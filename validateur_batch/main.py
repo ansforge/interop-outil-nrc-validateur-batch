@@ -50,7 +50,12 @@ if __name__ == "__main__":
     print("\n\n## Respect du format ##")
     for b in list_b:
         # Vérification du respect du format
-        b.check_format(fts)
+        format_checks = b.check_format(fts)
+        format_checks.to_csv(
+            op.join(args.output, f"{b.type}_format_checks.csv"),
+            sep=";",
+            index=False
+        )
         # Appliquer les changements des batchs sur `data`
         if b.type != "VAL":
             preview.set_index("id", inplace=True)

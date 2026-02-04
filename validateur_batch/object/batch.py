@@ -178,7 +178,7 @@ class Batch:
 
         return preview
 
-    def check_format(self, fts: "server.Server") -> None:
+    def check_format(self, fts: "server.Server") -> pd.DataFrame:
         """Lance les contrôles de format du fichier batch.
 
         args:
@@ -190,3 +190,4 @@ class Batch:
         nb = len(self.df.columns) - nb
         status = "OK" if nb == 0 else "KO"
         print(f"{self.type} - {nb} règle(s) de format non respectées - {status}")
+        return self.df
