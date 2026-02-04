@@ -1,0 +1,16 @@
+{
+    // Use IntelliSense to learn about possible attributes.
+    // Hover to view descriptions of existing attributes.
+    // For more information, visit: https://go.microsoft.com/fwlink/?linkid=830387
+    "version": "0.2.0",
+    "configurations": [
+        {
+            "name": "Python Debugger: Current File",
+            "type": "debugpy",
+            "request": "launch",
+            "program": "${file}",
+            "console": "integratedTerminal",
+            "args": ["https://smt.esante.gouv.fr/fhir", "D:\\Métier\\ANS\\Sources\\terminologie-snomed-ct-fr-Juin 2025 v1.0\\src\\SnomedCT_ManagedServiceFR_PRODUCTION_FR1000315_20250621T120000Z\\Snapshot\\", "20250621", "D:\\Test\\SauvegardeTraductionSNOMED\\", "--val", "D:\\Data_Export\\ANS\\TraductionsSIMED\\Concepts_Revus_Non_Modifiés 2026-02-04 14-40.csv", "--add", "D:\\Data_Export\\ANS\\TraductionsSIMED\\Descriptions_Additions 2026-02-04 14-40.csv", "--chg", "D:\\Data_Export\\ANS\\TraductionsSIMED\\Descriptions_Changes 2026-02-04 14-40.csv", "--rep", "D:\\Data_Export\\ANS\\TraductionsSIMED\\Descriptions_Replacements 2026-02-04 14-40.csv", "--ina", "D:\\Data_Export\\ANS\\TraductionsSIMED\\Descriptions_Inactivations 2026-02-04 14-40.csv"]
+        }
+    ]
+}

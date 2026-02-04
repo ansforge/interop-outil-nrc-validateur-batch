@@ -1,0 +1,7 @@
+numpy
+pandas
+pytest
+python-jsonpath
+requests
+responses
+setuptools

@@ -1,0 +1,68 @@
+import os.path as op
+import pandas as pd
+
+
+def generate_excel_from_report(csv_path: str, excel_path: str) -> None:
+    """Génération d'un fichier excel, condensé du résultat, pour intégration dans le fichier de travail
+
+    args:
+        csv_path: Chemin vers check_results.csv.
+        excel_path: Chemin vers le fichier Excel de destination.
+    """
+    df_chk_results = pd.read_csv(csv_path, sep=";", dtype={"conceptId": "string"} )
+    #all_columns = list(df_chk_results.columns)
+    
+    rules_columns = [col for col in list(df_chk_results.columns) if col not in ["id", "active", "_type_", "conceptId", "FSN", "term", "caseSignificanceId", "acceptabilityId"]]
+    #df_chk_results.sort_values(by=["conceptId"], inplace=True)
+    all_conceptIds = df_chk_results["conceptId"].unique()
+    
+    df_condense = pd.DataFrame({
+    "conceptId": pd.Series(dtype="string"),
+    "FSN": pd.Series(dtype="string"),
+    "errors": pd.Series(dtype="string"),
+    "errors_PT": pd.Series(dtype="string"),
+    "errors_AS1": pd.Series(dtype="string"),
+    "errors_AS2": pd.Series(dtype="string"),
+    "errors_AS3": pd.Series(dtype="string"),
+    "errors_AS4": pd.Series(dtype="string"),
+    "errors_AS5": pd.Series(dtype="string"),
+    "errors_AS6": pd.Series(dtype="string"),
+    "errors_AS7": pd.Series(dtype="string"),
+    "errors_AS8": pd.Series(dtype="string"),
+    "errors_AS9": pd.Series(dtype="string")
+    })
+
+    for conceptId in all_conceptIds:
+        df_concept = df_chk_results[df_chk_results["conceptId"] == conceptId]
+        termes_en_erreur  = ""
+        regles_en_erreur = list()
+
+        for _, row in df_concept.iterrows():
+            mask = row[rules_columns] == 1
+            if mask.any():
+                colonnes_en_erreur = mask[mask].index.tolist()   # seules les colonnes à True
+                term_erreurs = f"{row['term']} : {','.join(colonnes_en_erreur)}"
+                regles_en_erreur.append(term_erreurs)
+            else:
+                continue    
+
+        termes_en_erreur += " | ".join(regles_en_erreur)    
+        
+        df_condense.loc[len(df_condense)] = [
+                    conceptId,
+                    df_concept["FSN"].iloc[0],
+                    termes_en_erreur, 
+                    pd.NA,
+                    pd.NA,
+                    pd.NA,
+                    pd.NA,
+                    pd.NA,
+                    pd.NA,
+                    pd.NA,
+                    pd.NA,
+                    pd.NA,
+                    pd.NA
+                    ]
+       
+    df_condense.to_excel(excel_path, index=False)
+    print(f"Fichier Excel généré : {excel_path}")

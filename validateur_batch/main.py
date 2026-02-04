@@ -7,6 +7,7 @@ import pandas as pd
 from validateur_batch import io
 from validateur_batch.object import batch, server
 from validateur_batch.control import editorial_check, format_check
+from validateur_batch.phast import utils
 
 if __name__ == "__main__":
     cli = argparse.ArgumentParser()
@@ -26,6 +27,8 @@ if __name__ == "__main__":
     cli.add_argument("--ina", type=str,
                      help="Chemin vers le CSV de l'onglet 'Description Inactivations'")
     args = cli.parse_args()
+
+    #utils.generate_excel_from_report(op.join(args.output, "check_results.csv"), op.join(args.output, "check_results_condenses.xlsx"))
 
     # Initialisation de la classe de gestion du FTS
     fts = server.Server(args.endpoint)
@@ -70,3 +73,9 @@ if __name__ == "__main__":
     filepath = op.join(args.output, "check_results.csv")
     preview.to_csv(filepath, sep=";", index=False)
     print(f"\nAnalyse terminée et sauvegardée : {filepath}")
+
+    # Génération d'un fichier excel, condensé du résultat, pour intégration dans le fichier de travail
+    print("\n## Génération du fichier Excel ##")
+    utils.generate_excel_from_report(filepath, op.join(args.output, "check_results_condenses.xlsx"))
+
+
