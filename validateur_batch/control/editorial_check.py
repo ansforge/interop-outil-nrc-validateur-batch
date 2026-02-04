@@ -107,9 +107,9 @@ def _check_bs3(df: pd.DataFrame, bs: pd.Series, pt: pd.Series,
                  & (df.loc[:, "FSN"].str.contains("structure", regex=False, case=False))
                  & (df.loc[:, "term"].str.contains("structure", regex=False, case=False))].index # noqa
 
-    idx = idx.union(df.loc[bs & syn
-                           & (df.loc[:, "FSN"].str.contains("structure", regex=False, case=False)) # noqa
-                           & (~df.loc[:, "term"].str.contains("structure", regex=False, case=False))].index) # noqa
+    #idx = idx.union(df.loc[bs & syn
+    #                       & (df.loc[:, "FSN"].str.contains("structure", regex=False, case=False)) # noqa
+    #                       & (~df.loc[:, "term"].str.contains("structure", regex=False, case=False))].index) # noqa
 
     idx = idx.union(df.loc[bs
                            & (df.loc[:, "FSN"].str.contains("entire", regex=False, case=False)) # noqa
