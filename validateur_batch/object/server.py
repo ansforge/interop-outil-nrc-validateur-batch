@@ -10,14 +10,21 @@ class Server:
     choix
     """
 
-    def __init__(self, endpoint: str):
+    def __init__(self, endpoint: str, login: str = None, password: str = None, versioning: bool = True):
         """
         Args:
             endpoint: Endpoint de votre serveur de Terminologies FHIR
         """
         self.endpoint = endpoint
-        self.ecl_base_url = f"{endpoint}/ValueSet/$expand?url=http://snomed.info/sct/900000000000207008?fhir_vs=ecl/" # noqa
-        self.lookup_base_url = f"{endpoint}/CodeSystem/$lookup?system=http://snomed.info/sct&version=http://snomed.info/sct/900000000000207008" # noqa
+        self.login = login
+        self.password = password
+        
+        if versioning:
+            self.ecl_base_url = f"{endpoint}/ValueSet/$expand?url=http://snomed.info/sct/900000000000207008?fhir_vs=ecl/" # noqa
+            self.lookup_base_url = f"{endpoint}/CodeSystem/$lookup?system=http://snomed.info/sct&version=http://snomed.info/sct/900000000000207008" # noqa
+        else:
+            self.ecl_base_url = f"{endpoint}/ValueSet/$expand?url=http://snomed.info/sct?fhir_vs=ecl/" # noqa
+            self.lookup_base_url = f"{endpoint}/CodeSystem/$lookup?system=http://snomed.info/sct" # noqa
 
     def ecl(self, ecl: str) -> List[str]:
         """Envoie une requête ECL au FTS
@@ -29,9 +36,10 @@ class Server:
             Liste des SCTID correspondant à la requête ECL
         """
         url = f"{self.ecl_base_url}{requests.utils.quote(ecl)}"
-        response = requests.request("GET", url)
+       
+        response = requests.request("GET", url, auth=(self.login, self.password) if self.login and self.password else None)
         response.raise_for_status()
-
+    
         return [r.get("code", "")
                 for r in response.json()["expansion"].get("contains", {})]
 
@@ -45,9 +53,10 @@ class Server:
             Informations du concept `sctid`
         """
         url = f"{self.lookup_base_url}&code={sctid}"
-        response = requests.request("GET", url)
+       
+        response = requests.request("GET", url, auth=(self.login, self.password) if self.login and self.password else None)
         response.raise_for_status()
-
+        
         return response.json()
 
     def get_fsn(self, sctid: str) -> str:

@@ -26,12 +26,19 @@ if __name__ == "__main__":
                      help="Chemin vers le CSV de l'onglet 'Description Replacement'")
     cli.add_argument("--ina", type=str,
                      help="Chemin vers le CSV de l'onglet 'Description Inactivations'")
+    cli.add_argument("--login", type=str,
+                     help="Login pour accéder au FTS")
+    cli.add_argument("--pwd", type=str,
+                     help="Mot de passe pour accéder au FTS")
+    cli.add_argument("--versioning", action="store_true",
+                     help="Activer la gestion des versions SNOMED CT sur le FTS")
     args = cli.parse_args()
 
     #utils.generate_excel_from_report(op.join(args.output, "check_results.csv"), op.join(args.output, "check_results_condenses.xlsx"))
 
     # Initialisation de la classe de gestion du FTS
-    fts = server.Server(args.endpoint)
+    #fts = server.Server(args.endpoint)
+    fts = server.Server(args.endpoint, args.login, args.pwd, versioning=args.versioning)
 
     # Création de la liste des fichiers
     print("\n## Imports batch ##")
