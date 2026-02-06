@@ -71,7 +71,7 @@ def _check_ar6(df: pd.DataFrame, sb: pd.Series) -> pd.DataFrame:
 #########################
 # Règles Body structure #
 #########################
-def _check_bs2(df: pd.DataFrame) -> pd.DataFrame:
+def _check_bs2(df: pd.DataFrame,  pt: pd.Series) -> pd.DataFrame:
     """Identifie les descriptions ne respectant pas la règle bs2.
 
     args:
@@ -81,8 +81,9 @@ def _check_bs2(df: pd.DataFrame) -> pd.DataFrame:
         DataFrame du fichier avec une colonne identifiant les
         descriptions ne respectant pas la règle bs2.
     """
-    idx = df.loc[(df.loc[:, "FSN"].str.contains("joint", regex=False, case=False))
+    idx = df.loc[pt & (df.loc[:, "FSN"].str.contains("joint", regex=False, case=False))
                  & (~df.loc[:, "term"].str.contains("(?:articulation|articulaire)", case=False))].index # noqa
+
     if not idx.empty:
         df = pd.merge(df, pd.DataFrame(data={"bs2": ["1"] * len(idx)}, index=idx),
                       how="left", left_index=True, right_index=True, validate="1:1")
@@ -1162,7 +1163,7 @@ def run_editorial_check(df: pd.DataFrame, fts: "server.Server") -> pd.DataFrame:
 
     # Contrôles des règles de Body Structure
     if not df.loc[bs].empty:
-        df = _check_bs2(df)
+        df = _check_bs2(df,pt)
         df = _check_bs3(df, bs, pt, syn)
         df = _check_bs5(df, bs)
         df = _check_bs6(df, bs)
