@@ -51,7 +51,7 @@ if __name__ == "__main__":
     print("Lecture des imports batch - OK")
 
     #for b in list_b:
-    #    b.df = b.df.head(100) # TODO : à supprimer, juste pour les tests4
+    #    b.df = b.df.head(100) # TODO : à supprimer, juste pour les tests
 
     # Initialiser la preview de la snapshot de l'édition FR
     print("\n## Snapshot FR ##")
@@ -76,7 +76,8 @@ if __name__ == "__main__":
     fsn = preview.loc[:, ["conceptId"]].drop_duplicates("conceptId", ignore_index=True)
     fsn.loc[:, "FSN"] = [fts.get_fsn(sctid) for sctid in fsn.loc[:, "conceptId"]]
     preview = pd.merge(preview, fsn, how="left", on="conceptId")
-    preview = preview[["id", "active", "_type_", "conceptId", "FSN", "term",
+    preview["FSN_no_sem"] = preview["FSN"].str.replace(r'[\(\[].*[\)\]]$', "", regex=True)
+    preview = preview[["id", "active", "_type_", "conceptId", "FSN", "FSN_no_sem", "term",
                        "caseSignificanceId", "acceptabilityId"]]
 
     # Vérification du respect des règles éditoriales
