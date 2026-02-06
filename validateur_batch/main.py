@@ -50,13 +50,13 @@ if __name__ == "__main__":
     list_b = [batch.Batch(f, t) for f, t in input if f is not None]
     print("Lecture des imports batch - OK")
 
-    #for b in list_b:
-    #    b.df = b.df.head(100) # TODO : à supprimer, juste pour les tests
+    # for b in list_b:
+    #     b.df = b.df.head(100) # TODO : à supprimer, juste pour les tests
 
     # Initialiser la preview de la snapshot de l'édition FR
     print("\n## Snapshot FR ##")
     preview = io.read_snapshot(args.snapshot, args.date, list_b)
-
+    
     print("\n\n## Respect du format ##")
     for b in list_b:
         # Vérification du respect du format

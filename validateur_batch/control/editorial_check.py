@@ -266,16 +266,28 @@ def _check_bs10(df: pd.DataFrame, pt: pd.Series, syn: pd.Series) -> pd.DataFrame
         descriptions ne respectant pas la règle bs10.
     """
     idx = df.loc[(df.loc[:, "FSN_no_sem"].str.contains("lower limb", regex=False, case=False))
-                 & (~df.loc[:, "term"].str.contains("membre inférieur", regex=False, case=False))].index # noqa
+                            & (~df.loc[:, "term"].str.contains("membre inférieur", regex=False, case=False))].index # noqa
 
-    idx = idx.union(df.loc[pt
-                           & (df.loc[:, "FSN_no_sem"].str.contains("lower leg", regex=False, case=False)) # noqa
-                           & (~df.loc[:, "term"].str.contains("partie inférieure(?: entière)? de la jambe", case=False))].index) # noqa
+    # idx = idx.union(df.loc[pt
+    #                        & (df.loc[:, "FSN_no_sem"].str.contains("lower leg", regex=False, case=False)) # noqa
+    #                        & (~df.loc[:, "term"].str.contains("partie inférieure(?: entière)? de la jambe", case=False))].index) # noqa
 
-    idx = idx.union(df.loc[syn
-                           & (df.loc[:, "FSN_no_sem"].str.contains("lower leg", regex=False, case=False)) # noqa
-                           & (~df.loc[:, "term"].str.contains("(?:partie basse(?: entière)? de la jambe|jambe(?: entière)?, du genou à la cheville)", case=False))].index) # noqa
+    # idx = idx.union(df.loc[syn
+    #                        & (df.loc[:, "FSN_no_sem"].str.contains("lower leg", regex=False, case=False)) # noqa
+    #                        & (~df.loc[:, "term"].str.contains("(?:partie basse(?: entière)? de la jambe|jambe(?: entière)?, du genou à la cheville)", case=False))].index) # noqa
 
+    idx = df.loc[pt 
+                 & (df.loc[:, "FSN_no_sem"].str.contains("lower leg", regex=False, case=False))
+                 & (~df.loc[:, "term"].str.contains("partie inférieure de la jambe", case=False))].index
+    
+    idx = df.loc[syn 
+                 & (df.loc[:, "FSN_no_sem"].str.contains("lower leg", regex=False, case=False))
+                 & (~df.loc[:, "term"].str.contains("partie basse de la jambe", case=False))].index
+    
+    idx = df.loc[syn 
+                 & (df.loc[:, "FSN_no_sem"].str.contains("lower leg", regex=False, case=False))
+                 & (~df.loc[:, "term"].str.contains("jambe, du genou à la cheville", case=False))].index
+    
     if not idx.empty:
         df = pd.merge(df, pd.DataFrame(data={"bs10": ["1"] * len(idx)}, index=idx),
                       how="left", left_index=True, right_index=True, validate="1:1")
