@@ -310,13 +310,20 @@ def _check_bs11(df: pd.DataFrame, pt: pd.Series, syn: pd.Series) -> pd.DataFrame
     idx = df.loc[(df.loc[:, "FSN_no_sem"].str.contains("upper limb", regex=False, case=False))
                  & (~df.loc[:, "term"].str.contains("membre supérieur", regex=False, case=False))].index # noqa
 
+    # idx = idx.union(df.loc[pt
+    #                        & (df.loc[:, "FSN_no_sem"].str.contains("upper arm", regex=False, case=False)) # noqa
+    #                        & (~df.loc[:, "term"].str.contains("partie supérieure(?: entière)? du bras", case=False))].index) # noqa
+
+    # idx = idx.union(df.loc[syn
+    #                        & (df.loc[:, "FSN_no_sem"].str.contains("upper arm", regex=False, case=False)) # noqa
+    #                        & (~df.loc[:, "term"].str.contains("bras(?: entier)?, de l'épaule au coude", case=False))].index) # noqa
     idx = idx.union(df.loc[pt
                            & (df.loc[:, "FSN_no_sem"].str.contains("upper arm", regex=False, case=False)) # noqa
-                           & (~df.loc[:, "term"].str.contains("partie supérieure(?: entière)? du bras", case=False))].index) # noqa
+                           & (~df.loc[:, "term"].str.contains("partie supérieure du bras", case=False))].index) # noqa
 
     idx = idx.union(df.loc[syn
                            & (df.loc[:, "FSN_no_sem"].str.contains("upper arm", regex=False, case=False)) # noqa
-                           & (~df.loc[:, "term"].str.contains("bras(?: entier)?, de l'épaule au coude", case=False))].index) # noqa
+                           & (~df.loc[:, "term"].str.contains("bras, de l'épaule au coude", case=False))].index) # noqa
 
     if not idx.empty:
         df = pd.merge(df, pd.DataFrame(data={"bs11": ["1"] * len(idx)}, index=idx),
