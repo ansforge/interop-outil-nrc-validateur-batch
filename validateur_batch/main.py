@@ -1,6 +1,7 @@
 #!/usr/bin/env python3
 
 import argparse
+import os
 import os.path as op
 import pandas as pd
 
@@ -37,7 +38,6 @@ if __name__ == "__main__":
     #utils.generate_excel_from_report(op.join(args.output, "check_results.csv"), op.join(args.output, "check_results_condenses.xlsx"))
 
     # Initialisation de la classe de gestion du FTS
-    #fts = server.Server(args.endpoint)
     fts = server.Server(args.endpoint, args.login, args.pwd, versioning=args.versioning)
 
     # Création de la liste des fichiers
@@ -51,7 +51,9 @@ if __name__ == "__main__":
     print("Lecture des imports batch - OK")
 
     # for b in list_b:
-    #     b.df = b.df.head(100) # TODO : à supprimer, juste pour les tests
+    #     if "Concept ID" in b.df.columns:
+    #         b.df = b.df.loc[b.df["Concept ID"] == "368148009"]
+        # b.df = b.df.head(100) # TODO : à supprimer, juste pour les tests
 
     # Initialiser la preview de la snapshot de l'édition FR
     print("\n## Snapshot FR ##")
@@ -82,7 +84,8 @@ if __name__ == "__main__":
 
     # Vérification du respect des règles éditoriales
     print("\n## Respect des règles éditoriales ##")
-    preview = editorial_check.run_editorial_check(preview, fts)
+    rules = pd.read_csv(os.path.join(os.path.dirname(__file__), "rules.csv"),  dtype={"en": "string", "fr": "string", "id": "string", "pt": "Int64", "syn": "Int64"}, sep=";")
+    preview = editorial_check.run_editorial_check(preview, rules, fts)
     # Vérification du respect 1 concept = 1 PT
     preview = format_check.check_pt(preview)
     # Sauvegarde du fichier

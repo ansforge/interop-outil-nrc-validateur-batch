@@ -1,3 +1,4 @@
+import os
 import pandas as pd
 
 from typing import TYPE_CHECKING
@@ -1131,12 +1132,42 @@ def _check_su8(df: pd.DataFrame, su: pd.Series, pt: pd.Series) -> pd.DataFrame:
 
     return df
 
+def _check_regle_generique(df: pd.DataFrame, pt: pd.Series, syn: pd.Series, regex_en_fsn: str, regex_fr_term: str, id_regle: str, is_pt: int, is_syn: int) -> pd.DataFrame:
+    """Identifie les descriptions ne respectant pas une règle générique sur les articles
+    args:        df: DataFrame à valider
+        pt: Filtre sur les termes préférés de `df`
+        syn: Filtre sur les synonymes acceptables de `df`     
+        regex_en_fsn: Expression régulière à appliquer sur la colonne "FSN_no_sem" pour identifier les descriptions ne respectant pas la règle     
+        regex_fr_term: Expression régulière à appliquer sur la colonne "term" pour identifier les descriptions respectant la règle     
+        id_regle: Identifiant de la règle à ajouter dans le nom de la colonne créée pour identifier les descriptions ne respectant pas la règle     
+        is_pt: Indicateur d'application de la règle sur les termes préférés (1 pour appliquer, 0 sinon)     
+        is_syn: Indicateur d'application de la règle sur les synonymes acceptables (1 pour appliquer, 0 sinon)  
+        
+    returns:        DataFrame du fichier avec une colonne identifiant les descriptions ne respectant pas la règle générique.
+    """
+    idx = pd.Index([])
 
-def run_editorial_check(df: pd.DataFrame, fts: "server.Server") -> pd.DataFrame:
+    if is_pt == 1:
+        idx = df.loc[pt
+                     & (df.loc[:, "FSN_no_sem"].str.contains(regex_en_fsn, case=False))
+                     & (~df.loc[:, "term"].str.contains(regex_fr_term, case=False))].index
+    if is_syn == 1:
+        idx = idx.union(df.loc[syn
+                               & (df.loc[:, "FSN_no_sem"].str.contains(regex_en_fsn, case=False))
+                               & (~df.loc[:, "term"].str.contains(regex_fr_term, case=False))].index)
+    if not idx.empty:
+        df = pd.merge(df, pd.DataFrame(data={id_regle: ["1"] * len(idx)}, index=idx),
+                      how="left", left_index=True, right_index=True, validate="1:1")
+        
+    return df
+
+
+def run_editorial_check(df: pd.DataFrame, rules: pd.DataFrame, fts: "server.Server") -> pd.DataFrame:
     """Lance l'ensemble des contrôles sur le respect des règles éditoriales.
 
     args:
         df: DataFrame à valider
+        rules: DataFrame contenant les règles éditoriales
         fts: Serveur de Terminologies FHIR à utiliser
 
     returns:
@@ -1151,26 +1182,26 @@ def run_editorial_check(df: pd.DataFrame, fts: "server.Server") -> pd.DataFrame:
 
     # Précalcul des hiérarchies
     # Body structure
-    bs = ((df.loc[:, "FSN_no_sem"].str.endswith(" (body structure)"))
-          | (df.loc[:, "FSN_no_sem"].str.endswith(" (cell)"))
-          | (df.loc[:, "FSN_no_sem"].str.endswith(" (cell structure)"))
-          | (df.loc[:, "FSN_no_sem"].str.endswith(" (morphologic abnormality)")))
+    bs = ((df.loc[:, "FSN"].str.endswith(" (body structure)"))
+          | (df.loc[:, "FSN"].str.endswith(" (cell)"))
+          | (df.loc[:, "FSN"].str.endswith(" (cell structure)"))
+          | (df.loc[:, "FSN"].str.endswith(" (morphologic abnormality)")))
     # Clinical finding
-    co = (df.loc[:, "FSN_no_sem"].str.endswith(" (finding)"))
-    pa = (df.loc[:, "FSN_no_sem"].str.endswith(" (disorder)"))
+    co = (df.loc[:, "FSN"].str.endswith(" (finding)"))
+    pa = (df.loc[:, "FSN"].str.endswith(" (disorder)"))
     # Pharmaceutical / biological product
     me = (df.loc[:, "conceptId"].isin(fts.ecl("<< 373873005")))
     # Physical object
     sb = (df.loc[:, "conceptId"].isin(fts.ecl("<< 260787004")))
     # Procedure
-    pr = ((df.loc[:, "FSN_no_sem"].str.endswith(" (procedure)"))
-          | (df.loc[:, "FSN_no_sem"].str.endswith(" (regime/therapy)")))
+    pr = ((df.loc[:, "FSN"].str.endswith(" (procedure)"))
+          | (df.loc[:, "FSN"].str.endswith(" (regime/therapy)")))
     # Situation with explicit context
-    hs = (df.loc[:, "FSN_no_sem"].str.endswith(" (situation)"))
+    hs = (df.loc[:, "FSN"].str.endswith(" (situation)"))
     # Specimen
-    ec = (df.loc[:, "FSN_no_sem"].str.endswith(" (specimen)"))
+    ec = (df.loc[:, "FSN"].str.endswith(" (specimen)"))
     # Substance
-    su = (df.loc[:, "FSN_no_sem"].str.endswith(" (substance)"))
+    su = (df.loc[:, "FSN"].str.endswith(" (substance)"))
 
     # Correction des casses
     correction = _get_correct_case(df.loc[df.loc[:, "caseSignificanceId"] == "CS"])
@@ -1245,6 +1276,10 @@ def run_editorial_check(df: pd.DataFrame, fts: "server.Server") -> pd.DataFrame:
         df = _check_su1(df, pt, syn)
         df = _check_su3(df, su, pt)
         df = _check_su8(df, su, pt)
+
+    # Règles génériques issues du fichier rules.csv
+    for _, rule in rules.iterrows():
+        df = _check_regle_generique(df, pt, syn, rule["en"], rule["fr"], rule["id"], rule["pt"], rule["syn"])
 
     nb = len(df.columns) - nb
     status = "OK" if nb == 0 else "KO"

@@ -12,7 +12,7 @@ def generate_excel_from_report(csv_path: str, excel_path: str) -> None:
     df_chk_results = pd.read_csv(csv_path, sep=";", dtype={"conceptId": "string"} )
     #all_columns = list(df_chk_results.columns)
     
-    rules_columns = [col for col in list(df_chk_results.columns) if col not in ["id", "active", "_type_", "conceptId", "FSN", "term", "caseSignificanceId", "acceptabilityId"]]
+    rules_columns = [col for col in list(df_chk_results.columns) if col not in ["id", "active", "_type_", "conceptId", "FSN", "FSN_no_sem", "term", "caseSignificanceId", "acceptabilityId"]]
     #df_chk_results.sort_values(by=["conceptId"], inplace=True)
     all_conceptIds = df_chk_results["conceptId"].unique()
     
