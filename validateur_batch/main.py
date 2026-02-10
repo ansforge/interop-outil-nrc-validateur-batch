@@ -33,12 +33,14 @@ if __name__ == "__main__":
                      help="Mot de passe pour accéder au FTS")
     cli.add_argument("--versioning", action="store_true",
                      help="Activer la gestion des versions SNOMED CT sur le FTS")
+    cli.add_argument("--cache", type=str,
+                     help="Fichier de cache pour les données récupérées du FTS (si vide, le FTS est uilisé pour chaque requête)")
     args = cli.parse_args()
 
     #utils.generate_excel_from_report(op.join(args.output, "check_results.csv"), op.join(args.output, "check_results_condenses.xlsx"))
 
     # Initialisation de la classe de gestion du FTS
-    fts = server.Server(args.endpoint, args.login, args.pwd, versioning=args.versioning)
+    fts = server.Server(args.endpoint, args.login, args.pwd, versioning=args.versioning, cache_file=args.cache)
 
     # Création de la liste des fichiers
     print("\n## Imports batch ##")

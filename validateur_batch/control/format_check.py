@@ -46,21 +46,6 @@ def _find_empty_cell(df: pd.DataFrame, type: "batch.BATCH_TYPE") -> pd.DataFrame
     return df
 
 
-def _sctid_is_inactive(json: Dict) -> str:
-    """Vérifie si le concept est inactif
-
-    args:
-        json: Résultat de l'opération lookup
-
-    returns:
-        "1" si le concept est inactif ou une string vide dans le cas contraire
-    """
-    p = list(
-        jsonpath.query("$.parameter[?@name == 'property'].part[?@valueCode == 'inactive']", json).pointers() # noqa
-    )[0]
-
-    return "" if next(filter(
-        lambda x: x["name"] == "value", p.resolve_parent(json)[0]))["valueBoolean"] is False else "1" # noqa
 
 
 def _validate_sctid(df: pd.DataFrame, fts: "server.Server") -> pd.DataFrame:
@@ -74,8 +59,8 @@ def _validate_sctid(df: pd.DataFrame, fts: "server.Server") -> pd.DataFrame:
         DataFrame avec 2 colonnes identifiant : les SCTID de concepts inactifs et les
         FSN
     """
-    json = [fts.lookup(sctid) if sctid else "" for sctid in df.loc[:, "Concept ID"]]
-    inactive = [_sctid_is_inactive(j) if j else "" for j in json]
+    status = [fts.get_status(sctid) if sctid else "" for sctid in df.loc[:, "Concept ID"]]
+    inactive = ["1" if s == 0 else "" for s in status]
 
     if "1" in inactive:
         df.loc[:, "E_concept_inactif"] = inactive
@@ -266,9 +251,9 @@ def _check_association_target(df: pd.DataFrame, fts: "server.Server") -> pd.Data
                                        index=idx),
                       how="left", left_index=True, right_index=True, validate="1:1")
 
-    json = [fts.lookup(sctid) if sctid else ""
+    status = [fts.get_status(sctid) if sctid else ""
             for sctid in df.loc[:, "Association Target ID1"]]
-    inactive = [_sctid_is_inactive(j) if j else "" for j in json]
+    inactive = ["1" if s == 0 else "" for s in status]
     if "1" in inactive:
         df.loc[:, "E_association_target_inactive"] = inactive
 
