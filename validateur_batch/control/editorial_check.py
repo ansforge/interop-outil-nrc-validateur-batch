@@ -156,19 +156,22 @@ def _check_bs3(df: pd.DataFrame, bs: pd.Series, pt: pd.Series,
     return df
 
 
-def _check_bs5(df: pd.DataFrame, bs: pd.Series) -> pd.DataFrame:
+def _check_bs5(df: pd.DataFrame, bs: pd.Series, pt: pd.Series, syn: pd.Series) -> pd.DataFrame:
     """Identifie les descriptions ne respectant pas la règle bs5
 
     args:
         df: DataFrame à valider
         bs: Filtre sur les Body structure de `df`
+        pt: Filtre sur les termes préférés de `df`
+        syn: Filtre sur les synonymes acceptables de `df`
 
     returns:
         DataFrame du fichier avec une colonne identifiant les
         descriptions ne respectant pas la règle bs5.
     """
-    idx = df.loc[bs
-                 & (df.loc[:, "FSN_no_sem"].str.contains("region", regex=False, case=False))
+
+    idx = df.loc[pt & bs
+                 & (df.loc[:, "FSN"].str.contains("region", regex=False, case=False))
                  & (~df.loc[:, "term"].str.contains("région", regex=False, case=False))].index # noqa
 
     if not idx.empty:
@@ -1242,9 +1245,9 @@ def run_editorial_check(df: pd.DataFrame, rules: pd.DataFrame, fts: "server.Serv
 
     # Contrôles des règles de Body Structure
     if not df.loc[bs].empty:
-        df = _check_bs2(df,pt)
+        df = _check_bs2(df, pt)
         df = _check_bs3(df, bs, pt, syn)
-        df = _check_bs5(df, bs)
+        df = _check_bs5(df, bs, pt, syn)
         df = _check_bs6(df, bs)
         df = _check_bs7(df, bs)
         df = _check_bs8(df, pt, syn)
