@@ -134,20 +134,20 @@ def _check_bs3(df: pd.DataFrame, bs: pd.Series, pt: pd.Series,
         DataFrame du fichier avec une colonne identifiant les
         descriptions ne respectant pas la règle bs3
     """
+
+    REGEX_ADJECTIVAL = r"(?:(?:\S*laires?)|(?:\S*ienn?e?s?)|(?:\S*iques?)|(?:\S*ales?)|(?:\S*eux)|(?:\S*euses?)|(?:\S*ales?)|(?:\S*elles?))"
+
     idx = df.loc[bs & pt
                  & (df.loc[:, "FSN_no_sem"].str.contains("structure", regex=False, case=False))
-                 & (df.loc[:, "term"].str.contains("structure", regex=False, case=False))].index # noqa
+                 & (df.loc[:, "term"].str.contains(f"structure(?! {REGEX_ADJECTIVAL})", regex=True, case=False))].index # noqa
 
-    #idx = idx.union(df.loc[bs & syn
-    #                       & (df.loc[:, "FSN_no_sem"].str.contains("structure", regex=False, case=False)) # noqa
-    #                       & (~df.loc[:, "term"].str.contains("structure", regex=False, case=False))].index) # noqa
 
-    idx = idx.union(df.loc[bs
-                           & (df.loc[:, "FSN_no_sem"].str.contains("entire", regex=False, case=False)) # noqa
+    idx = idx.union(df.loc[bs & pt
+                           & (df.loc[:, "FSN_no_sem"].str.contains(r"\bentire\b", regex=True, case=False)) # noqa
                            & (~df.loc[:, "term"].str.contains("(?:entiers?|entières?)", case=False))].index) # noqa
 
-    idx = idx.union(df.loc[bs
-                           & (df.loc[:, "FSN_no_sem"].str.contains("part", regex=False, case=False)) # noqa
+    idx = idx.union(df.loc[bs & pt
+                           & (df.loc[:, "FSN_no_sem"].str.contains(r"\bpart\b", regex=True, case=False)) # noqa
                            & (~df.loc[:, "term"].str.contains("partie", regex=False, case=False))].index) # noqa
 
     if not idx.empty:
