@@ -343,18 +343,24 @@ def _check_bs11(df: pd.DataFrame, pt: pd.Series, syn: pd.Series) -> pd.DataFrame
     return df
 
 
-def _check_bs12(df: pd.DataFrame) -> pd.DataFrame:
+def _check_bs12(df: pd.DataFrame, pt: pd.Series, syn: pd.Series) -> pd.DataFrame:
     """Identifie les descriptions ne respectant pas la règle bs12
 
     args:
         df: DataFrame à valider
-
+        pt: Filtre sur les termes préférés de `df`
+        syn: Filtre sur les synonymes acceptables de `df`
     returns:
         DataFrame du fichier avec une colonne identifiant les
         descriptions ne respectant pas la règle bs12.
     """
-    idx = df.loc[(df.loc[:, "FSN_no_sem"].str.contains("cerebrum", regex=False, case=False))
+    idx = df.loc[pt &
+                 (df.loc[:, "FSN_no_sem"].str.contains("cerebrum", regex=False, case=False))
                  & (~df.loc[:, "term"].str.contains("cerveau", regex=False, case=False))].index # noqa
+
+    idx = df.loc[syn &
+                 (df.loc[:, "FSN_no_sem"].str.contains("cerebrum", regex=False, case=False))
+                 & (~df.loc[:, "term"].str.contains(r"(?:cerveau)|(?:télencéphale)", regex=True, case=False))].index # noqa
 
     if not idx.empty:
         df = pd.merge(df, pd.DataFrame(data={"bs12": ["1"] * len(idx)}, index=idx),
@@ -1234,7 +1240,7 @@ def run_editorial_check(df: pd.DataFrame, rules: pd.DataFrame, fts: "server.Serv
         df = _check_bs9(df, pt, syn)
         df = _check_bs10(df, pt, syn)
         df = _check_bs11(df, pt, syn)
-        df = _check_bs12(df)
+        df = _check_bs12(df, pt, syn)
         df = _check_bs13(df)
 
     # Contrôles des règles de Clinical finding
