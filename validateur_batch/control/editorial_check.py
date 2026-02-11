@@ -139,19 +139,26 @@ def _check_bs3(df: pd.DataFrame, bs: pd.Series, pt: pd.Series,
 
     idx = df.loc[bs & pt
                  & (df.loc[:, "FSN_no_sem"].str.contains("structure", regex=False, case=False))
-                 & (df.loc[:, "term"].str.contains(f"structure(?! {REGEX_ADJECTIVAL})", regex=True, case=False))].index # noqa
+                 & (df.loc[:, "term"].str.contains(f"structure(?!s? {REGEX_ADJECTIVAL})", regex=True, case=False))].index # noqa
+    if not idx.empty:
+        df = pd.merge(df, pd.DataFrame(data={"bs3-struct": ["1"] * len(idx)}, index=idx),
+                      how="left", left_index=True, right_index=True, validate="1:1")
 
 
-    idx = idx.union(df.loc[bs & pt
-                           & (df.loc[:, "FSN_no_sem"].str.contains(r"\bentire\b", regex=True, case=False)) # noqa
-                           & (~df.loc[:, "term"].str.contains("(?:entiers?|entières?)", case=False))].index) # noqa
+    idx = df.loc[bs & pt
+                & (df.loc[:, "FSN_no_sem"].str.contains(r"\bentire\b", regex=True, case=False)) # noqa
+                & (~df.loc[:, "term"].str.contains("(?:entiers?|entières?)", case=False))].index # noqa
+    
+    if not idx.empty:
+        df = pd.merge(df, pd.DataFrame(data={"bs3-entire": ["1"] * len(idx)}, index=idx),
+                      how="left", left_index=True, right_index=True, validate="1:1")
 
     idx = idx.union(df.loc[bs & pt
                            & (df.loc[:, "FSN_no_sem"].str.contains(r"\bpart\b", regex=True, case=False)) # noqa
                            & (~df.loc[:, "term"].str.contains("partie", regex=False, case=False))].index) # noqa
 
     if not idx.empty:
-        df = pd.merge(df, pd.DataFrame(data={"bs3": ["1"] * len(idx)}, index=idx),
+        df = pd.merge(df, pd.DataFrame(data={"bs3-part": ["1"] * len(idx)}, index=idx),
                       how="left", left_index=True, right_index=True, validate="1:1")
     return df
 
@@ -310,7 +317,7 @@ def _check_bs10(df: pd.DataFrame, pt: pd.Series, syn: pd.Series) -> pd.DataFrame
 
     idx = df.loc[syn & 
                  (df.loc[:, "FSN"].str.contains("lower limb", regex=False, case=False))
-                 & (~df.loc[:, "term"].str.contains(r"\b(membre inférieur|membrum inferius|membri inferioris)\b", regex=True, case=False))].index # noqa
+                 & (~df.loc[:, "term"].str.contains(r"\b(?:membre(?: (?:droit|gauche)) inférieur|membrum inferius|membri inferioris)\b", regex=True, case=False))].index # noqa
 
 
     idx = idx.union(df.loc[pt
@@ -342,7 +349,7 @@ def _check_bs11(df: pd.DataFrame, pt: pd.Series, syn: pd.Series) -> pd.DataFrame
 
     idx = df.loc[syn &
                  (df.loc[:, "FSN_no_sem"].str.contains("upper limb", regex=False, case=False))
-                 & (~df.loc[:, "term"].str.contains(r"\b(membre supérieur|membrum superius|membri superioris)\b", regex=True, case=False))].index # noqa  
+                 & (~df.loc[:, "term"].str.contains(r"\b(?:membre supérieur|membrum superius|membri superioris)\b", regex=True, case=False))].index # noqa  
 
     idx = idx.union(df.loc[pt
                            & (df.loc[:, "FSN_no_sem"].str.contains("upper arm", regex=False, case=False)) # noqa
@@ -1239,6 +1246,7 @@ def run_editorial_check(df: pd.DataFrame, rules: pd.DataFrame, fts: "server.Serv
 
     # Contrôles des règles sur les articles
     df = _check_ar2(df)
+    df = _check_ar4_FR(df, bs)
     df = _check_ar6(df, sb)
 
     # Contrôles des règles de Body Structure
