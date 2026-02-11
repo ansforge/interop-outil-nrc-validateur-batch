@@ -135,7 +135,7 @@ def _check_bs3(df: pd.DataFrame, bs: pd.Series, pt: pd.Series,
         descriptions ne respectant pas la règle bs3
     """
 
-    REGEX_ADJECTIVAL = r"(?:(?:\S*laires?)|(?:\S*ienn?e?s?)|(?:\S*iques?)|(?:\S*ales?)|(?:\S*eux)|(?:\S*euses?)|(?:\S*ales?)|(?:\S*elles?))"
+    REGEX_ADJECTIVAL = r"(?:(?:\S*aires?)|(?:\S*ienn?e?s?)|(?:\S*iques?)|(?:\S*ales?)|(?:\S*eux)|(?:\S*euses?)|(?:\S*ales?)|(?:\S*elles?)|\S*ine?s?|(?:\S*ois(?:es)?))" # noqa
 
     idx = df.loc[bs & pt
                  & (df.loc[:, "FSN_no_sem"].str.contains("structure", regex=False, case=False))
@@ -304,8 +304,14 @@ def _check_bs10(df: pd.DataFrame, pt: pd.Series, syn: pd.Series) -> pd.DataFrame
         DataFrame du fichier avec une colonne identifiant les
         descriptions ne respectant pas la règle bs10.
     """
-    idx = df.loc[(df.loc[:, "FSN"].str.contains("lower limb", regex=False, case=False))
+    idx = df.loc[pt & 
+                 (df.loc[:, "FSN"].str.contains("lower limb", regex=False, case=False))
                  & (~df.loc[:, "term"].str.contains("membre inférieur", regex=False, case=False))].index # noqa
+
+    idx = df.loc[syn & 
+                 (df.loc[:, "FSN"].str.contains("lower limb", regex=False, case=False))
+                 & (~df.loc[:, "term"].str.contains(r"\b(membre inférieur|membrum inferius|membri inferioris)\b", regex=True, case=False))].index # noqa
+
 
     idx = idx.union(df.loc[pt
                            & (df.loc[:, "FSN"].str.contains("lower leg", regex=False, case=False)) # noqa
@@ -330,8 +336,14 @@ def _check_bs11(df: pd.DataFrame, pt: pd.Series, syn: pd.Series) -> pd.DataFrame
         DataFrame du fichier avec une colonne identifiant les
         descriptions ne respectant pas la règle bs11-FR.
     """
-    idx = df.loc[(df.loc[:, "FSN_no_sem"].str.contains("upper limb", regex=False, case=False))
+    idx = df.loc[pt &
+                 (df.loc[:, "FSN_no_sem"].str.contains("upper limb", regex=False, case=False))
                  & (~df.loc[:, "term"].str.contains("membre supérieur", regex=False, case=False))].index # noqa
+
+    idx = df.loc[syn &
+                 (df.loc[:, "FSN_no_sem"].str.contains("upper limb", regex=False, case=False))
+                 & (~df.loc[:, "term"].str.contains(r"\b(membre supérieur|membrum superius|membri superioris)\b", regex=True, case=False))].index # noqa  
+
     idx = idx.union(df.loc[pt
                            & (df.loc[:, "FSN_no_sem"].str.contains("upper arm", regex=False, case=False)) # noqa
                            & (~df.loc[:, "term"].str.contains(r"partie supérieure(?: (?:entière|gauche|droite))* du bras", case=False))].index) # noqa
