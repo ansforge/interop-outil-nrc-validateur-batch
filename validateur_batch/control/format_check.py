@@ -272,7 +272,7 @@ def check_pt(df: pd.DataFrame) -> pd.DataFrame:
     """
     df.loc[:, "E_multiple_pt"] = [""] * len(df)
 
-    pt = df.loc[df.loc[:, "acceptabilityId"] == "PREFERRED",
+    pt = df.loc[(df.loc[:, "acceptabilityId"] == "PREFERRED") & (df.loc[:, "active"] == "1"),
                 ["conceptId", "acceptabilityId"]]
     error = pt[pt.duplicated("conceptId") == True] # noqa
     error.loc[:, "E_multiple_pt"] = ["1"] * len(error)
