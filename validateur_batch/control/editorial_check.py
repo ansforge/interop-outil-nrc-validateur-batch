@@ -1,4 +1,3 @@
-import os
 import pandas as pd
 
 from typing import TYPE_CHECKING
@@ -31,6 +30,40 @@ def _get_correct_case(cs: pd.DataFrame) -> pd.DataFrame:
 #####################
 # Règles génériques #
 #####################
+
+def _check_case_significance(df: pd.DataFrame) -> pd.DataFrame:
+    """
+    Identifie les descriptions dont la casse du terme ne correspond pas à leur caseSignificanceId.
+
+    args:
+        df: DataFrame à valider
+
+    returns:
+        DataFrame du fichier avec une colonne identifiant les
+        descriptions dont la casse du terme ne correspond pas à leur caseSignificanceId.
+    """
+    # Si tous les caractères du terme sont en minuscules, case significance devrait être "ci"
+    df["case-ci"] = "0"
+    df.loc[
+        df.loc[:, "term"].str.islower() & 
+        (df.loc[:, "caseSignificanceId"] != "ci")
+    , "case-ci"] = "1"
+
+    df["case-CS"] = "0"
+    df.loc[
+        df.loc[:, "term"].str[0].str.isupper() &
+        (df.loc[:, "caseSignificanceId"] != "CS")
+    , "case-CS"] = "1"
+
+    df["case-cI"] = "0"
+    df.loc[
+        ~df.loc[:, "term"].str[0].str.isupper() &
+        ~df.loc[:, "term"].str.islower() & 
+        (df.loc[:, "caseSignificanceId"] != "cI")
+    , "case-cI"] = "1"
+
+    return df
+
 def _check_ar2(df: pd.DataFrame) -> pd.DataFrame:
     """Identifie les descriptions ne respectant pas la règle ar2.
 
@@ -1241,8 +1274,10 @@ def run_editorial_check(df: pd.DataFrame, rules: pd.DataFrame, fts: "server.Serv
     su = (df.loc[:, "FSN"].str.endswith(" (substance)"))
 
     # Correction des casses
-    correction = _get_correct_case(df.loc[df.loc[:, "caseSignificanceId"] == "CS"])
-    df.update(correction)
+    #correction = _get_correct_case(df.loc[df.loc[:, "caseSignificanceId"] == "CS"])
+    #df.update(correction)
+
+    df = _check_case_significance(df)
 
     # Contrôles des règles sur les articles
     df = _check_ar2(df)
