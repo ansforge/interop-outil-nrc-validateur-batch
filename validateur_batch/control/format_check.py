@@ -1,12 +1,12 @@
-import jsonpath
 import numpy as np
 import pandas as pd
 
-from typing import Dict, TYPE_CHECKING
+from typing import TYPE_CHECKING
 
 if TYPE_CHECKING:
     from validateur_batch.object import batch, server
 
+from validateur_batch.object.server import INACTIVE_STATUS
 
 def _find_empty_cell(df: pd.DataFrame, type: "batch.BATCH_TYPE") -> pd.DataFrame:
     """Cherche des cellules vides ou NaN dans le DataFrame.
@@ -60,7 +60,7 @@ def _validate_sctid(df: pd.DataFrame, fts: "server.Server") -> pd.DataFrame:
         FSN
     """
     status = [fts.get_status(sctid) if sctid else "" for sctid in df.loc[:, "Concept ID"]]
-    inactive = ["1" if s == 0 else "" for s in status]
+    inactive = ["1" if s == INACTIVE_STATUS else "" for s in status]
 
     if "1" in inactive:
         df.loc[:, "E_concept_inactif"] = inactive
@@ -78,7 +78,10 @@ def _duplicated_term(df: pd.DataFrame, col: str) -> pd.DataFrame:
     returns:
         DataFrame avec une colonne identifiant les lignes ayant un terme dupliqué
     """
-    idx = df.loc[df.duplicated(col, keep=False),].index
+    idx = df.loc[
+        (df.duplicated(col, keep=False) 
+         & (df[col] != ""))
+        ,].index
 
     if not idx.empty:
         df = pd.merge(df, pd.DataFrame(data={"W_terme_dupliqué": ["1"] * len(idx)},
@@ -101,7 +104,12 @@ def _check_language_code(df: pd.DataFrame) -> pd.DataFrame:
     if "Language Code" not in df.columns:
         return df
 
-    idx = df.loc[df.loc[:, "Language Code"] != "fr"].index
+    if "New Replacement Description ID" in df.columns:
+        idx = df.loc[(df.loc[:, "Language Code"] != "fr") & 
+                     (df.loc[:, "New Replacement Description ID"] == "")
+                     ].index
+    else:
+        idx = df.loc[df.loc[:, "Language Code"] != "fr"].index
 
     if not idx.empty:
         df = pd.merge(df, pd.DataFrame(data={"E_language_code": ["1"] * len(idx)},
@@ -123,8 +131,14 @@ def _check_case_significance(df: pd.DataFrame) -> pd.DataFrame:
     """
     if "Case significance" not in df.columns:
         return df
-
-    idx = df.loc[~df.loc[:, "Case significance"].isin(["ci", "cI", "CS"])].index
+    
+    if "New Replacement Description ID" in df.columns:
+        idx = df.loc[(~df.loc[:, "Case significance"].isin(["ci", "cI", "CS"])) & 
+                     (df.loc[:, "New Replacement Description ID"] == "")
+                     ].index
+    else:
+        idx = df.loc[~df.loc[:, "Case significance"].isin(["ci", "cI", "CS"])].index
+    
 
     if not idx.empty:
         df = pd.merge(df, pd.DataFrame(data={"E_case_significance": ["1"] * len(idx)},
@@ -147,7 +161,12 @@ def _check_type(df: pd.DataFrame) -> pd.DataFrame:
     if "Type" not in df.columns:
         return df
 
-    idx = df.loc[~df.loc[:, "Type"].isin(["SYNONYM", "DEF"])].index
+    if "New Replacement Description ID" in df.columns:
+        idx = df.loc[(~df.loc[:, "Type"].isin(["SYNONYM", "DEF"])) & 
+                     (df.loc[:, "New Replacement Description ID"] == "")
+                     ].index
+    else:
+        idx = df.loc[~df.loc[:, "Type"].isin(["SYNONYM", "DEF"])].index
 
     if not idx.empty:
         df = pd.merge(df, pd.DataFrame(data={"E_type": ["1"] * len(idx)}, index=idx),
@@ -169,7 +188,12 @@ def _check_language_refset(df: pd.DataFrame) -> pd.DataFrame:
     if "Language reference set" not in df.columns:
         return df
 
-    idx = df.loc[df.loc[:, "Language reference set"] != "French"].index
+    if "New Replacement Description ID" in df.columns:
+        idx = df.loc[(df.loc[:, "Language reference set"] != "French") & 
+                     (df.loc[:, "New Replacement Description ID"] == "")
+                     ].index
+    else:
+        idx = df.loc[df.loc[:, "Language reference set"] != "French"].index
 
     if not idx.empty:
         df = pd.merge(df, pd.DataFrame(data={"E_language_refset": ["1"] * len(idx)},
@@ -191,8 +215,13 @@ def _check_acceptability(df: pd.DataFrame) -> pd.DataFrame:
     """
     if "Acceptability" not in df.columns:
         return df
-
-    idx = df.loc[~df.loc[:, "Acceptability"].isin(["PREFERRED", "ACCEPTABLE"])].index
+    
+    if "New Replacement Description ID" in df.columns:
+        idx = df.loc[(~df.loc[:, "Acceptability"].isin(["PREFERRED", "ACCEPTABLE"])) & 
+                     (df.loc[:, "New Replacement Description ID"] == "")
+                     ].index
+    else:
+        idx = df.loc[~df.loc[:, "Acceptability"].isin(["PREFERRED", "ACCEPTABLE"])].index
 
     if not idx.empty:
         df = pd.merge(df, pd.DataFrame(data={"E_acceptability": ["1"] * len(idx)},
