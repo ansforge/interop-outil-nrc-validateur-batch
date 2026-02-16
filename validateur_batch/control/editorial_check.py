@@ -1,4 +1,7 @@
 import pandas as pd
+import unicodedata
+import re
+import regex
 
 from typing import TYPE_CHECKING
 
@@ -43,24 +46,87 @@ def _check_case_significance(df: pd.DataFrame) -> pd.DataFrame:
         descriptions dont la casse du terme ne correspond pas à leur caseSignificanceId.
     """
     # Si tous les caractères du terme sont en minuscules, case significance devrait être "ci"
-    df["case-ci"] = "0"
-    df.loc[
-        df.loc[:, "term"].str.islower() & 
+    mask_ci = (
+        df.loc[:, "term"].str.islower() &
         (df.loc[:, "caseSignificanceId"] != "ci")
-    , "case-ci"] = "1"
+    )
+    if mask_ci.any():
+        df["case-ci"] = "0"
+        df.loc[mask_ci, "case-ci"] = "1"
 
-    df["case-CS"] = "0"
-    df.loc[
+    mask_CS = (
         df.loc[:, "term"].str[0].str.isupper() &
         (df.loc[:, "caseSignificanceId"] != "CS")
-    , "case-CS"] = "1"
+    )
+    if mask_CS.any():
+        df["case-CS"] = "0"
+        df.loc[mask_CS, "case-CS"] = "1"
 
-    df["case-cI"] = "0"
-    df.loc[
+    mask_cI = (
         ~df.loc[:, "term"].str[0].str.isupper() &
         ~df.loc[:, "term"].str.islower() & 
         (df.loc[:, "caseSignificanceId"] != "cI")
-    , "case-cI"] = "1"
+    )
+    if mask_cI.any():
+        df["case-cI"] = "0"
+        df.loc[mask_cI, "case-cI"] = "1"
+
+    return df
+
+def _check_spaces(df: pd.DataFrame) -> pd.DataFrame:
+    """
+    Identifie les descriptions contenant des caractères d'espace innatendus
+
+    args:
+        df: DataFrame à valider
+
+    returns:
+        DataFrame du fichier avec une colonne identifiant les
+        descriptions contenant des caractères d'espace innatendus
+    """
+    NON_STANDARD_SPACE_RE = r"[\u00A0\u2000-\u200A\u202F\u205F\u3000\t\n\r\f\v]"
+
+    # autres charactères d'espace
+    mask_special = df["term"].str.contains(NON_STANDARD_SPACE_RE, regex=True)
+    # doubles espaces
+    mask_double = df["term"].str.contains(r"(?: {2,})", regex=True)
+    # espace de début
+    mask_head = df["term"].str.contains(r"^ ", regex=True)
+    # espace de fin
+    mask_trail = df["term"].str.contains(r"^ ", regex=True)
+
+    mask_errors = mask_double | mask_head | mask_trail | mask_special
+    if mask_errors.any():
+        df["spaces"]="0"
+        df.loc[mask_errors, "spaces"]="1"
+    
+    return df
+
+def _check_chars(df: pd.DataFrame) -> pd.DataFrame:
+    """
+    Identifie les descriptions contenant des caractères innatendus
+
+    args:
+        df: DataFrame à valider
+
+    returns:
+        DataFrame du fichier avec une colonne identifiant les
+        descriptions contenant des caractères innatendus
+    """
+
+    AUTHORIZED_CHARS_RE = r"^[ \p{Script=Latin}0-9,():\x2d\-\x27\/\[\]+]*\Z"
+    compiled = regex.compile(AUTHORIZED_CHARS_RE)
+    def is_authorised(s):
+        if compiled.match(s):
+            return True
+        else:
+            return False
+        
+    mask_unauthorized = ~(df["term"].apply(is_authorised))
+
+    if mask_unauthorized.any():
+        df["char"]="0"
+        df.loc[mask_unauthorized, "char"]="1"
 
     return df
 
@@ -130,6 +196,47 @@ def _check_ar6(df: pd.DataFrame, sb: pd.Series) -> pd.DataFrame:
     return df
 
 
+def _check_ll1(df: pd.Dataframe) -> pd.Dataframe:
+    """Identifie les descriptions ne respectant pas la règle ll1.
+
+    args:
+        df: DataFrame à valider
+
+    returns:
+        DataFrame du fichier avec une colonne identifiant les
+        descriptions ne respectant pas la règle ll1.
+    """
+    mask_oe = df["term"].str.contains(r"[oO][eE]", regex=True)
+    mask_ae = df["term"].str.contains(r"[aA][eE]", regex=True)
+    mask_error = mask_oe | mask_ae
+    if mask_error.any():
+        df["ll1"] = "0"
+        df.loc[mask_error, "ll1"] = "1"
+
+    return df
+
+def _check_or4(df: pd.Dataframe) -> pd.Dataframe:
+    """Identifie les descriptions ne respectant pas la règle or4.
+
+    args:
+        df: DataFrame à valider
+
+    returns:
+        DataFrame du fichier avec une colonne identifiant les
+        descriptions ne respectant pas la règle or4.
+    """
+    mask = {}
+    mask_error = pd.Series([False]*len(df), df.index)
+    for prefix in ["demin", "mi", "semi", "ex", "sous", "vice", "non"]:
+        mask[prefix] = df["term"].str.contains(f"\b{prefix}[^\-]", regex=True)
+        mask_error = mask_error | mask[prefix]
+    
+    if mask_error.any():
+        df["or4"] = "0"
+        df.loc[mask_error, "or4"] = "1"
+
+    return df
+
 #########################
 # Règles Body structure #
 #########################
@@ -195,11 +302,22 @@ def _check_bs3(df: pd.DataFrame, bs: pd.Series, pt: pd.Series,
                       how="left", left_index=True, right_index=True, validate="1:1")
     return df
 
-def _check_bs4(df: pd.DataFrame, terminology_anatomica: pd.DataFrame, pt: pd.Series) -> pd.DataFrame:
+def _remove_accents(s):
+    if not isinstance(s, str):
+        return ""
+    return ''.join(
+        c for c in unicodedata.normalize('NFD', s)
+        if unicodedata.category(c) != 'Mn'
+    )
+
+def _check_bs4(
+    df: pd.DataFrame, anats: pd.Series, terminology_anatomica: pd.DataFrame, pt: pd.Series
+) -> pd.DataFrame:
     """Identifie les descriptions ne respectant pas la règle bs4
 
     args:
         df: DataFrame à valider
+        anats : Filtre sur les termes descendants de anatomical structure
         terminology_anatomica: DataFrame contenant la terminologie anatomique
         pt: Filtre sur les termes préférés de `df`
 
@@ -207,13 +325,51 @@ def _check_bs4(df: pd.DataFrame, terminology_anatomica: pd.DataFrame, pt: pd.Ser
         DataFrame du fichier avec une colonne identifiant les
         descriptions ne respectant pas la règle bs4.
     """
-    idx = df.loc[pt
-                 & (df["term"].isin(terminology_anatomica["Ancienne nomenclature"]))].index # noqa
-    
+    entre_par = re.compile(r'\(.*\)')
+ 
+    lower_unacceted_old_nomenclature = [
+        str.lower(entre_par.sub('',_remove_accents(t)))
+        for t in terminology_anatomica["Ancienne nomenclature"]
+    ]
+
+    lower_unacceted_old_nomenclature = [
+        str.strip(part)
+        for item in lower_unacceted_old_nomenclature
+        for part in item.split("/")
+        if part  # garde uniquement les non vides
+    ]
+
+    pattern_list = [f"(?:{s})" for s in lower_unacceted_old_nomenclature]
+    pattern = "|".join(pattern_list)
+    df_check_ta = df.copy()
+    df_check_ta["term_no_accents"] = df_check_ta["term"].apply(_remove_accents)
+
+    mask_ta = (
+        pt 
+        & anats 
+        & df_check_ta["term_no_accents"].str.contains(pattern, case=False, na=False)
+    )
+    filtered_df = df_check_ta[mask_ta].copy()
+    filtered_df["matched_term_no_accents"] = (
+        filtered_df["term_no_accents"]
+        .str.extract(f"({pattern})", flags=re.IGNORECASE)
+    )
+    filtered_df.to_excel("ar4.xlsx")
+    with open("pattern.txt", "w") as file:
+        file.write(pattern)
+
+    idx = filtered_df.index
+
     if not idx.empty:
-        df = pd.merge(df, pd.DataFrame(data={"bs4": ["1"] * len(idx)}, index=idx),
-                      how="left", left_index=True, right_index=True, validate="1:1")
-        
+        df = pd.merge(
+            df,
+            pd.DataFrame(data={"bs4": ["1"] * len(idx)}, index=idx),
+            how="left",
+            left_index=True,
+            right_index=True,
+            validate="1:1",
+        )
+
     return df
 
 def _check_bs5(df: pd.DataFrame, bs: pd.Series, pt: pd.Series, syn: pd.Series) -> pd.DataFrame:
@@ -1276,6 +1432,8 @@ def run_editorial_check(df: pd.DataFrame, rules: pd.DataFrame, terminology_anato
           | (df.loc[:, "FSN"].str.endswith(" (morphologic abnormality)")))
     # Body surface region
     bsr = (df.loc[:, "conceptId"].isin(fts.ecl("<< 127947003")))
+    # Anatomical structure
+    anats = (df.loc[:, "conceptId"].isin(fts.ecl("<< 91723000")))
     # Clinical finding
     co = (df.loc[:, "FSN"].str.endswith(" (finding)"))
     pa = (df.loc[:, "FSN"].str.endswith(" (disorder)"))
@@ -1293,22 +1451,31 @@ def run_editorial_check(df: pd.DataFrame, rules: pd.DataFrame, terminology_anato
     # Substance
     su = (df.loc[:, "FSN"].str.endswith(" (substance)"))
 
+
     # Correction des casses
     #correction = _get_correct_case(df.loc[df.loc[:, "caseSignificanceId"] == "CS"])
     #df.update(correction)
 
     df = _check_case_significance(df)
+    df = _check_spaces(df)
+    df = _check_chars(df)
 
     # Contrôles des règles sur les articles
     df = _check_ar2(df)
     df = _check_ar4_FR(df, bs)
     df = _check_ar6(df, sb)
 
+    # Contrôles des règles sur les ligatures
+    df = _check_ll1(df)
+
+    # Contrôle des règles sur l'orthographe de 1990
+    df = _check_or4(df)
+
     # Contrôles des règles de Body Structure
     if not df.loc[bs].empty:
         df = _check_bs2(df, pt)
         df = _check_bs3(df, bs, pt, syn)
-        df = _check_bs4(df, terminology_anatomica, pt)
+        df = _check_bs4(df, anats, terminology_anatomica, pt)
         df = _check_bs5(df, bs, pt, syn)
         df = _check_bs6(df, bs, bsr, pt, syn)
         df = _check_bs7(df, bs, pt, syn)
