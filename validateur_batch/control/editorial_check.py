@@ -293,9 +293,9 @@ def _check_bs3(df: pd.DataFrame, bs: pd.Series, pt: pd.Series,
         df = pd.merge(df, pd.DataFrame(data={"bs3-entire": ["1"] * len(idx)}, index=idx),
                       how="left", left_index=True, right_index=True, validate="1:1")
 
-    idx = idx.union(df.loc[bs & pt
-                           & (df.loc[:, "FSN_no_sem"].str.contains(r"\bpart\b", regex=True, case=False)) # noqa
-                           & (~df.loc[:, "term"].str.contains("partie", regex=False, case=False))].index) # noqa
+    idx = df.loc[bs & pt
+                & (df.loc[:, "FSN_no_sem"].str.contains(r"\bpart\b", regex=True, case=False)) # noqa
+                & (~df.loc[:, "term"].str.contains("partie", regex=False, case=False))].index
 
     if not idx.empty:
         df = pd.merge(df, pd.DataFrame(data={"bs3-part": ["1"] * len(idx)}, index=idx),
