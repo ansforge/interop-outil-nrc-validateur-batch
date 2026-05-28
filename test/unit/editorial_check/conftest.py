@@ -352,199 +352,250 @@ def bs13(bs) -> pd.DataFrame:
 @pytest.fixture
 def co_pa() -> pd.DataFrame:
     return pd.DataFrame(
-        {"conceptId": ["1", "2", "2", "2", "3", "3", "4", "4", "5", "5", "6", "6",
-                       "7", "7", "8", "9", "9", "10", "11", "11", "12", "12", "13",
-                       "14", "14", "15", "15", "16", "16", "17", "18", "18", "19",
-                       "19", "20", "20", "21", "21", "22", "22", "23", "23", "23",
-                       "23", "14", "25", "25"],
-         "FSN": ["neurological finding", "finding of small intestine",
-                 "finding of small intestine", "finding of small intestine",
-                 "calcium level above reference range",
-                 "calcium level above reference range",
-                 "protein level above reference range",
-                 "protein level above reference range",
-                 "calcium level below reference range",
-                 "calcium level below reference range",
-                 "protein level below reference range",
-                 "protein level below reference range",
-                 "calcium level within reference range",
-                 "calcium level within reference range",
-                 "protein level within reference range",
-                 "calcium level outside reference range",
-                 "calcium level outside reference range",
-                 "protein level outside reference range",
-                 "pressure injury of hip", "pressure injury of hip",
-                 "reflex epilepsy", "reflex epilepsy", "epileptic seizure",
-                 "seizure disorder", "seizure disorder", "uremic convulsion",
-                 "uremic convulsion", "visual impairment", "visual impairment",
-                 "primary osteoporosis", "primary siphilis", "primary siphilis",
-                 "chilblain", "chilblain", "frostbite of left hand",
-                 "frostbite of left hand", "superficial frostbite of thorax",
-                 "superficial frostbite of thorax", "carbuncle of breast",
-                 "carbuncle of breast", "furuncle of hand", "furuncle of hand",
-                 "furuncle of hand", "furuncle of hand", "boil of hand", "anthrax",
-                 "anthrax"],
-         "term": ["constatation neurologique",
-                  "constatation à propos de l'intestin grêle",
-                  "constatation concernant l'intestin grêle",
-                  "observation de l'intestin grêle",
-                  "calcium supérieur à l'intervalle de référence",
-                  "calcium supérieur aux valeurs de référence",
-                  "protéine supérieure à l'intervalle de référence",
-                  "protéine augmentée", "calcium inférieur à l'intervalle de référence",
-                  "calcium inférieur aux valeurs de référence",
-                  "protein inférieure à l'intervalle de référence",
-                  "protein diminuée", "calcium dans l'intervalle de référence",
-                  "calcium dans les valeurs de référence",
-                  "protéine normale", "calcium en dehors de l'intervalle de référence",
-                  "calcium en dehors des valeurs de référence",
-                  "protéine anormale", "escarre de la hanche",
-                  "blessure par pression de la hanche", "épilepsie réflexe",
-                  "crise réflexe", "crise épileptique", "trouble convulsif",
-                  "épilepsie", "convulsions urémiques", "crise urémique",
-                  "atteinte de la vision", "déficience visuelle",
-                  "ostéoporose primitive", "syphilis primaire", "syphilis primordiale",
-                  "engelure", "gelure", "gelure de la main gauche",
-                  "engelure de la main gauche", "gelure superficielle du thorax",
-                  "engelure superficielle du thorax", "anthrax du sein",
-                  "furoncle du sein", "furoncle de la main",
-                  "folliculite nécrotique de la main", "clou de la main",
-                  "anthrax de la main", "furoncle de la main", "maladie du charbon",
-                  "anthrax"]}
+        {"conceptId": ["co2", "co2",
+                       "co3_abv1", "co3_abv1", "co3_abv2", "co3_abv2", "co3_abv3", "co3_abv3",  # noqa
+                       "co3_bel1", "co3_bel1", "co3_bel2", "co3_bel2", "co3_bel3", "co3_bel3",  # noqa
+                       "co3_in1", "co3_in1", "co3_in2", "co3_in2", "co3_in3", "co3_in3",
+                       "co3_out1", "co3_out1", "co3_out2", "co3_out2", "co3_out3", "co3_out3",  # noqa
+                       "pa3.1", "pa3.1",
+                       "pa4_epi", "pa4_epi",
+                       "pa4_sei", "pa4_sei", "pa4_sei", "pa4_sei",
+                       "pa4_con", "pa4_con",
+                       "pa6", "pa6",
+                       "pa7_1", "pa7_2", "pa7_2",
+                       "pa8_c", "pa8_c",
+                       "pa8_f", "pa8_f",
+                       "pa8_sf", "pa8_sf",
+                       "pa9_c", "pa9_c",
+                       "pa9_f", "pa9_f", "pa9_f", "pa9_b", "pa9_b",
+                       "pa9_a", "pa9_a"],
+         "FSN": ["Neurological finding", "Neurological finding",  # co2
+                 "Iron above reference range", "Iron above reference range", "Iron above reference range", "Iron above reference range", "Protein above reference range", "Protein above reference range",  # co6 above # noqa
+                 "Iron below reference range", "Iron below reference range", "Iron below reference range", "Iron below reference range", "Protein below reference range", "Protein below reference range",  # co6 below # noqa
+                 "Iron within reference range", "Iron within reference range", "Iron within reference range", "Iron within reference range", "Protein within reference range", "Protein within reference range",  # co6 within # noqa
+                 "Iron outside reference range", "Iron outside reference range", "Iron outside reference range", "Iron outside reference range", "Protein outside reference range", "Protein outside reference range",  # co6 outside # noqa
+                 "Pressure injury of hip", "Pressure injury of hip",  # pa3.1
+                 "Reflex epilepsy", "Reflex epilepsy",  # pa4 Epilepsy
+                 "Seizure disorder", "Seizure disorder", "Seizure disorder", "Seizure disorder",  # pa4 Seizure # noqa
+                 "Uremic convulsion", "Uremic convulsion",  # pa4 Convulsion
+                 "Visual impairment", "Visual impairment",  # pa6
+                 "Primary osteoporosis", "Primary siphilis", "Primary siphilis",  # pa7
+                 "Chilblain", "Chilblain",  # pa8 Chilblain
+                 "Frostbite of left hand", "Frostbite of left hand",  # pa8 Frostbite
+                 "Superficial frostbite of thorax", "Superficial frostbite of thorax",  # pa8 Superficial frostbite # noqa
+                 "Carbuncle of breast", "Carbuncle of breast",  # pa9 Carbuncle
+                 "Furuncle of hand", "Furuncle of hand", "Furuncle of hand", "Boil of hand", "Boil of hand",  # pa9 Furuncle Boil # noqa
+                 "Anthrax", "Anthrax"],  # pa9 anthrax
+         "term": ["constatation neurologique", "observation neurologique",  # co2
+                  "fer supérieur à l'intervalle de référence", "fer supérieur à l'intervalle de référence", "fer supérieur aux valeurs de référence", "fer supérieur aux valeurs de référence", "protéine supérieure à l'intervalle de référence", "protéine supérieure aux valeurs de référence",  # co6 above # noqa
+                  "fer inférieur à l'intervalle de référence", "fer inférieur à l'intervalle de référence", "fer inférieur aux valeurs de référence", "fer inférieur aux valeurs de référence", "protéine inférieure à l'intervalle de référence", "protéine inférieure aux valeurs de référence",  # co6 below # noqa
+                  "fer dans l'intervalle de référence", "fer dans l'intervalle de référence", "fer dans les valeurs de référence", "fer dans les valeurs de référence", "protéine dans l'intervalle de référence", "protéine dans les valeurs de référence",  # co6 within # noqa
+                  "fer en dehors de l'intervalle de référence", "fer en dehors de l'intervalle de référence", "fer en dehors des valeurs de référence", "fer en dehors des valeurs de référence", "protéine en dehors de l'intervalle de référence", "protéine en dehors des valeurs de référence",  # co6 outside # noqa
+                  "escarre de la hanche", "blessure par pression de la hanche",  # pa3.1
+                  "épilepsie réflexe", "crise réflexe",  # pa4 Epilepsy
+                  "crise", "convulsion", "trouble convulsif", "épilepsie",  # pa4 Seizure # noqa
+                  "convulsions urémiques", "crise urémique",  # pa4 Convulsion
+                  "atteinte de la vision", "déficience visuelle",  # pa6
+                  "ostéoporose primitive", "syphilis primaire", "syphilis primordiale",  # pa7 # noqa
+                  "engelure", "gelure",  # pa8 Chilblain
+                  "gelure de la main gauche", "engelure de la main gauche",  # pa8 Frostbite # noqa
+                  "gelure superficielle du thorax", "engelure superficielle du thorax",  # pa8 Superficial frostbite # noqa
+                  "anthrax du sein", "maladie du sein",  # pa9 Carbuncle
+                  "furoncle de la main", "folliculite nécrotique de la main", "maladie de la main", "clou de la main", "maladie de la main",  # pa9 Furuncle Boil # noqa
+                  "maladie du charbon", "anthrax"],  # pa9 anthrax
+         "acceptabilityId": ["PREFERRED", "PREFERRED",  # co2
+                             "PREFERRED", "ACCEPTABLE", "PREFERRED", "ACCEPTABLE", "PREFERRED", "ACCEPTABLE",  # co6 above # noqa
+                             "PREFERRED", "ACCEPTABLE", "PREFERRED", "ACCEPTABLE", "PREFERRED", "ACCEPTABLE",  # co6 below # noqa
+                             "PREFERRED", "ACCEPTABLE", "PREFERRED", "ACCEPTABLE", "PREFERRED", "ACCEPTABLE",  # co6 within # noqa
+                             "PREFERRED", "ACCEPTABLE", "PREFERRED", "ACCEPTABLE", "PREFERRED", "ACCEPTABLE",  # co6 outside # noqa
+                             "PREFERRED", "PREFERRED",  # pa3.1
+                             "PREFERRED", "PREFERRED",  # pa4 Epilepsy
+                             "PREFERRED", "PREFERRED", "PREFERRED", "PREFERRED",  # pa4 Seizure # noqa
+                             "PREFERRED", "PREFERRED",  # pa4 Convulsion
+                             "PREFERRED", "PREFERRED",  # pa6
+                             "PREFERRED", "PREFERRED", "PREFERRED",  # pa7
+                             "PREFERRED", "PREFERRED",  # pa8 Chilblain
+                             "PREFERRED", "PREFERRED",  # pa8 Frostbite
+                             "PREFERRED", "PREFERRED",  # pa8 Superficial frostbite
+                             "PREFERRED", "PREFERRED",  # pa9 Carbuncle
+                             "PREFERRED", "PREFERRED", "PREFERRED", "PREFERRED", "PREFERRED",  # pa9 Furuncle Boil # noqa
+                             "PREFERRED", "PREFERRED"]}  # pa9 anthrax
     )
 
 
 @pytest.fixture
 def co2(co_pa) -> pd.DataFrame:
-    co2 = pd.Series([float("nan"), float("nan"), float("nan"), "1", float("nan"),
-                     float("nan"), float("nan"), float("nan"), float("nan"),
-                     float("nan"), float("nan"), float("nan"), float("nan"),
-                     float("nan"), float("nan"), float("nan"), float("nan"),
-                     float("nan"), float("nan"), float("nan"), float("nan"),
-                     float("nan"), float("nan"), float("nan"), float("nan"),
-                     float("nan"), float("nan"), float("nan"), float("nan"),
-                     float("nan"), float("nan"), float("nan"), float("nan"),
-                     float("nan"), float("nan"), float("nan"), float("nan"),
-                     float("nan"), float("nan"), float("nan"), float("nan"),
-                     float("nan"), float("nan"), float("nan"), float("nan"),
-                     float("nan")], name="co2")
+    co2 = pd.Series([float("nan"), "1",  # co2
+                     float("nan"), float("nan"), float("nan"), float("nan"), float("nan"), float("nan"),  # co6 above # noqa
+                     float("nan"), float("nan"), float("nan"), float("nan"), float("nan"), float("nan"),  # co6 below # noqa
+                     float("nan"), float("nan"), float("nan"), float("nan"), float("nan"), float("nan"),  # co6 within # noqa
+                     float("nan"), float("nan"), float("nan"), float("nan"), float("nan"), float("nan"),  # co6 outside # noqa
+                     float("nan"), float("nan"),  # pa3.1
+                     float("nan"), float("nan"),  # pa4 Epilepsy
+                     float("nan"), float("nan"), float("nan"), float("nan"),  # pa4 Seizure # noqa
+                     float("nan"), float("nan"),  # pa4 Convulsion
+                     float("nan"), float("nan"),  # pa6
+                     float("nan"), float("nan"), float("nan"),  # pa7
+                     float("nan"), float("nan"),  # pa8 Chilblain
+                     float("nan"), float("nan"),  # pa8 Frostbite
+                     float("nan"), float("nan"),  # pa8 Superficial frostbite
+                     float("nan"), float("nan"),  # pa9 Carbuncle
+                     float("nan"), float("nan"), float("nan"), float("nan"), float("nan"),  # pa9 Furuncle Boil # noqa
+                     float("nan"), float("nan")], name="co2")  # pa9 anthrax
     return pd.concat([co_pa, co2], axis=1)
 
 
 @pytest.fixture
 def co6(co_pa) -> pd.DataFrame:
-    co6 = pd.Series([float("nan"), float("nan"), float("nan"), float("nan"),
-                     float("nan"), float("nan"), float("nan"), "1", float("nan"),
-                     float("nan"), float("nan"), "1", float("nan"), float("nan"),
-                     "1", float("nan"), float("nan"), "1", float("nan"),
-                     float("nan"), float("nan"), float("nan"), float("nan"),
-                     float("nan"), float("nan"), float("nan"), float("nan"),
-                     float("nan"), float("nan"), float("nan"), float("nan"),
-                     float("nan"), float("nan"), float("nan"), float("nan"),
-                     float("nan"), float("nan"), float("nan"), float("nan"),
-                     float("nan"), float("nan"), float("nan"), float("nan"),
-                     float("nan"), float("nan"), float("nan")], name="co6")
+    co6 = pd.Series([float("nan"), float("nan"),  # co2
+                     float("nan"), "1", "1", float("nan"), float("nan"), float("nan"),  # co6 above # noqa
+                     float("nan"), "1", "1", float("nan"), float("nan"), float("nan"),  # co6 below # noqa
+                     float("nan"), "1", "1", float("nan"), float("nan"), float("nan"),  # co6 within # noqa
+                     float("nan"), "1", "1", float("nan"), float("nan"), float("nan"),  # co6 outside # noqa
+                     float("nan"), float("nan"),  # pa3.1
+                     float("nan"), float("nan"),  # pa4 Epilepsy
+                     float("nan"), float("nan"), float("nan"), float("nan"),  # pa4 Seizure # noqa
+                     float("nan"), float("nan"),  # pa4 Convulsion
+                     float("nan"), float("nan"),  # pa6
+                     float("nan"), float("nan"), float("nan"),  # pa7
+                     float("nan"), float("nan"),  # pa8 Chilblain
+                     float("nan"), float("nan"),  # pa8 Frostbite
+                     float("nan"), float("nan"),  # pa8 Superficial frostbite
+                     float("nan"), float("nan"),  # pa9 Carbuncle
+                     float("nan"), float("nan"), float("nan"), float("nan"), float("nan"),  # pa9 Furuncle Boil # noqa
+                     float("nan"), float("nan")], name="co6")  # pa9 anthrax
     return pd.concat([co_pa, co6], axis=1)
 
 
 @pytest.fixture
 def pa3_1(co_pa) -> pd.DataFrame:
-    pa3_1 = pd.Series([float("nan"), float("nan"), float("nan"), float("nan"),
-                       float("nan"), float("nan"), float("nan"), float("nan"),
-                       float("nan"), float("nan"), float("nan"), float("nan"),
-                       float("nan"), float("nan"), float("nan"), float("nan"),
-                       float("nan"), float("nan"), float("nan"), "1", float("nan"),
-                       float("nan"), float("nan"), float("nan"), float("nan"),
-                       float("nan"), float("nan"), float("nan"), float("nan"),
-                       float("nan"), float("nan"), float("nan"), float("nan"),
-                       float("nan"), float("nan"), float("nan"), float("nan"),
-                       float("nan"), float("nan"), float("nan"), float("nan"),
-                       float("nan"), float("nan"), float("nan"), float("nan"),
-                       float("nan")], name="pa3.1")
+    pa3_1 = pd.Series([float("nan"), float("nan"),  # co2
+                       float("nan"), float("nan"), float("nan"), float("nan"), float("nan"), float("nan"),  # co6 above # noqa
+                       float("nan"), float("nan"), float("nan"), float("nan"), float("nan"), float("nan"),  # co6 below # noqa
+                       float("nan"), float("nan"), float("nan"), float("nan"), float("nan"), float("nan"),  # co6 within # noqa
+                       float("nan"), float("nan"), float("nan"), float("nan"), float("nan"), float("nan"),  # co6 outside # noqa
+                       float("nan"), "1",  # pa3.1
+                       float("nan"), float("nan"),  # pa4 Epilepsy
+                       float("nan"), float("nan"), float("nan"), float("nan"),  # pa4 Seizure # noqa
+                       float("nan"), float("nan"),  # pa4 Convulsion
+                       float("nan"), float("nan"),  # pa6
+                       float("nan"), float("nan"), float("nan"),  # pa7
+                       float("nan"), float("nan"),  # pa8 Chilblain
+                       float("nan"), float("nan"),  # pa8 Frostbite
+                       float("nan"), float("nan"),  # pa8 Superficial frostbite
+                       float("nan"), float("nan"),  # pa9 Carbuncle
+                       float("nan"), float("nan"), float("nan"), float("nan"), float("nan"),  # pa9 Furuncle Boil # noqa
+                       float("nan"), float("nan")], name="pa3.1")  # pa9 anthrax
     return pd.concat([co_pa, pa3_1], axis=1)
 
 
 @pytest.fixture
 def pa4(co_pa) -> pd.DataFrame:
-    pa4 = pd.Series([float("nan"), float("nan"), float("nan"), float("nan"),
-                     float("nan"), float("nan"), float("nan"), float("nan"),
-                     float("nan"), float("nan"), float("nan"), float("nan"),
-                     float("nan"), float("nan"), float("nan"), float("nan"),
-                     float("nan"), float("nan"), float("nan"), float("nan"),
-                     float("nan"), "1", float("nan"), float("nan"), "1", float("nan"),
-                     "1", float("nan"), float("nan"), float("nan"), float("nan"),
-                     float("nan"), float("nan"), float("nan"), float("nan"),
-                     float("nan"), float("nan"), float("nan"), float("nan"),
-                     float("nan"), float("nan"), float("nan"), float("nan"),
-                     float("nan"), float("nan"), float("nan")], name="pa4")
+    pa4 = pd.Series([float("nan"), float("nan"),  # co2
+                     float("nan"), float("nan"), float("nan"), float("nan"), float("nan"), float("nan"),  # co6 above # noqa
+                     float("nan"), float("nan"), float("nan"), float("nan"), float("nan"), float("nan"),  # co6 below # noqa
+                     float("nan"), float("nan"), float("nan"), float("nan"), float("nan"), float("nan"),  # co6 within # noqa
+                     float("nan"), float("nan"), float("nan"), float("nan"), float("nan"), float("nan"),  # co6 outside # noqa
+                     float("nan"), float("nan"),  # pa3.1
+                     float("nan"), "1",  # pa4 Epilepsy
+                     float("nan"), float("nan"), float("nan"), "1",  # pa4 Seizure # noqa
+                     float("nan"), "1",  # pa4 Convulsion
+                     float("nan"), float("nan"),  # pa6
+                     float("nan"), float("nan"), float("nan"),  # pa7
+                     float("nan"), float("nan"),  # pa8 Chilblain
+                     float("nan"), float("nan"),  # pa8 Frostbite
+                     float("nan"), float("nan"),  # pa8 Superficial frostbite
+                     float("nan"), float("nan"),  # pa9 Carbuncle
+                     float("nan"), float("nan"), float("nan"), float("nan"), float("nan"),  # pa9 Furuncle Boil # noqa
+                     float("nan"), float("nan")], name="pa4")  # pa9 anthrax
     return pd.concat([co_pa, pa4], axis=1)
 
 
 @pytest.fixture
 def pa6(co_pa) -> pd.DataFrame:
-    pa6 = pd.Series([float("nan"), float("nan"), float("nan"), float("nan"),
-                     float("nan"), float("nan"), float("nan"), float("nan"),
-                     float("nan"), float("nan"), float("nan"), float("nan"),
-                     float("nan"), float("nan"), float("nan"), float("nan"),
-                     float("nan"), float("nan"), float("nan"), float("nan"),
-                     float("nan"), float("nan"), float("nan"), float("nan"),
-                     float("nan"), float("nan"), float("nan"), float("nan"), "1",
-                     float("nan"), float("nan"), float("nan"), float("nan"),
-                     float("nan"), float("nan"), float("nan"), float("nan"),
-                     float("nan"), float("nan"), float("nan"), float("nan"),
-                     float("nan"), float("nan"), float("nan"), float("nan"),
-                     float("nan")], name="pa6")
+    pa6 = pd.Series([float("nan"), float("nan"),  # co2
+                     float("nan"), float("nan"), float("nan"), float("nan"), float("nan"), float("nan"),  # co6 above # noqa
+                     float("nan"), float("nan"), float("nan"), float("nan"), float("nan"), float("nan"),  # co6 below # noqa
+                     float("nan"), float("nan"), float("nan"), float("nan"), float("nan"), float("nan"),  # co6 within # noqa
+                     float("nan"), float("nan"), float("nan"), float("nan"), float("nan"), float("nan"),  # co6 outside # noqa
+                     float("nan"), float("nan"),  # pa3.1
+                     float("nan"), float("nan"),  # pa4 Epilepsy
+                     float("nan"), float("nan"), float("nan"), float("nan"),  # pa4 Seizure # noqa
+                     float("nan"), float("nan"),  # pa4 Convulsion
+                     float("nan"), "1",  # pa6
+                     float("nan"), float("nan"), float("nan"),  # pa7
+                     float("nan"), float("nan"),  # pa8 Chilblain
+                     float("nan"), float("nan"),  # pa8 Frostbite
+                     float("nan"), float("nan"),  # pa8 Superficial frostbite
+                     float("nan"), float("nan"),  # pa9 Carbuncle
+                     float("nan"), float("nan"), float("nan"), float("nan"), float("nan"),  # pa9 Furuncle Boil # noqa
+                     float("nan"), float("nan")], name="pa6")  # pa9 anthrax
     return pd.concat([co_pa, pa6], axis=1)
 
 
 @pytest.fixture
 def pa7(co_pa) -> pd.DataFrame:
-    pa7 = pd.Series([float("nan"), float("nan"), float("nan"), float("nan"),
-                     float("nan"), float("nan"), float("nan"), float("nan"),
-                     float("nan"), float("nan"), float("nan"), float("nan"),
-                     float("nan"), float("nan"), float("nan"), float("nan"),
-                     float("nan"), float("nan"), float("nan"), float("nan"),
-                     float("nan"), float("nan"), float("nan"), float("nan"),
-                     float("nan"), float("nan"), float("nan"), float("nan"),
-                     float("nan"), float("nan"), float("nan"), "1", float("nan"),
-                     float("nan"), float("nan"), float("nan"), float("nan"),
-                     float("nan"), float("nan"), float("nan"), float("nan"),
-                     float("nan"), float("nan"), float("nan"), float("nan"),
-                     float("nan")], name="pa7")
+    pa7 = pd.Series([float("nan"), float("nan"),  # co2
+                     float("nan"), float("nan"), float("nan"), float("nan"), float("nan"), float("nan"),  # co6 above # noqa
+                     float("nan"), float("nan"), float("nan"), float("nan"), float("nan"), float("nan"),  # co6 below # noqa
+                     float("nan"), float("nan"), float("nan"), float("nan"), float("nan"), float("nan"),  # co6 within # noqa
+                     float("nan"), float("nan"), float("nan"), float("nan"), float("nan"), float("nan"),  # co6 outside # noqa
+                     float("nan"), float("nan"),  # pa3.1
+                     float("nan"), float("nan"),  # pa4 Epilepsy
+                     float("nan"), float("nan"), float("nan"), float("nan"),  # pa4 Seizure # noqa
+                     float("nan"), float("nan"),  # pa4 Convulsion
+                     float("nan"), float("nan"),  # pa6
+                     float("nan"), float("nan"), "1",  # pa7
+                     float("nan"), float("nan"),  # pa8 Chilblain
+                     float("nan"), float("nan"),  # pa8 Frostbite
+                     float("nan"), float("nan"),  # pa8 Superficial frostbite
+                     float("nan"), float("nan"),  # pa9 Carbuncle
+                     float("nan"), float("nan"), float("nan"), float("nan"), float("nan"),  # pa9 Furuncle Boil # noqa
+                     float("nan"), float("nan")], name="pa7")  # pa9 anthrax
     return pd.concat([co_pa, pa7], axis=1)
 
 
 @pytest.fixture
 def pa8(co_pa) -> pd.DataFrame:
-    pa8 = pd.Series([float("nan"), float("nan"), float("nan"), float("nan"),
-                     float("nan"), float("nan"), float("nan"), float("nan"),
-                     float("nan"), float("nan"), float("nan"), float("nan"),
-                     float("nan"), float("nan"), float("nan"), float("nan"),
-                     float("nan"), float("nan"), float("nan"), float("nan"),
-                     float("nan"), float("nan"), float("nan"), float("nan"),
-                     float("nan"), float("nan"), float("nan"), float("nan"),
-                     float("nan"), float("nan"), float("nan"), float("nan"),
-                     float("nan"), "1", float("nan"), "1", float("nan"), "1",
-                     float("nan"), float("nan"), float("nan"), float("nan"),
-                     float("nan"), float("nan"), float("nan"), float("nan")],
-                    name="pa8")
+    pa8 = pd.Series([float("nan"), float("nan"),  # co2
+                     float("nan"), float("nan"), float("nan"), float("nan"), float("nan"), float("nan"),  # co6 above # noqa
+                     float("nan"), float("nan"), float("nan"), float("nan"), float("nan"), float("nan"),  # co6 below # noqa
+                     float("nan"), float("nan"), float("nan"), float("nan"), float("nan"), float("nan"),  # co6 within # noqa
+                     float("nan"), float("nan"), float("nan"), float("nan"), float("nan"), float("nan"),  # co6 outside # noqa
+                     float("nan"), float("nan"),  # pa3.1
+                     float("nan"), float("nan"),  # pa4 Epilepsy
+                     float("nan"), float("nan"), float("nan"), float("nan"),  # pa4 Seizure # noqa
+                     float("nan"), float("nan"),  # pa4 Convulsion
+                     float("nan"), float("nan"),  # pa6
+                     float("nan"), float("nan"), float("nan"),  # pa7
+                     float("nan"), "1",  # pa8 Chilblain
+                     float("nan"), "1",  # pa8 Frostbite
+                     float("nan"), "1",  # pa8 Superficial frostbite
+                     float("nan"), float("nan"),  # pa9 Carbuncle
+                     float("nan"), float("nan"), float("nan"), float("nan"), float("nan"),  # pa9 Furuncle Boil # noqa
+                     float("nan"), float("nan")], name="pa8")  # pa9 anthrax
     return pd.concat([co_pa, pa8], axis=1)
 
 
 @pytest.fixture
 def pa9(co_pa) -> pd.DataFrame:
-    pa9 = pd.Series([float("nan"), float("nan"), float("nan"), float("nan"),
-                     float("nan"), float("nan"), float("nan"), float("nan"),
-                     float("nan"), float("nan"), float("nan"), float("nan"),
-                     float("nan"), float("nan"), float("nan"), float("nan"),
-                     float("nan"), float("nan"), float("nan"), float("nan"),
-                     float("nan"), float("nan"), float("nan"), float("nan"),
-                     float("nan"), float("nan"), float("nan"), float("nan"),
-                     float("nan"), float("nan"), float("nan"), float("nan"),
-                     float("nan"), float("nan"), float("nan"), float("nan"),
-                     float("nan"), float("nan"), float("nan"), "1", float("nan"),
-                     float("nan"), float("nan"), "1", float("nan"), float("nan"), "1"],
-                    name="pa9")
+    pa9 = pd.Series([float("nan"), float("nan"),  # co2
+                     float("nan"), float("nan"), float("nan"), float("nan"), float("nan"), float("nan"),  # co6 above # noqa
+                     float("nan"), float("nan"), float("nan"), float("nan"), float("nan"), float("nan"),  # co6 below # noqa
+                     float("nan"), float("nan"), float("nan"), float("nan"), float("nan"), float("nan"),  # co6 within # noqa
+                     float("nan"), float("nan"), float("nan"), float("nan"), float("nan"), float("nan"),  # co6 outside # noqa
+                     float("nan"), float("nan"),  # pa3.1
+                     float("nan"), float("nan"),  # pa4 Epilepsy
+                     float("nan"), float("nan"), float("nan"), float("nan"),  # pa4 Seizure # noqa
+                     float("nan"), float("nan"),  # pa4 Convulsion
+                     float("nan"), float("nan"),  # pa6
+                     float("nan"), float("nan"), float("nan"),  # pa7
+                     float("nan"), float("nan"),  # pa8 Chilblain
+                     float("nan"), float("nan"),  # pa8 Frostbite
+                     float("nan"), float("nan"),  # pa8 Superficial frostbite
+                     float("nan"), "1",  # pa9 Carbuncle
+                     float("nan"), float("nan"), "1", float("nan"), "1",  # pa9 Furuncle Boil # noqa
+                     float("nan"), "1"], name="pa9")  # pa9 anthrax
     return pd.concat([co_pa, pa9], axis=1)
 
 

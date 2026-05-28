@@ -22,7 +22,10 @@ def test_check_co6(df_in: pd.DataFrame, df_out: pd.DataFrame,
     input = request.getfixturevalue(df_in)
     output = request.getfixturevalue(df_out)
     tag = semtag(len(input))
-    pd.testing.assert_frame_equal(editorial_check._check_co6(input, tag), output)
+    pt = (input.loc[:, "acceptabilityId"] == "PREFERRED")
+    syn = (input.loc[:, "acceptabilityId"] == "ACCEPTABLE")
+    pd.testing.assert_frame_equal(editorial_check._check_co6(input, tag, pt, syn),
+                                  output)
 
 
 @pytest.mark.parametrize("df_in, df_out", [("null", "null"), ("co_pa", "pa3_1")])
@@ -46,7 +49,8 @@ def test_check_pa6(df_in: pd.DataFrame, df_out: pd.DataFrame,
                    request: pytest.FixtureRequest) -> None:
     input = request.getfixturevalue(df_in)
     output = request.getfixturevalue(df_out)
-    pd.testing.assert_frame_equal(editorial_check._check_pa6(input), output)
+    pt = (input.loc[:, "acceptabilityId"] == "PREFERRED")
+    pd.testing.assert_frame_equal(editorial_check._check_pa6(input, pt), output)
 
 
 @pytest.mark.parametrize("df_in, df_out", [("null", "null"), ("co_pa", "pa7")])
