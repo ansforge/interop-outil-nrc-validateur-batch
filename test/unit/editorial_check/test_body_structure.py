@@ -10,7 +10,8 @@ def test_check_bs2(df_in: pd.DataFrame, df_out: pd.DataFrame,
                    request: pytest.FixtureRequest) -> None:
     input = request.getfixturevalue(df_in)
     output = request.getfixturevalue(df_out)
-    pd.testing.assert_frame_equal(editorial_check._check_bs2(input), output)
+    pt = (input.loc[:, "acceptabilityId"] == "PREFERRED")
+    pd.testing.assert_frame_equal(editorial_check._check_bs2(input, pt), output)
 
 
 @pytest.mark.parametrize("df_in, df_out", [("null", "null"), ("bs", "bs3")])
@@ -33,7 +34,8 @@ def test_check_bs5(df_in: pd.DataFrame, df_out: pd.DataFrame,
     input = request.getfixturevalue(df_in)
     output = request.getfixturevalue(df_out)
     tag = semtag(len(input))
-    pd.testing.assert_frame_equal(editorial_check._check_bs5(input, tag), output)
+    pt = (input.loc[:, "acceptabilityId"] == "PREFERRED")
+    pd.testing.assert_frame_equal(editorial_check._check_bs5(input, tag, pt), output)
 
 
 @pytest.mark.parametrize("df_in, df_out", [("null", "null"), ("bs", "bs6")])
@@ -43,7 +45,8 @@ def test_check_bs6(df_in: pd.DataFrame, df_out: pd.DataFrame,
     input = request.getfixturevalue(df_in)
     output = request.getfixturevalue(df_out)
     tag = semtag(len(input))
-    pd.testing.assert_frame_equal(editorial_check._check_bs6(input, tag), output)
+    pt = (input.loc[:, "acceptabilityId"] == "PREFERRED")
+    pd.testing.assert_frame_equal(editorial_check._check_bs6(input, tag, pt), output)
 
 
 @pytest.mark.parametrize("df_in, df_out", [("null", "null"), ("bs", "bs7")])
@@ -53,7 +56,8 @@ def test_check_bs7(df_in: pd.DataFrame, df_out: pd.DataFrame,
     input = request.getfixturevalue(df_in)
     output = request.getfixturevalue(df_out)
     tag = semtag(len(input))
-    pd.testing.assert_frame_equal(editorial_check._check_bs7(input, tag), output)
+    pt = (input.loc[:, "acceptabilityId"] == "PREFERRED")
+    pd.testing.assert_frame_equal(editorial_check._check_bs7(input, tag, pt), output)
 
 
 @pytest.mark.parametrize("df_in, df_out", [("null", "null"), ("bs", "bs8")])
@@ -62,8 +66,7 @@ def test_check_bs8(df_in: pd.DataFrame, df_out: pd.DataFrame,
     input = request.getfixturevalue(df_in)
     output = request.getfixturevalue(df_out)
     pt = (input.loc[:, "acceptabilityId"] == "PREFERRED")
-    syn = (input.loc[:, "acceptabilityId"] == "ACCEPTABLE")
-    pd.testing.assert_frame_equal(editorial_check._check_bs8(input, pt, syn), output)
+    pd.testing.assert_frame_equal(editorial_check._check_bs8(input, pt), output)
 
 
 @pytest.mark.parametrize("df_in, df_out", [("null", "null"), ("bs", "bs9")])
@@ -81,10 +84,8 @@ def test_check_bs10(df_in: pd.DataFrame, df_out: pd.DataFrame,
                     request: pytest.FixtureRequest) -> None:
     input = request.getfixturevalue(df_in)
     output = request.getfixturevalue(df_out)
-    pt = (input.loc[:, "acceptabilityId"] == "PREFERRED")
-    syn = (input.loc[:, "acceptabilityId"] == "ACCEPTABLE")
     pd.testing.assert_frame_equal(
-        editorial_check._check_bs10(input, pt, syn), output)
+        editorial_check._check_bs10(input), output)
 
 
 @pytest.mark.parametrize("df_in, df_out", [("null", "null"), ("bs", "bs11")])
@@ -92,10 +93,8 @@ def test_check_bs11(df_in: pd.DataFrame, df_out: pd.DataFrame,
                     request: pytest.FixtureRequest) -> None:
     input = request.getfixturevalue(df_in)
     output = request.getfixturevalue(df_out)
-    pt = (input.loc[:, "acceptabilityId"] == "PREFERRED")
-    syn = (input.loc[:, "acceptabilityId"] == "ACCEPTABLE")
     pd.testing.assert_frame_equal(
-        editorial_check._check_bs11(input, pt, syn), output)
+        editorial_check._check_bs11(input), output)
 
 
 @pytest.mark.parametrize("df_in, df_out", [("null", "null"), ("bs", "bs12")])

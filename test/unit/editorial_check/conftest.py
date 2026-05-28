@@ -8,8 +8,8 @@ import pandas as pd
 @pytest.fixture
 def null() -> pd.DataFrame:
     return pd.DataFrame(
-        {"FSN": ["SNOMED CT Concept"], "term": ["Concept SNOMED CT"],
-         "acceptabilityId": ["PREFERRED"]}
+        {"conceptId": ["1"], "FSN": ["SNOMED CT Concept"],
+         "term": ["Concept SNOMED CT"], "acceptabilityId": ["PREFERRED"]}
     )
 
 
@@ -78,185 +78,271 @@ def ar6(ar) -> pd.DataFrame:
 @pytest.fixture
 def bs() -> pd.DataFrame:
     return pd.DataFrame(
-        {"FSN": ["knee joint structure", "knee joint structure",
-                 "entire hip region", "entire hip region", "part of hip zone",
-                 "part of hip zone", "zone of cerebrum", "area of cerebrum",
-                 "area of cerebrum", "area of brain", "area of brain",
-                 "apex of proper heart", "apex of proper tongue",
-                 "apex of proper tongue", "apex of proper tongue",
-                 "apex of proper tongue", "structure lesser toe",
-                 "structure lesser toe", "structure lesser toe",
-                 "part of lower limb", "part of lower limb", "entire lower leg",
-                 "entire lower leg", "entire lower leg", "entire lower leg",
-                 "part of upper limb", "part of upper limb", "entire upper arm",
-                 "entire upper arm", "entire upper arm"],
-         "term": ["structure de l'articulation du genou", "genou",
-                  "région entière de la hanche", "hanche",
-                  "partie de la zone de la hanche", "hanche", "zone du cerveau",
-                  "zone du cerveau", "surface de l'encéphale", "aire de l'encéphale",
-                  "cerveau", "apex du cœur propre",
-                  "pointe de la langue proprement dite",
-                  "bout de la langue proprement dite",
-                  "cime de la langue proprement dite", "langue",
-                  "structure de l'orteil excepté l'hallux",
-                  "structure de l'orteil latéral", "petit orteil",
-                  "partie du membre inférieur", "partie de la jambe",
-                  "partie inférieure entière de la jambe",
-                  "partie basse entière de la jambe",
-                  "jambe entière, du genou à la cheville", "mollet entier",
-                  "partie du membre supérieur", "partie du bras",
-                  "partie supérieure entière du bras",
-                  "bras entier, de l'épaule au coude", "member supérieur entier"],
-         "acceptabilityId": ["PREFERRED", "PREFERRED", "PREFERRED", "PREFERRED",
-                             "PREFERRED", "PREFERRED", "PREFERRED", "PREFERRED",
-                             "PREFERRED", "PREFERRED", "PREFERRED", "PREFERRED",
-                             "ACCEPTABLE", "ACCEPTABLE", "ACCEPTABLE", "ACCEPTABLE",
-                             "PREFERRED", "ACCEPTABLE", "ACCEPTABLE", "PREFERRED",
-                             "PREFERRED", "PREFERRED", "ACCEPTABLE", "ACCEPTABLE",
-                             "ACCEPTABLE", "PREFERRED", "PREFERRED", "PREFERRED",
-                             "ACCEPTABLE", "ACCEPTABLE"]}
+        {"conceptId": ["bs2", "bs2", "bs2",
+                       "bs3_s1", "bs3_s1", "bs3_s2", "bs3_s2", "bs3_s3", "bs3_s3",
+                       "bs3_e", "bs3_e", "bs3_e",
+                       "bs3_p", "bs3_p",
+                       "bs5", "bs5", "bs5",
+                       "bs6_z", "bs6_z", "bs6_z", "bs6_z", "bs6_z",
+                       "bs6_a", "bs6_a", "bs6_a", "bs6_a", "bs6_a",
+                       "bs7", "bs7", "bs7", "bs7", "bs7",
+                       "bs8", "bs8", "bs8",
+                       "bs9_1", "bs9_1", "bs9_2", "bs9_2", "bs9_3", "bs9_3", "bs9_3",
+                       "bs10_limb", "bs10_limb", "bs10_leg", "bs10_leg",
+                       "bs11_limb", "bs11_limb", "bs11_arm", "bs11_arm",
+                       "bs12", "bs12", "bs12",
+                       "bs13", "bs13", "bs13", "bs13_bs", "bs13_bs"],
+         "FSN": ["Knee joint", "Knee joint", "Knee joint",  # bs2
+                 "Knee structure", "Knee structure", "Knee structure", "Knee structure", "Knee structure", "Knee structure",  # bs3 Structure # noqa
+                 "Entire patella", "Entire patella", "Entire patella",  # bs3 Entire
+                 "Part of knee", "Part of knee",  # bs3 Part
+                 "Knee region", "Knee region", "Knee region",  # bs5
+                 "Knee zone", "Knee zone", "Knee zone", "Knee zone", "Knee zone",  # bs6 Zone # noqa
+                 "Knee area", "Knee area", "Knee area", "Knee area", "Knee area",  # bs6 Area # noqa
+                 "Proper patella", "Proper patella", "Proper patella", "Proper patella", "Proper patella",  # bs7 # noqa
+                 "Apex of lung", "Apex of lung", "Apex of lung",  # bs8
+                 "Skin of lesser toe", "Skin of lesser toe", "Skin of lesser toe", "Skin of lesser toe", "Skin of lesser toe", "Skin of lesser toe", "Skin of lesser toe",  # bs9 # noqa
+                 "Skin of lower limb", "Skin of lower limb", "Skin of lower leg", "Skin of lower leg",  # bs10 # noqa
+                 "Skin of upper limb", "Skin of upper limb", "Skin of upper arm", "Skin of upper arm",  # bs11 # noqa
+                 "Cerebrum surface", "Cerebrum surface", "Cerebrum surface",  # bs12
+                 "Brain surface", "Brain surface", "Brain surface", "Brainstem nerve", "Brainstem nerve"],  # bs13 # noqa
+         "term": ["articulation du genou", "genou", "genou",  # bs2
+                  "genou", "genou", "genou, structure", "genou, structure", "genou", "genou, structure",  # bs3 Structure # noqa
+                  "rotule entière", "os entier de la rotule", "rotule",  # bs3 Entire
+                  "partie du genou", "genou",  # bs3 Part
+                  "région du genou", "genou", "genou",  # bs5
+                  "zone du genou", "surface du genou", "aire du genou", "genou", "genou",  # bs6 Zone # noqa
+                  "zone du genou", "surface du genou", "aire du genou", "genou", "genou",  # bs6 Area # noqa
+                  "rotule propre", "rotule proprement dite", "os de la rotule proprement dit", "rotule", "rotule",  # bs7 # noqa
+                  "apex du poumon", "poumon", "poumon",  # bs8
+                  "peau d'orteil excepté l'hallux", "peau d'orteil excepté l'hallux", "peau d'orteil latéral", "peau d'orteil latéral", "peau d'orteil excepté l'hallux", "peau de petit orteil", "peau d'orteil latéral",  # bs9 # noqa
+                  "Peau du membre inférieur", "Peau de la jambe", "Peau de la partie inférieure de la jambe", "Peau de la jambe",  # bs10 # noqa
+                  "Peau du membre supérieur", "Peau du bras", "Peau de la partie supérieure du bras", "Peau du bras",  # bs11 # noqa
+                  "surface du cerveau", "surface cérébrale", "surface encéphalique",  # bs12 # noqa
+                  "surface de l'encéphale", "surface encéphalique", "surface cérébrale", "nerf du tronc cérébral", "nerf du tronc encéphalique"],  # bs13 # noqa
+         "acceptabilityId": ["PREFERRED", "ACCEPTABLE", "PREFERRED",  # bs2
+                             "PREFERRED", "ACCEPTABLE", "PREFERRED", "ACCEPTABLE", "PREFERRED", "ACCEPTABLE",  # bs3 Structure # noqa
+                             "PREFERRED", "PREFERRED", "PREFERRED",  # bs3 Entire
+                             "PREFERRED", "PREFERRED",  # bs3 Part
+                             "PREFERRED", "ACCEPTABLE", "PREFERRED",  # bs5
+                             "PREFERRED", "PREFERRED", "PREFERRED", "ACCEPTABLE", "PREFERRED",  # bs6 Zone # noqa
+                             "PREFERRED", "PREFERRED", "PREFERRED", "ACCEPTABLE", "PREFERRED",  # bs6 Area # noqa
+                             "PREFERRED", "PREFERRED", "PREFERRED", "ACCEPTABLE", "PREFERRED",  # bs7 # noqa
+                             "PREFERRED", "ACCEPTABLE", "PREFERRED",  # bs8
+                             "PREFERRED", "ACCEPTABLE", "PREFERRED", "ACCEPTABLE", "PREFERRED", "ACCEPTABLE", "ACCEPTABLE",  # bs9 # noqa
+                             "PREFERRED", "PREFERRED", "PREFERRED", "PREFERRED",  # bs10
+                             "PREFERRED", "PREFERRED", "PREFERRED", "PREFERRED",  # bs11
+                             "PREFERRED", "PREFERRED", "PREFERRED",  # bs12
+                             "PREFERRED", "PREFERRED", "PREFERRED", "PREFERRED", "PREFERRED"]}  # bs13 # noqa
     )
 
 
 @pytest.fixture
 def bs2(bs) -> pd.DataFrame:
-    bs2 = pd.Series([float("nan"), "1", float("nan"), float("nan"), float("nan"),
-                     float("nan"), float("nan"), float("nan"), float("nan"),
-                     float("nan"), float("nan"), float("nan"), float("nan"),
-                     float("nan"), float("nan"), float("nan"), float("nan"),
-                     float("nan"), float("nan"), float("nan"), float("nan"),
-                     float("nan"), float("nan"), float("nan"), float("nan"),
-                     float("nan"), float("nan"), float("nan"), float("nan"),
-                     float("nan")], name="bs2")
+    bs2 = pd.Series([float("nan"), float("nan"), "1",  # bs2
+                     float("nan"), float("nan"), float("nan"), float("nan"), float("nan"), float("nan"),  # bs3 Structure # noqa
+                     float("nan"), float("nan"), float("nan"),  # bs3 Entire
+                     float("nan"), float("nan"),  # bs3 Part
+                     float("nan"), float("nan"), float("nan"),  # bs5
+                     float("nan"), float("nan"), float("nan"), float("nan"), float("nan"),  # bs6 Zone # noqa
+                     float("nan"), float("nan"), float("nan"), float("nan"), float("nan"),  # bs6 Area # noqa
+                     float("nan"), float("nan"), float("nan"), float("nan"), float("nan"),  # bs7 # noqa
+                     float("nan"), float("nan"), float("nan"),  # bs8
+                     float("nan"), float("nan"), float("nan"), float("nan"), float("nan"), float("nan"), float("nan"),  # bs9 # noqa
+                     float("nan"), float("nan"), float("nan"), float("nan"),  # bs10
+                     float("nan"), float("nan"), float("nan"), float("nan"),  # bs11
+                     float("nan"), float("nan"), float("nan"),  # bs12
+                     float("nan"), float("nan"), float("nan"), float("nan"), float("nan"),], name="bs2")  # bs13 # noqa
     return pd.concat([bs, bs2], axis=1)
 
 
 @pytest.fixture
 def bs3(bs) -> pd.DataFrame:
-    bs3 = pd.Series(["1", float("nan"), float("nan"), "1", float("nan"), "1",
-                     float("nan"), float("nan"), float("nan"), float("nan"),
-                     float("nan"), float("nan"), float("nan"), float("nan"),
-                     float("nan"), float("nan"), "1", float("nan"), "1", float("nan"),
-                     float("nan"), float("nan"), float("nan"), float("nan"),
-                     float("nan"), float("nan"), float("nan"), float("nan"),
-                     float("nan"), float("nan")], name="bs3")
+    bs3 = pd.Series([float("nan"), float("nan"), float("nan"),  # bs2
+                     float("nan"), "1", "1", float("nan"), float("nan"), float("nan"),  # bs3 Structure # noqa
+                     float("nan"), float("nan"), "1",  # bs3 Entire
+                     float("nan"), "1",  # bs3 Part
+                     float("nan"), float("nan"), float("nan"),  # bs5
+                     float("nan"), float("nan"), float("nan"), float("nan"), float("nan"),  # bs6 Zone # noqa
+                     float("nan"), float("nan"), float("nan"), float("nan"), float("nan"),  # bs6 Area # noqa
+                     float("nan"), float("nan"), float("nan"), float("nan"), float("nan"),  # bs7 # noqa
+                     float("nan"), float("nan"), float("nan"),  # bs8
+                     float("nan"), float("nan"), float("nan"), float("nan"), float("nan"), float("nan"), float("nan"),  # bs9 # noqa
+                     float("nan"), float("nan"), float("nan"), float("nan"),  # bs10
+                     float("nan"), float("nan"), float("nan"), float("nan"),  # bs11
+                     float("nan"), float("nan"), float("nan"),  # bs12
+                     float("nan"), float("nan"), float("nan"), float("nan"), float("nan"),], name="bs3")  # bs13 # noqa
     return pd.concat([bs, bs3], axis=1)
 
 
 @pytest.fixture
 def bs5(bs) -> pd.DataFrame:
-    bs5 = pd.Series([float("nan"), float("nan"), float("nan"), "1", float("nan"),
-                     float("nan"), float("nan"), float("nan"), float("nan"),
-                     float("nan"), float("nan"), float("nan"), float("nan"),
-                     float("nan"), float("nan"), float("nan"), float("nan"),
-                     float("nan"), float("nan"), float("nan"), float("nan"),
-                     float("nan"), float("nan"), float("nan"), float("nan"),
-                     float("nan"), float("nan"), float("nan"), float("nan"),
-                     float("nan")], name="bs5")
+    bs5 = pd.Series([float("nan"), float("nan"), float("nan"),  # bs2
+                     float("nan"), float("nan"), float("nan"), float("nan"), float("nan"), float("nan"),  # bs3 Structure # noqa
+                     float("nan"), float("nan"), float("nan"),  # bs3 Entire
+                     float("nan"), float("nan"),  # bs3 Part
+                     float("nan"), float("nan"), "1",  # bs5
+                     float("nan"), float("nan"), float("nan"), float("nan"), float("nan"),  # bs6 Zone # noqa
+                     float("nan"), float("nan"), float("nan"), float("nan"), float("nan"),  # bs6 Area # noqa
+                     float("nan"), float("nan"), float("nan"), float("nan"), float("nan"),  # bs7 # noqa
+                     float("nan"), float("nan"), float("nan"),  # bs8
+                     float("nan"), float("nan"), float("nan"), float("nan"), float("nan"), float("nan"), float("nan"),  # bs9 # noqa
+                     float("nan"), float("nan"), float("nan"), float("nan"),  # bs10
+                     float("nan"), float("nan"), float("nan"), float("nan"),  # bs11
+                     float("nan"), float("nan"), float("nan"),  # bs12
+                     float("nan"), float("nan"), float("nan"), float("nan"), float("nan"),], name="bs5")  # bs13 # noqa
     return pd.concat([bs, bs5], axis=1)
 
 
 @pytest.fixture
 def bs6(bs) -> pd.DataFrame:
-    bs6 = pd.Series([float("nan"), float("nan"), float("nan"), float("nan"),
-                     float("nan"), "1", float("nan"), float("nan"), float("nan"),
-                     float("nan"), "1", float("nan"), float("nan"), float("nan"),
-                     float("nan"), float("nan"), float("nan"), float("nan"),
-                     float("nan"), float("nan"), float("nan"), float("nan"),
-                     float("nan"), float("nan"), float("nan"), float("nan"),
-                     float("nan"), float("nan"), float("nan"), float("nan")],
-                    name="bs6")
+    bs6 = pd.Series([float("nan"), float("nan"), float("nan"),  # bs2
+                     float("nan"), float("nan"), float("nan"), float("nan"), float("nan"), float("nan"),  # bs3 Structure # noqa
+                     float("nan"), float("nan"), float("nan"),  # bs3 Entire
+                     float("nan"), float("nan"),  # bs3 Part
+                     float("nan"), float("nan"), float("nan"),  # bs5
+                     float("nan"), float("nan"), float("nan"), float("nan"), "1",  # bs6 Zone # noqa
+                     float("nan"), float("nan"), float("nan"), float("nan"), "1",  # bs6 Area # noqa
+                     float("nan"), float("nan"), float("nan"), float("nan"), float("nan"),  # bs7 # noqa
+                     float("nan"), float("nan"), float("nan"),  # bs8
+                     float("nan"), float("nan"), float("nan"), float("nan"), float("nan"), float("nan"), float("nan"),  # bs9 # noqa
+                     float("nan"), float("nan"), float("nan"), float("nan"),  # bs10
+                     float("nan"), float("nan"), float("nan"), float("nan"),  # bs11
+                     float("nan"), float("nan"), float("nan"),  # bs12
+                     float("nan"), float("nan"), float("nan"), float("nan"), float("nan"),], name="bs6")  # bs13 # noqa
     return pd.concat([bs, bs6], axis=1)
 
 
 @pytest.fixture
 def bs7(bs) -> pd.DataFrame:
-    bs7 = pd.Series([float("nan"), float("nan"), float("nan"), float("nan"),
-                     float("nan"), float("nan"), float("nan"), float("nan"),
-                     float("nan"), float("nan"), float("nan"), float("nan"),
-                     float("nan"), float("nan"), float("nan"), "1", float("nan"),
-                     float("nan"), float("nan"), float("nan"), float("nan"),
-                     float("nan"), float("nan"), float("nan"), float("nan"),
-                     float("nan"), float("nan"), float("nan"), float("nan"),
-                     float("nan")], name="bs7")
+    bs7 = pd.Series([float("nan"), float("nan"), float("nan"),  # bs2
+                     float("nan"), float("nan"), float("nan"), float("nan"), float("nan"), float("nan"),  # bs3 Structure # noqa
+                     float("nan"), float("nan"), float("nan"),  # bs3 Entire
+                     float("nan"), float("nan"),  # bs3 Part
+                     float("nan"), float("nan"), float("nan"),  # bs5
+                     float("nan"), float("nan"), float("nan"), float("nan"), float("nan"),  # bs6 Zone # noqa
+                     float("nan"), float("nan"), float("nan"), float("nan"), float("nan"),  # bs6 Area # noqa
+                     float("nan"), float("nan"), float("nan"), float("nan"), "1",  # bs7
+                     float("nan"), float("nan"), float("nan"),  # bs8
+                     float("nan"), float("nan"), float("nan"), float("nan"), float("nan"), float("nan"), float("nan"),  # bs9 # noqa
+                     float("nan"), float("nan"), float("nan"), float("nan"),  # bs10
+                     float("nan"), float("nan"), float("nan"), float("nan"),  # bs11
+                     float("nan"), float("nan"), float("nan"),  # bs12
+                     float("nan"), float("nan"), float("nan"), float("nan"), float("nan"),], name="bs7")  # bs13 # noqa
     return pd.concat([bs, bs7], axis=1)
 
 
 @pytest.fixture
 def bs8(bs) -> pd.DataFrame:
-    bs8 = pd.Series([float("nan"), float("nan"), float("nan"), float("nan"),
-                     float("nan"), float("nan"), float("nan"), float("nan"),
-                     float("nan"), float("nan"), float("nan"), float("nan"),
-                     float("nan"), float("nan"), float("nan"), "1", float("nan"),
-                     float("nan"), float("nan"), float("nan"), float("nan"),
-                     float("nan"), float("nan"), float("nan"), float("nan"),
-                     float("nan"), float("nan"), float("nan"), float("nan"),
-                     float("nan")], name="bs8")
+    bs8 = pd.Series([float("nan"), float("nan"), float("nan"),  # bs2
+                     float("nan"), float("nan"), float("nan"), float("nan"), float("nan"), float("nan"),  # bs3 Structure # noqa
+                     float("nan"), float("nan"), float("nan"),  # bs3 Entire
+                     float("nan"), float("nan"),  # bs3 Part
+                     float("nan"), float("nan"), float("nan"),  # bs5
+                     float("nan"), float("nan"), float("nan"), float("nan"), float("nan"),  # bs6 Zone # noqa
+                     float("nan"), float("nan"), float("nan"), float("nan"), float("nan"),  # bs6 Area # noqa
+                     float("nan"), float("nan"), float("nan"), float("nan"), float("nan"),  # bs7 # noqa
+                     float("nan"), float("nan"), "1",  # bs8
+                     float("nan"), float("nan"), float("nan"), float("nan"), float("nan"), float("nan"), float("nan"),  # bs9 # noqa
+                     float("nan"), float("nan"), float("nan"), float("nan"),  # bs10
+                     float("nan"), float("nan"), float("nan"), float("nan"),  # bs11
+                     float("nan"), float("nan"), float("nan"),  # bs12
+                     float("nan"), float("nan"), float("nan"), float("nan"), float("nan"),], name="bs8")  # bs13 # noqa
     return pd.concat([bs, bs8], axis=1)
 
 
 @pytest.fixture
 def bs9(bs) -> pd.DataFrame:
-    bs9 = pd.Series([float("nan"), float("nan"), float("nan"), float("nan"),
-                     float("nan"), float("nan"), float("nan"), float("nan"),
-                     float("nan"), float("nan"), float("nan"), float("nan"),
-                     float("nan"), float("nan"), float("nan"), float("nan"),
-                     float("nan"), float("nan"), "1", float("nan"), float("nan"),
-                     float("nan"), float("nan"), float("nan"), float("nan"),
-                     float("nan"), float("nan"), float("nan"), float("nan"),
-                     float("nan")], name="bs9")
+    bs9 = pd.Series([float("nan"), float("nan"), float("nan"),  # bs2
+                     float("nan"), float("nan"), float("nan"), float("nan"), float("nan"), float("nan"),  # bs3 Structure # noqa
+                     float("nan"), float("nan"), float("nan"),  # bs3 Entire
+                     float("nan"), float("nan"),  # bs3 Part
+                     float("nan"), float("nan"), float("nan"),  # bs5
+                     float("nan"), float("nan"), float("nan"), float("nan"), float("nan"),  # bs6 Zone # noqa
+                     float("nan"), float("nan"), float("nan"), float("nan"), float("nan"),  # bs6 Area # noqa
+                     float("nan"), float("nan"), float("nan"), float("nan"), float("nan"),  # bs7 # noqa
+                     float("nan"), float("nan"), float("nan"),  # bs8
+                     float("nan"), "1", "1", float("nan"), float("nan"), "1", float("nan"),  # bs9 # noqa
+                     float("nan"), float("nan"), float("nan"), float("nan"),  # bs10
+                     float("nan"), float("nan"), float("nan"), float("nan"),  # bs11
+                     float("nan"), float("nan"), float("nan"),  # bs12
+                     float("nan"), float("nan"), float("nan"), float("nan"), float("nan"),], name="bs9")  # bs13 # noqa
     return pd.concat([bs, bs9], axis=1)
 
 
 @pytest.fixture
 def bs10(bs) -> pd.DataFrame:
-    bs10 = pd.Series([float("nan"), float("nan"), float("nan"), float("nan"),
-                      float("nan"), float("nan"), float("nan"), float("nan"),
-                      float("nan"), float("nan"), float("nan"), float("nan"),
-                      float("nan"), float("nan"), float("nan"), float("nan"),
-                      float("nan"), float("nan"), float("nan"), float("nan"), "1",
-                      float("nan"), float("nan"), float("nan"), "1", float("nan"),
-                      float("nan"), float("nan"), float("nan"), float("nan")],
-                     name="bs10")
+    bs10 = pd.Series([float("nan"), float("nan"), float("nan"),  # bs2
+                      float("nan"), float("nan"), float("nan"), float("nan"), float("nan"), float("nan"),  # bs3 Structure # noqa
+                      float("nan"), float("nan"), float("nan"),  # bs3 Entire
+                      float("nan"), float("nan"),  # bs3 Part
+                      float("nan"), float("nan"), float("nan"),  # bs5
+                      float("nan"), float("nan"), float("nan"), float("nan"), float("nan"),  # bs6 Zone # noqa
+                      float("nan"), float("nan"), float("nan"), float("nan"), float("nan"),  # bs6 Area # noqa
+                      float("nan"), float("nan"), float("nan"), float("nan"), float("nan"),  # bs7 # noqa
+                      float("nan"), float("nan"), float("nan"),  # bs8
+                      float("nan"), float("nan"), float("nan"), float("nan"), float("nan"), float("nan"), float("nan"),  # bs9 # noqa
+                      float("nan"), "1", float("nan"), "1",  # bs10
+                      float("nan"), float("nan"), float("nan"), float("nan"),  # bs11
+                      float("nan"), float("nan"), float("nan"),  # bs12
+                      float("nan"), float("nan"), float("nan"), float("nan"), float("nan"),], name="bs10")  # bs13 # noqa
     return pd.concat([bs, bs10], axis=1)
 
 
 @pytest.fixture
 def bs11(bs) -> pd.DataFrame:
-    bs11 = pd.Series([float("nan"), float("nan"), float("nan"), float("nan"),
-                      float("nan"), float("nan"), float("nan"), float("nan"),
-                      float("nan"), float("nan"), float("nan"), float("nan"),
-                      float("nan"), float("nan"), float("nan"), float("nan"),
-                      float("nan"), float("nan"), float("nan"), float("nan"),
-                      float("nan"), float("nan"), float("nan"), float("nan"),
-                      float("nan"), float("nan"), "1", float("nan"), float("nan"), "1"],
-                     name="bs11")
+    bs11 = pd.Series([float("nan"), float("nan"), float("nan"),  # bs2
+                      float("nan"), float("nan"), float("nan"), float("nan"), float("nan"), float("nan"),  # bs3 Structure # noqa
+                      float("nan"), float("nan"), float("nan"),  # bs3 Entire
+                      float("nan"), float("nan"),  # bs3 Part
+                      float("nan"), float("nan"), float("nan"),  # bs5
+                      float("nan"), float("nan"), float("nan"), float("nan"), float("nan"),  # bs6 Zone # noqa
+                      float("nan"), float("nan"), float("nan"), float("nan"), float("nan"),  # bs6 Area # noqa
+                      float("nan"), float("nan"), float("nan"), float("nan"), float("nan"),  # bs7 # noqa
+                      float("nan"), float("nan"), float("nan"),  # bs8
+                      float("nan"), float("nan"), float("nan"), float("nan"), float("nan"), float("nan"), float("nan"),  # bs9 # noqa
+                      float("nan"), float("nan"), float("nan"), float("nan"),  # bs10
+                      float("nan"), "1", float("nan"), "1",  # bs11
+                      float("nan"), float("nan"), float("nan"),  # bs12
+                      float("nan"), float("nan"), float("nan"), float("nan"), float("nan"),], name="bs11")  # bs13 # noqa
     return pd.concat([bs, bs11], axis=1)
 
 
 @pytest.fixture
 def bs12(bs) -> pd.DataFrame:
-    bs12 = pd.Series([float("nan"), float("nan"), float("nan"), float("nan"),
-                      float("nan"), float("nan"), float("nan"), float("nan"), "1",
-                      float("nan"), float("nan"), float("nan"), float("nan"),
-                      float("nan"), float("nan"), float("nan"), float("nan"),
-                      float("nan"), float("nan"), float("nan"), float("nan"),
-                      float("nan"), float("nan"), float("nan"), float("nan"),
-                      float("nan"), float("nan"), float("nan"), float("nan"),
-                      float("nan")], name="bs12")
+    bs12 = pd.Series([float("nan"), float("nan"), float("nan"),  # bs2
+                      float("nan"), float("nan"), float("nan"), float("nan"), float("nan"), float("nan"),  # bs3 Structure # noqa
+                      float("nan"), float("nan"), float("nan"),  # bs3 Entire
+                      float("nan"), float("nan"),  # bs3 Part
+                      float("nan"), float("nan"), float("nan"),  # bs5
+                      float("nan"), float("nan"), float("nan"), float("nan"), float("nan"),  # bs6 Zone # noqa
+                      float("nan"), float("nan"), float("nan"), float("nan"), float("nan"),  # bs6 Area # noqa
+                      float("nan"), float("nan"), float("nan"), float("nan"), float("nan"),  # bs7 # noqa
+                      float("nan"), float("nan"), float("nan"),  # bs8
+                      float("nan"), float("nan"), float("nan"), float("nan"), float("nan"), float("nan"), float("nan"),  # bs9 # noqa
+                      float("nan"), float("nan"), float("nan"), float("nan"),  # bs10
+                      float("nan"), float("nan"), float("nan"), float("nan"),  # bs11
+                      float("nan"), float("nan"), "1",  # bs12
+                      float("nan"), float("nan"), float("nan"), float("nan"), float("nan"),], name="bs12")  # bs13 # noqa
     return pd.concat([bs, bs12], axis=1)
 
 
 @pytest.fixture
 def bs13(bs) -> pd.DataFrame:
-    bs13 = pd.Series([float("nan"), float("nan"), float("nan"), float("nan"),
-                      float("nan"), float("nan"), float("nan"), float("nan"),
-                      float("nan"), float("nan"), "1", float("nan"), float("nan"),
-                      float("nan"), float("nan"), float("nan"), float("nan"),
-                      float("nan"), float("nan"), float("nan"), float("nan"),
-                      float("nan"), float("nan"), float("nan"), float("nan"),
-                      float("nan"), float("nan"), float("nan"), float("nan"),
-                      float("nan")], name="bs13")
+    bs13 = pd.Series([float("nan"), float("nan"), float("nan"),  # bs2
+                      float("nan"), float("nan"), float("nan"), float("nan"), float("nan"), float("nan"),  # bs3 Structure # noqa
+                      float("nan"), float("nan"), float("nan"),  # bs3 Entire
+                      float("nan"), float("nan"),  # bs3 Part
+                      float("nan"), float("nan"), float("nan"),  # bs5
+                      float("nan"), float("nan"), float("nan"), float("nan"), float("nan"),  # bs6 Zone # noqa
+                      float("nan"), float("nan"), float("nan"), float("nan"), float("nan"),  # bs6 Area # noqa
+                      float("nan"), float("nan"), float("nan"), float("nan"), float("nan"),  # bs7 # noqa
+                      float("nan"), float("nan"), float("nan"),  # bs8
+                      float("nan"), float("nan"), float("nan"), float("nan"), float("nan"), float("nan"), float("nan"),  # bs9 # noqa
+                      float("nan"), float("nan"), float("nan"), float("nan"),  # bs10
+                      float("nan"), float("nan"), float("nan"), float("nan"),  # bs11
+                      float("nan"), float("nan"), float("nan"),  # bs12
+                      float("nan"), float("nan"), "1", float("nan"), "1"], name="bs13")  # bs13 # noqa
     return pd.concat([bs, bs13], axis=1)
 
 
@@ -266,7 +352,12 @@ def bs13(bs) -> pd.DataFrame:
 @pytest.fixture
 def co_pa() -> pd.DataFrame:
     return pd.DataFrame(
-        {"FSN": ["neurological finding", "finding of small intestine",
+        {"conceptId": ["1", "2", "2", "2", "3", "3", "4", "4", "5", "5", "6", "6",
+                       "7", "7", "8", "9", "9", "10", "11", "11", "12", "12", "13",
+                       "14", "14", "15", "15", "16", "16", "17", "18", "18", "19",
+                       "19", "20", "20", "21", "21", "22", "22", "23", "23", "23",
+                       "23", "14", "25", "25"],
+         "FSN": ["neurological finding", "finding of small intestine",
                  "finding of small intestine", "finding of small intestine",
                  "calcium level above reference range",
                  "calcium level above reference range",
@@ -463,7 +554,8 @@ def pa9(co_pa) -> pd.DataFrame:
 @pytest.fixture
 def me() -> pd.DataFrame:
     return pd.DataFrame(
-        {"FSN": ["product containing amoxicilline", "product containing amoxicilline",
+        {"conceptId": ["1", "1", "2", "2", "3", "3"],
+         "FSN": ["product containing amoxicilline", "product containing amoxicilline",
                  "product containing only amoxicilline",
                  "product containing only amoxicilline",
                  "product containing precisely captopril 25 mg/1 each conventional release oral tablet (clinical drug)", # noqa
@@ -510,7 +602,8 @@ def me4(me) -> pd.DataFrame:
 @pytest.fixture
 def sb() -> pd.DataFrame:
     return pd.DataFrame(
-        {"FSN": ["evacuated blood collection tube, K2EDTA/aprotinin",
+        {"conceptId": ["1", "1", "2", "2", "3", "3", "3", "3"],
+         "FSN": ["evacuated blood collection tube, K2EDTA/aprotinin",
                  "evacuated blood collection tube, K2EDTA/aprotinin",
                  "evacuated urine specimen container, boric acid (H3BO3)",
                  "evacuated urine specimen container, boric acid (H3BO3)",
@@ -552,7 +645,10 @@ def sb3(sb) -> pd.DataFrame:
 @pytest.fixture
 def pr() -> pd.DataFrame:
     return pd.DataFrame(
-        {"FSN": ["MRI for neuromuscular procedure", "MRI for neuromuscular procedure",
+        {"conceptId": ["1", "1", "1", "1", "2", "2", "2", "2", "3", "3", "4", "4", "5",
+                       "5", "5", "5", "6", "6", "6", "6", "7", "7", "8", "8", "8", "8",
+                       "9", "9", "9", "9", "10", "10", "10", "10", "10", "11", "11"],
+         "FSN": ["MRI for neuromuscular procedure", "MRI for neuromuscular procedure",
                  "MRI for neuromuscular procedure", "MRI for neuromuscular procedure",
                  "perirenal operation using ultrasound guidance",
                  "perirenal operation using ultrasound guidance",
@@ -764,7 +860,8 @@ def pr15(pr) -> pd.DataFrame:
 @pytest.fixture
 def hs() -> pd.DataFrame:
     return pd.DataFrame(
-        {"FSN": ["asthma familial history"] * 2,
+        {"conceptId": ["1"] * 2,
+         "FSN": ["asthma familial history"] * 2,
          "term": ["antécédent familial d'asthme", "antécédents familiaux d'asthme"]}
     )
 
@@ -781,7 +878,8 @@ def hs1(hs) -> pd.DataFrame:
 @pytest.fixture
 def ec() -> pd.DataFrame:
     return pd.DataFrame(
-        {"FSN": ["implant submitted as specimen", "implant submitted as specimen",
+        {"conceptId": ["1", "1", "2", "2", "3", "3", "4", "4"],
+         "FSN": ["implant submitted as specimen", "implant submitted as specimen",
                  "pharyngeal washings", "pharyngeal washings",
                  "cervix cytologic material", "cervix cytologic material",
                  "intravenous infusion fluid sample",
@@ -814,24 +912,26 @@ def ec4(ec) -> pd.DataFrame:
 @pytest.fixture
 def su() -> pd.DataFrame:
     return pd.DataFrame(
-        {"FSN": ["rabies virus antibody", "rabies virus antibody",
-                 "rabies virus immunoglobulin", "rabies virus antibody",
-                 "rabies virus antibody", "rabies virus immunoglobulin",
+        {"conceptId": ["1", "1", "1", "1", "2", "2", "2", "3", "4", "5", "6", "7", "8",
+                       "9", "10", "11", "11"],
+         "FSN": ["rabies virus antibody", "rabies virus antibody",
+                 "rabies virus antibody", "rabies virus antibody",
+                 "rabies virus immunoglobulin", "rabies virus immunoglobulin",
                  "rabies virus immunoglobulin", "meta-hydroxybenzoate",
                  "ortho-hydroxybenzoate", "para-hydroxybenzoate", "m-hydroxybenzoate",
                  "X-meta-hydroxybenzoate", "X-ortho-hydroxybenzoate",
                  "X-para-hydroxybenzoate", "X-m-hydroxybenzoate", "moenomycin B>1<",
                  "moenomycin B>1<"],
          "term": ["Ig antirabique", "immunoglobuline antirabique",
-                  "immunoglobuline antirabique", "immunoglobuline antirabique",
-                  "Ig antirabique", "anticorps antirabique",
+                  "immunoglobuline antirabique", "Ig antirabique",
+                  "immunoglobuline antirabique", "anticorps antirabique",
                   "immunoglobuline antirabique", "méta-hydroxybenzoate",
                   "ortho-hydroxybenzoate", "para-hydroxybenzoate", "m-hydroxybenzoate",
                   "X-méta-hydroxybenzoate", "X-ortho-hydroxybenzoate",
                   "X-para-hydroxybenzoate", "X-m-hydroxybenzoate", "moénomycine B>1<",
                   "moénomycine B1"],
-         "acceptabilityId": ["PREFERRED", "PREFERRED", "PREFERRED", "ACCEPTABLE",
-                             "ACCEPTABLE", "ACCEPTABLE", "ACCEPTABLE", "PREFERRED",
+         "acceptabilityId": ["PREFERRED", "PREFERRED", "ACCEPTABLE", "ACCEPTABLE",
+                             "PREFERRED", "ACCEPTABLE", "ACCEPTABLE", "PREFERRED",
                              "PREFERRED", "PREFERRED", "PREFERRED", "PREFERRED",
                              "PREFERRED", "PREFERRED", "PREFERRED", "PREFERRED",
                              "PREFERRED"]}
