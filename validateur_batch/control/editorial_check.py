@@ -71,17 +71,19 @@ def _check_ar6(df: pd.DataFrame, sb: pd.Series) -> pd.DataFrame:
 #########################
 # Règles Body structure #
 #########################
-def _check_bs2(df: pd.DataFrame) -> pd.DataFrame:
+def _check_bs2(df: pd.DataFrame, pt: pd.Series) -> pd.DataFrame:
     """Identifie les descriptions ne respectant pas la règle bs2.
 
     args:
         df: DataFrame à valider
+        pt: Filtre sur les termes préférés de `df`
 
     returns:
         DataFrame du fichier avec une colonne identifiant les
         descriptions ne respectant pas la règle bs2.
     """
-    idx = df.loc[(df.loc[:, "FSN"].str.contains("joint", regex=False, case=False))
+    idx = df.loc[pt
+                 & (df.loc[:, "FSN"].str.contains("joint", regex=False, case=False))
                  & (~df.loc[:, "term"].str.contains("(?:articulation|articulaire)", case=False))].index # noqa
     if not idx.empty:
         df = pd.merge(df, pd.DataFrame(data={"bs2": ["1"] * len(idx)}, index=idx),
@@ -103,13 +105,17 @@ def _check_bs3(df: pd.DataFrame, bs: pd.Series, pt: pd.Series,
         DataFrame du fichier avec une colonne identifiant les
         descriptions ne respectant pas la règle bs3
     """
-    idx = df.loc[bs & pt
-                 & (df.loc[:, "FSN"].str.contains("structure", regex=False, case=False))
+    f_structure = df.loc[:, "FSN"].str.contains(r"structure(?!\))", case=False)
+
+    has_invalid_syn = ~df.loc[f_structure, "conceptId"].isin(
+        df.loc[syn
+               & df.loc[:, "term"].str.endswith(", structure"), "conceptId"].unique()
+    )
+
+    idx = df.loc[bs & pt & f_structure
                  & (df.loc[:, "term"].str.contains("structure", regex=False, case=False))].index # noqa
 
-    idx = idx.union(df.loc[bs & syn
-                           & (df.loc[:, "FSN"].str.contains("structure", regex=False, case=False)) # noqa
-                           & (~df.loc[:, "term"].str.contains("structure", regex=False, case=False))].index) # noqa
+    idx = idx.union(df.loc[bs & syn & has_invalid_syn].index)
 
     idx = idx.union(df.loc[bs
                            & (df.loc[:, "FSN"].str.contains("entire", regex=False, case=False)) # noqa
@@ -125,18 +131,19 @@ def _check_bs3(df: pd.DataFrame, bs: pd.Series, pt: pd.Series,
     return df
 
 
-def _check_bs5(df: pd.DataFrame, bs: pd.Series) -> pd.DataFrame:
+def _check_bs5(df: pd.DataFrame, bs: pd.Series, pt: pd.Series) -> pd.DataFrame:
     """Identifie les descriptions ne respectant pas la règle bs5
 
     args:
         df: DataFrame à valider
         bs: Filtre sur les Body structure de `df`
+        pt: Filtre sur les termes préférés de `df`
 
     returns:
         DataFrame du fichier avec une colonne identifiant les
         descriptions ne respectant pas la règle bs5.
     """
-    idx = df.loc[bs
+    idx = df.loc[bs & pt
                  & (df.loc[:, "FSN"].str.contains("region", regex=False, case=False))
                  & (~df.loc[:, "term"].str.contains("région", regex=False, case=False))].index # noqa
 
@@ -147,24 +154,21 @@ def _check_bs5(df: pd.DataFrame, bs: pd.Series) -> pd.DataFrame:
     return df
 
 
-def _check_bs6(df: pd.DataFrame, bs: pd.Series) -> pd.DataFrame:
+def _check_bs6(df: pd.DataFrame, bs: pd.Series, pt: pd.Series) -> pd.DataFrame:
     """Identifie les descriptions ne respectant pas la règle bs6
 
     args:
         df: DataFrame à valider
         bs: Filtre sur les Body structure de `df`
+        pt: Filtre sur les termes préférés de `df`
 
     returns:
         DataFrame du fichier avec une colonne identifiant les
         descriptions ne respectant pas la règle bs6.
     """
-    idx = df.loc[bs
-                 & (df.loc[:, "FSN"].str.contains("zone", regex=False, case=False))
-                 & (~df.loc[:, "term"].str.contains("zone", regex=False, case=False))].index # noqa
-
-    idx = idx.union(df.loc[bs
-                           & (df.loc[:, "FSN"].str.contains("area", regex=False, case=False)) # noqa
-                           & (~df.loc[:, "term"].str.contains("(?:zone|surface|aire)", case=False))].index) # noqa
+    idx = df.loc[bs & pt
+                 & (df.loc[:, "FSN"].str.contains("(?:zone|area)", case=False))
+                 & (~df.loc[:, "term"].str.contains("(?:zone|surface|aire)", case=False))].index # noqa
 
     if not idx.empty:
         df = pd.merge(df, pd.DataFrame(data={"bs6": ["1"] * len(idx)}, index=idx),
@@ -173,18 +177,19 @@ def _check_bs6(df: pd.DataFrame, bs: pd.Series) -> pd.DataFrame:
     return df
 
 
-def _check_bs7(df: pd.DataFrame, bs: pd.Series) -> pd.DataFrame:
-    """Identifie les descriptions ne respectant pas la règle bs7
+def _check_bs7(df: pd.DataFrame, bs: pd.Series, pt: pd.Series) -> pd.DataFrame:
+    """Identifie les descriptions ne respectant pas la règle bs6
 
     args:
         df: DataFrame à valider
         bs: Filtre sur les Body structure de `df`
+        pt: Filtre sur les termes préférés de `df`
 
     returns:
         DataFrame du fichier avec une colonne identifiant les
         descriptions ne respectant pas la règle bs7.
     """
-    idx = df.loc[bs
+    idx = df.loc[bs & pt
                  & (df.loc[:, "FSN"].str.contains("proper", regex=False, case=False))
                  & (~df.loc[:, "term"].str.contains("(?:propre|proprement dite?)", case=False))].index # noqa
 
@@ -195,13 +200,12 @@ def _check_bs7(df: pd.DataFrame, bs: pd.Series) -> pd.DataFrame:
     return df
 
 
-def _check_bs8(df: pd.DataFrame, pt: pd.Series, syn: pd.Series) -> pd.DataFrame:
+def _check_bs8(df: pd.DataFrame, pt: pd.Series) -> pd.DataFrame:
     """Identifie les descriptions ne respectant pas la règle bs8
 
     args:
         df: DataFrame à valider
         pt: Filtre sur les termes préférés de `df`
-        syn: Filtre sur les synonymes acceptables de `df`
 
     returns:
         DataFrame du fichier avec une colonne identifiant les
@@ -210,10 +214,6 @@ def _check_bs8(df: pd.DataFrame, pt: pd.Series, syn: pd.Series) -> pd.DataFrame:
     idx = df.loc[pt
                  & (df.loc[:, "FSN"].str.contains("apex", regex=False, case=False))
                  & (~df.loc[:, "term"].str.contains("apex", regex=False, case=False))].index # noqa
-
-    idx = idx.union(df.loc[syn
-                           & (df.loc[:, "FSN"].str.contains("apex", regex=False, case=False)) # noqa
-                           & (~df.loc[:, "term"].str.contains("(?:pointe|bout|cime)", case=False))].index) # noqa
 
     if not idx.empty:
         df = pd.merge(df, pd.DataFrame(data={"bs8": ["1"] * len(idx)}, index=idx),
@@ -234,15 +234,19 @@ def _check_bs9(df: pd.DataFrame, pt: pd.Series, syn: pd.Series) -> pd.DataFrame:
         DataFrame du fichier avec une colonne identifiant les
         descriptions ne respectant pas la règle bs9.
     """
-    idx = df.loc[pt
-                 & (df.loc[:, "FSN"].str.contains("lesser toe", regex=False, case=False)) # noqa
+    f_lesser_toe = df.loc[:, "FSN"].str.contains("lesser toe", regex=False, case=False)
+
+    has_invalid_syn = ~df.loc[f_lesser_toe, "conceptId"].isin(
+        df.loc[syn
+               & df.loc[:, "term"].str.contains("orteil latéral", regex=False), "conceptId"].unique() # noqa
+    )
+
+    idx = df.loc[pt & f_lesser_toe
                  & (~df.loc[:, "term"].str.contains("orteil excepté l'hallux", regex=False, case=False))].index # noqa
 
-    idx = idx.union(df.loc[syn
-                           & (df.loc[:, "FSN"].str.contains("lesser toe", regex=False, case=False)) # noqa
-                           & (~df.loc[:, "term"].str.contains("orteil latéral", case=False))].index) # noqa
+    idx = idx.union(df.loc[syn & has_invalid_syn].index)
 
-    idx = idx.union(df.loc[(df.loc[:, "FSN"].str.contains("lesser toe", regex=False, case=False)) # noqa
+    idx = idx.union(df.loc[f_lesser_toe
                            & (df.loc[:, "term"].str.contains("petit orteil", case=False))].index) # noqa
 
     if not idx.empty:
@@ -252,13 +256,11 @@ def _check_bs9(df: pd.DataFrame, pt: pd.Series, syn: pd.Series) -> pd.DataFrame:
     return df
 
 
-def _check_bs10(df: pd.DataFrame, pt: pd.Series, syn: pd.Series) -> pd.DataFrame:
+def _check_bs10(df: pd.DataFrame) -> pd.DataFrame:
     """Identifie les descriptions ne respectant pas la règle bs10-FR
 
     args:
         df: DataFrame à valider
-        pt: Filtre sur les termes préférés de `df`
-        syn: Filtre sur les synonymes acceptables de `df`
 
     returns:
         DataFrame du fichier avec une colonne identifiant les
@@ -267,13 +269,8 @@ def _check_bs10(df: pd.DataFrame, pt: pd.Series, syn: pd.Series) -> pd.DataFrame
     idx = df.loc[(df.loc[:, "FSN"].str.contains("lower limb", regex=False, case=False))
                  & (~df.loc[:, "term"].str.contains("membre inférieur", regex=False, case=False))].index # noqa
 
-    idx = idx.union(df.loc[pt
-                           & (df.loc[:, "FSN"].str.contains("lower leg", regex=False, case=False)) # noqa
+    idx = idx.union(df.loc[(df.loc[:, "FSN"].str.contains("lower leg", regex=False, case=False)) # noqa
                            & (~df.loc[:, "term"].str.contains("partie inférieure(?: entière)? de la jambe", case=False))].index) # noqa
-
-    idx = idx.union(df.loc[syn
-                           & (df.loc[:, "FSN"].str.contains("lower leg", regex=False, case=False)) # noqa
-                           & (~df.loc[:, "term"].str.contains("(?:partie basse(?: entière)? de la jambe|jambe(?: entière)?, du genou à la cheville)", case=False))].index) # noqa
 
     if not idx.empty:
         df = pd.merge(df, pd.DataFrame(data={"bs10": ["1"] * len(idx)}, index=idx),
@@ -282,13 +279,11 @@ def _check_bs10(df: pd.DataFrame, pt: pd.Series, syn: pd.Series) -> pd.DataFrame
     return df
 
 
-def _check_bs11(df: pd.DataFrame, pt: pd.Series, syn: pd.Series) -> pd.DataFrame:
+def _check_bs11(df: pd.DataFrame) -> pd.DataFrame:
     """Identifie les descriptions ne respectant pas la règle bs11-FR
 
     args:
         df: DataFrame à valider
-        pt: Filtre sur les termes préférés de `df`
-        syn: Filtre sur les synonymes acceptables de `df`
 
     returns:
         DataFrame du fichier avec une colonne identifiant les
@@ -297,13 +292,8 @@ def _check_bs11(df: pd.DataFrame, pt: pd.Series, syn: pd.Series) -> pd.DataFrame
     idx = df.loc[(df.loc[:, "FSN"].str.contains("upper limb", regex=False, case=False))
                  & (~df.loc[:, "term"].str.contains("membre supérieur", regex=False, case=False))].index # noqa
 
-    idx = idx.union(df.loc[pt
-                           & (df.loc[:, "FSN"].str.contains("upper arm", regex=False, case=False)) # noqa
+    idx = idx.union(df.loc[(df.loc[:, "FSN"].str.contains("upper arm", regex=False, case=False)) # noqa
                            & (~df.loc[:, "term"].str.contains("partie supérieure(?: entière)? du bras", case=False))].index) # noqa
-
-    idx = idx.union(df.loc[syn
-                           & (df.loc[:, "FSN"].str.contains("upper arm", regex=False, case=False)) # noqa
-                           & (~df.loc[:, "term"].str.contains("bras(?: entier)?, de l'épaule au coude", case=False))].index) # noqa
 
     if not idx.empty:
         df = pd.merge(df, pd.DataFrame(data={"bs11": ["1"] * len(idx)}, index=idx),
@@ -323,7 +313,7 @@ def _check_bs12(df: pd.DataFrame) -> pd.DataFrame:
         descriptions ne respectant pas la règle bs12.
     """
     idx = df.loc[(df.loc[:, "FSN"].str.contains("cerebrum", regex=False, case=False))
-                 & (~df.loc[:, "term"].str.contains("cerveau", regex=False, case=False))].index # noqa
+                 & (~df.loc[:, "term"].str.contains("(?:cerveau|cérébral|cérébro)", case=False))].index # noqa
 
     if not idx.empty:
         df = pd.merge(df, pd.DataFrame(data={"bs12": ["1"] * len(idx)}, index=idx),
@@ -342,8 +332,11 @@ def _check_bs13(df: pd.DataFrame) -> pd.DataFrame:
         DataFrame du fichier avec une colonne identifiant les
         descriptions ne respectant pas la règle bs13.
     """
-    idx = df.loc[(df.loc[:, "FSN"].str.contains("brain", regex=False, case=False))
-                 & (~df.loc[:, "term"].str.contains("encéphale", regex=False, case=False))].index # noqa
+    idx = df.loc[(df.loc[:, "FSN"].str.contains("brain(?!stem)", case=False))
+                 & (~df.loc[:, "term"].str.contains("encéphal", regex=False, case=False))].index # noqa
+
+    idx = idx.union(df.loc[(df.loc[:, "FSN"].str.contains("brainstem", regex=False, case=False)) # noqa
+                 & (~df.loc[:, "term"].str.contains("tronc cérébral", regex=False, case=False))].index) # noqa
 
     if not idx.empty:
         df = pd.merge(df, pd.DataFrame(data={"bs13": ["1"] * len(idx)}, index=idx),
@@ -377,32 +370,71 @@ def _check_co2(df: pd.DataFrame, co: pd.Series) -> pd.DataFrame:
     return df
 
 
-def _check_co6(df: pd.DataFrame, co: pd.Series) -> pd.DataFrame:
+def _check_co6(df: pd.DataFrame, co: pd.Series, pt: pd.Series,
+               syn: pd.Series) -> pd.DataFrame:
     """Identifie les descriptions ne respectant pas la règle co6-FR
 
     args:
         df: DataFrame à valider
         co: Filtre sur les Clinical finding de `df`
+        pt: Filtre sur les termes préférés de `df`
+        syn: Filtre sur les synonymes acceptables de `df`
 
     returns:
         DataFrame du fichier avec une colonne identifiant les
         descriptions ne respectant pas la règle co6-FR.
     """
-    idx = df.loc[co
-                 & (df.loc[:, "FSN"].str.contains("above reference range", regex=False, case=False)) # noqa
-                 & (~df.loc[:, "term"].str.contains("supérieure? (?:à l'intervalle|aux valeurs) de référence", case=False))].index # noqa
+    # Filtre FSN
+    f_above = df.loc[:, "FSN"].str.contains("above reference range", regex=False,
+                                            case=False)
+    f_below = df.loc[:, "FSN"].str.contains("below reference range", regex=False,
+                                            case=False)
+    f_within = df.loc[:, "FSN"].str.contains("within reference range", regex=False,
+                                             case=False)
+    f_outside = df.loc[:, "FSN"].str.contains("outside reference range", regex=False,
+                                              case=False)
 
-    idx = idx.union(df.loc[co
-                           & (df.loc[:, "FSN"].str.contains("below reference range", regex=False, case=False)) # noqa
-                           & (~df.loc[:, "term"].str.contains("inférieure? (?:à l'intervalle|aux valeurs) de référence", case=False))].index) # noqa
+    # Identification des concepts ayant des synonymes invalides
+    has_invalid_syn_abv = ~df.loc[f_above, "conceptId"].isin(
+        df.loc[syn
+               & df.loc[:, "term"].str.contains("supérieure? aux valeurs de référence"), "conceptId"].unique() # noqa
+    )
 
-    idx = idx.union(df.loc[co
-                           & (df.loc[:, "FSN"].str.contains("within reference range", regex=False, case=False)) # noqa
-                           & (~df.loc[:, "term"].str.contains("dans (?:l'intervalle|les valeurs) de référence", case=False))].index) # noqa
+    has_invalid_syn_bel = ~df.loc[f_below, "conceptId"].isin(
+        df.loc[syn
+               & df.loc[:, "term"].str.contains("inférieure? aux valeurs de référence"), "conceptId"].unique() # noqa
+    )
 
-    idx = idx.union(df.loc[co
-                           & (df.loc[:, "FSN"].str.contains("outside reference range", regex=False, case=False)) # noqa
-                           & (~df.loc[:, "term"].str.contains("en dehors (?:de l'intervalle|des valeurs) de référence", case=False))].index) # noqa
+    has_invalid_syn_in = ~df.loc[f_within, "conceptId"].isin(
+        df.loc[syn
+               & df.loc[:, "term"].str.contains("dans les valeurs de référence", regex=False), "conceptId"].unique() # noqa
+    )
+
+    has_invalid_syn_out = ~df.loc[f_outside, "conceptId"].isin(
+        df.loc[syn
+               & df.loc[:, "term"].str.contains("en dehors des valeurs de référence", regex=False), "conceptId"].unique() # noqa
+    )
+
+    # Identification des lignes ne respectant pas la règle
+    idx = df.loc[co & pt & f_above
+                 & (~df.loc[:, "term"].str.contains("supérieure? à l'intervalle de référence", case=False))].index # noqa
+
+    idx = idx.union(df.loc[co & syn & has_invalid_syn_abv].index)
+
+    idx = idx.union(df.loc[co & pt & f_below
+                           & (~df.loc[:, "term"].str.contains("inférieure? à l'intervalle de référence", case=False))].index) # noqa
+
+    idx = idx.union(df.loc[co & syn & has_invalid_syn_bel].index)
+
+    idx = idx.union(df.loc[co & pt & f_within
+                           & (~df.loc[:, "term"].str.contains("dans l'intervalle de référence", regex=False, case=False))].index) # noqa
+
+    idx = idx.union(df.loc[co & syn & has_invalid_syn_in].index)
+
+    idx = idx.union(df.loc[co & pt & f_outside
+                           & (~df.loc[:, "term"].str.contains("en dehors de l'intervalle de référence", regex=False, case=False))].index) # noqa
+
+    idx = idx.union(df.loc[co & syn & has_invalid_syn_out].index)
 
     if not idx.empty:
         df = pd.merge(df, pd.DataFrame(data={"co6": ["1"] * len(idx)}, index=idx),
@@ -457,17 +489,19 @@ def _check_pa4(df: pd.DataFrame) -> pd.DataFrame:
     return df
 
 
-def _check_pa6(df: pd.DataFrame) -> pd.DataFrame:
+def _check_pa6(df: pd.DataFrame, pt: pd.Series) -> pd.DataFrame:
     """Identifie les descriptions ne respectant pas la règle pa6
 
     args:
         df: DataFrame à valider
+        pt: Filtre sur les termes préférés de `df`
 
     returns:
         DataFrame du fichier avec une colonne identifiant les
         descriptions ne respectant pas la règle pa6.
     """
-    idx = df.loc[(df.loc[:, "FSN"].str.contains("impairment", regex=False, case=False))
+    idx = df.loc[pt
+                 & (df.loc[:, "FSN"].str.contains("impairment", regex=False, case=False)) # noqa
                  & (~df.loc[:, "term"].str.contains("atteinte", regex=False, case=False))].index # noqa
 
     if not idx.empty:
@@ -552,20 +586,21 @@ def _check_pa9(df: pd.DataFrame) -> pd.DataFrame:
 ##############################################
 # Règles Pharmaceutical / biological product #
 ##############################################
-def _check_me1(df: pd.DataFrame, me: pd.Series) -> pd.DataFrame:
+def _check_me1(df: pd.DataFrame, me: pd.Series, pt: pd.Series) -> pd.DataFrame:
     """Identifie les descriptions ne respectant pas la règle me1
 
     args:
         df: DataFrame à valider
         me: Filtre sur les Pharmaceutical / biological product de `df`
+        pt: Filtre sur les termes préférés de `df`
 
     returns:
         DataFrame du fichier avec une colonne identifiant les
         descriptions ne respectant pas la règle me1.
     """
-    idx = df.loc[me
+    idx = df.loc[me & pt
                  & (df.loc[:, "FSN"].str.contains("product containing (?!only|precisely)", case=False)) # noqa
-                 & (~df.loc[:, "term"].str.contains("produit contenant (?!uniquement|précisément)", case=False))].index # noqa
+                 & (~df.loc[:, "term"].str.contains("(?:produit|vaccin) contenant (?!uniquement|précisément)", case=False))].index # noqa
 
     if not idx.empty:
         df = pd.merge(df, pd.DataFrame(data={"me1": ["1"] * len(idx)}, index=idx),
@@ -573,20 +608,21 @@ def _check_me1(df: pd.DataFrame, me: pd.Series) -> pd.DataFrame:
     return df
 
 
-def _check_me2(df: pd.DataFrame, me: pd.Series) -> pd.DataFrame:
+def _check_me2(df: pd.DataFrame, me: pd.Series, pt: pd.Series) -> pd.DataFrame:
     """Identifie les descriptions ne respectant pas la règle me2
 
     args:
         df: DataFrame à valider
         me: Filtre sur les Pharmaceutical / biological product de `df`
+        pt: Filtre sur les termes préférés de `df`
 
     returns:
         DataFrame du fichier avec une colonne identifiant les
         descriptions ne respectant pas la règle me2.
     """
-    idx = df.loc[me
+    idx = df.loc[me & pt
                  & (df.loc[:, "FSN"].str.contains("product containing only", regex=False, case=False)) # noqa
-                 & (~df.loc[:, "term"].str.contains("produit contenant uniquement", regex=False, case=False))].index # noqa
+                 & (~df.loc[:, "term"].str.contains("(?:produit|vaccin) contenant uniquement", case=False))].index # noqa
 
     if not idx.empty:
         df = pd.merge(df, pd.DataFrame(data={"me2": ["1"] * len(idx)}, index=idx),
@@ -595,18 +631,19 @@ def _check_me2(df: pd.DataFrame, me: pd.Series) -> pd.DataFrame:
     return df
 
 
-def _check_me3(df: pd.DataFrame, me: pd.Series) -> pd.DataFrame:
+def _check_me3(df: pd.DataFrame, me: pd.Series, pt: pd.Series) -> pd.DataFrame:
     """Identifie les descriptions ne respectant pas la règle me3
 
     args:
         df: DataFrame à valider
         me: Filtre sur les Pharmaceutical / biological product de `df`
+        pt: Filtre sur les termes préférés de `df`
 
     returns:
         DataFrame du fichier avec une colonne identifiant les
         descriptions ne respectant pas la règle me3.
     """
-    idx = df.loc[me
+    idx = df.loc[me & pt
                  & (df.loc[:, "FSN"].str.endswith("(clinical drug)"))
                  & (~df.loc[:, "term"].str.contains("produit contenant précisément", regex=False, case=False))].index # noqa
 
@@ -617,18 +654,19 @@ def _check_me3(df: pd.DataFrame, me: pd.Series) -> pd.DataFrame:
     return df
 
 
-def _check_me4(df: pd.DataFrame, me: pd.Series) -> pd.DataFrame:
+def _check_me4(df: pd.DataFrame, me: pd.Series, pt: pd.Series) -> pd.DataFrame:
     """Identifie les descriptions ne respectant pas la règle me4
 
     args:
         df: DataFrame à valider
         me: Filtre sur les Pharmaceutical / biological product de `df`
+        pt: Filtre sur les termes préférés de `df`
 
     returns:
         DataFrame du fichier avec une colonne identifiant les
         descriptions ne respectant pas la règle me4.
     """
-    idx = df.loc[me
+    idx = df.loc[me & pt
                  & (df.loc[:, "term"].str.contains("libération conventionnelle", regex=False, case=False))].index # noqa
 
     if not idx.empty:
@@ -641,17 +679,19 @@ def _check_me4(df: pd.DataFrame, me: pd.Series) -> pd.DataFrame:
 ##########################
 # Règles Physical object #
 ##########################
-def _check_sb1(df: pd.DataFrame) -> pd.DataFrame:
+def _check_sb1(df: pd.DataFrame, pt: pd.Series) -> pd.DataFrame:
     """Identifie les descriptions ne respectant pas la règle sb1
 
     args:
         df: DataFrame à valider
+        pt: Filtre sur les termes préférés de `df`
 
     returns:
         DataFrame du fichier avec une colonne identifiant les
         descriptions ne respectant pas la règle sb1.
     """
-    idx = df.loc[(df.loc[:, "FSN"].str.contains(r"evacuated [-\w\s\/\(\)':]+ collection tube", case=False)) # noqa
+    idx = df.loc[pt
+                 & (df.loc[:, "FSN"].str.contains(r"evacuated [-\w\s\/\(\)':]+ collection tube", case=False)) # noqa
                  & (~df.loc[:, "term"].str.contains(r"tube sous vide [-\w\s\/\(\)':]+ pour prélèvement", case=False))].index # noqa
 
     if not idx.empty:
@@ -661,17 +701,19 @@ def _check_sb1(df: pd.DataFrame) -> pd.DataFrame:
     return df
 
 
-def _check_sb2(df: pd.DataFrame) -> pd.DataFrame:
+def _check_sb2(df: pd.DataFrame, pt: pd.Series) -> pd.DataFrame:
     """Identifie les descriptions ne respectant pas la règle sb2
 
     args:
         df: DataFrame à valider
+        pt: Filtre sur les termes préférés de `df`
 
     returns:
         DataFrame du fichier avec une colonne identifiant les
         descriptions ne respectant pas la règle sb2.
     """
-    idx = df.loc[(df.loc[:, "FSN"].str.contains(r"evacuated [-\w\s\/\(\)':]+ specimen container", case=False)) # noqa
+    idx = df.loc[pt
+                 & (df.loc[:, "FSN"].str.contains(r"evacuated [-\w\s\/\(\)':]+ specimen container", case=False)) # noqa
                  & (~df.loc[:, "term"].str.contains(r"support sous vide [-\w\s\/\(\)':]+ pour prélèvement", case=False))].index # noqa
 
     if not idx.empty:
@@ -693,13 +735,17 @@ def _check_sb3(df: pd.DataFrame, pt: pd.Series, syn: pd.Series) -> pd.DataFrame:
         DataFrame du fichier avec une colonne identifiant les
         descriptions ne respectant pas la règle sb3.
     """
-    idx = df.loc[pt
-                 & (df.loc[:, "FSN"].str.contains("stent", regex=False, case=False))
+    f_stent = df.loc[:, "FSN"].str.contains("stent", regex=False, case=False)
+
+    has_invalid_syn = ~df.loc[f_stent, "conceptId"].isin(
+        df.loc[syn
+               & df.loc[:, "term"].str.contains("stent", regex=False), "conceptId"].unique() # noqa
+    )
+
+    idx = df.loc[pt & f_stent
                  & (~df.loc[:, "term"].str.contains("endoprothèse", regex=False, case=False))].index # noqa
 
-    idx = idx.union(df.loc[syn
-                           & (df.loc[:, "FSN"].str.contains("stent", regex=False, case=False)) # noqa
-                           & (~df.loc[:, "term"].str.contains("stent", regex=False, case=False))].index) # noqa
+    idx = idx.union(df.loc[syn & has_invalid_syn].index)
 
     if not idx.empty:
         df = pd.merge(df, pd.DataFrame(data={"sb3": ["1"] * len(idx)}, index=idx),
@@ -723,21 +769,39 @@ def _check_pr2(df: pd.DataFrame, pt: pd.Series, syn: pd.Series) -> pd.DataFrame:
         DataFrame du fichier avec une colonne identifiant les
         descriptions ne respectant pas la règle pr2.
     """
-    idx = df.loc[pt
-                 & (df.loc[:, "FSN"].str.contains(" procedure", regex=False, case=False)) # noqa
-                 & (~df.loc[:, "term"].str.contains("(?:procédure|intervention chirurgicale)", case=False))].index # noqa
+    # Filtre FSN
+    f_procedure = ((df.loc[:, "FSN"].str.contains("procedure", regex=False, case=False))
+                   & (~df.loc[:, "FSN"].str.contains("surgical", regex=False, case=False)))  # noqa
+    f_surgery = df.loc[:, "FSN"].str.contains("(?:operation|surgery|surgical)", case=False)  # noqa
 
-    idx = idx.union(df.loc[pt
-                           & (df.loc[:, "FSN"].str.contains("operation", regex=False, case=False)) # noqa
+    # Identification des concepts ayant des synonymes invalides
+    has_invalid_syn = ~df.loc[f_procedure, "conceptId"].isin(
+        df.loc[syn
+               & (df.loc[:, "term"].str.contains("intervention", regex=False))
+               & (~df.loc[:, "term"].str.contains("chirurgicale", regex=False)), "conceptId"].unique() # noqa
+    )
+
+    has_invalid_syn_ope = ~df.loc[f_surgery, "conceptId"].isin(
+        df.loc[syn
+               & (df.loc[:, "term"].str.contains("opération")), "conceptId"].unique()
+    )
+
+    has_invalid_syn_chir = ~df.loc[f_surgery, "conceptId"].isin(
+        df.loc[syn
+               & df.loc[:, "term"].str.contains("chirurgie"), "conceptId"].unique()
+    )
+
+    # Identification des lignes ne respectant pas la règle
+    idx = df.loc[pt & f_procedure
+                 & (~df.loc[:, "term"].str.contains("procédure", regex=False, case=False))].index # noqa
+
+    idx = idx.union(df.loc[syn & has_invalid_syn].index)
+
+    idx = idx.union(df.loc[pt & f_surgery
                            & (~df.loc[:, "term"].str.contains("intervention chirurgicale", regex=False, case=False))].index) # noqa
 
-    idx = idx.union(df.loc[syn
-                           & (df.loc[:, "FSN"].str.contains(" procedure", regex=False, case=False)) # noqa
-                           & (~df.loc[:, "term"].str.contains("(?:intervention|opération|chirurgie)", case=False))].index) # noqa
-
-    idx = idx.union(df.loc[syn
-                           & (df.loc[:, "FSN"].str.contains("operation", regex=False, case=False)) # noqa
-                           & (~df.loc[:, "term"].str.contains("(?:opération|chirurgie)", case=False))].index) # noqa
+    idx = idx.union(df.loc[syn & has_invalid_syn_ope].index)
+    idx = idx.union(df.loc[syn & has_invalid_syn_chir].index)
 
     if not idx.empty:
         df = pd.merge(df, pd.DataFrame(data={"pr2": ["1"] * len(idx)}, index=idx),
@@ -766,28 +830,24 @@ def _check_pr3(df: pd.DataFrame) -> pd.DataFrame:
     return df
 
 
-def _check_pr4(df: pd.DataFrame, pt: pd.Series, syn: pd.Series) -> pd.DataFrame:
+def _check_pr4(df: pd.DataFrame, pt: pd.Series) -> pd.DataFrame:
     """Identifie les descriptions ne respectant pas la règle pr4
 
     args:
         df: DataFrame à valider
         pt: Filtre sur les termes préférés de `df`
-        syn: Filtre sur les synonymes acceptables de `df`
 
     returns:
         DataFrame du fichier avec une colonne identifiant les
         descriptions ne respectant pas la règle pr4.
     """
-    idx = df.loc[(df.loc[:, "FSN"].str.contains("removal of foreign body", regex=False, case=False)) # noqa
+    idx = df.loc[pt
+                 & (df.loc[:, "FSN"].str.contains("removal of foreign body", regex=False, case=False)) # noqa
                  & (~df.loc[:, "term"].str.contains("retrait d'un corps étranger", regex=False, case=False))].index # noqa
 
     idx = idx.union(df.loc[pt
                            & (df.loc[:, "FSN"].str.contains("magnet extraction", regex=False, case=False)) # noqa
                            & (~df.loc[:, "term"].str.contains("extraction avec un aimant", regex=False, case=False))].index) # noqa
-
-    idx = idx.union(df.loc[syn
-                           & (df.loc[:, "FSN"].str.contains("magnet extraction", regex=False, case=False)) # noqa
-                           & (~df.loc[:, "term"].str.contains(r"retrait d'un corps étranger [-\w\s\/\(\)':]+ à l'aide d'un aimant", case=False))].index) # noqa
 
     if not idx.empty:
         df = pd.merge(df, pd.DataFrame(data={"pr4": ["1"] * len(idx)}, index=idx),
@@ -808,13 +868,17 @@ def _check_pr9(df: pd.DataFrame, pt: pd.Series, syn: pd.Series) -> pd.DataFrame:
         DataFrame du fichier avec une colonne identifiant les
         descriptions ne respectant pas la règle pr9.
     """
-    idx = df.loc[pt
-                 & (df.loc[:, "FSN"].str.contains("excisional biopsy", regex=False, case=False)) # noqa
+    f_excisional = df.loc[:, "FSN"].str.contains("excisional biopsy", regex=False, case=False)  # noqa
+
+    has_invalid_syn = ~df.loc[f_excisional, "conceptId"].isin(
+        df.loc[syn
+               & df.loc[:, "term"].str.contains("biopsie excisionnelle", regex=False), "conceptId"].unique() # noqa
+    )
+
+    idx = df.loc[pt & f_excisional
                  & (~df.loc[:, "term"].str.contains("biopsie-exérèse", regex=False, case=False))].index # noqa
 
-    idx = idx.union(df.loc[syn
-                           & (df.loc[:, "FSN"].str.contains("excisional biopsy", regex=False, case=False)) # noqa
-                           & (~df.loc[:, "term"].str.contains("biopsie excisionnelle", regex=False, case=False))].index) # noqa
+    idx = idx.union(df.loc[syn & has_invalid_syn].index)
 
     if not idx.empty:
         df = pd.merge(df, pd.DataFrame(data={"pr9": ["1"] * len(idx)}, index=idx),
@@ -855,21 +919,17 @@ def _check_pr12(df: pd.DataFrame, pt: pd.Series, syn: pd.Series) -> pd.DataFrame
         DataFrame du fichier avec une colonne identifiant les
         descriptions ne respectant pas la règle pr12.
     """
-    idx = df.loc[pt
-                 & (df.loc[:, "FSN"].str.contains("MRI", regex=False))
+    f_irm = df.loc[:, "FSN"].str.contains("(?:MRI|(?:m|M)agnetic resonance angiography|(?:m|M)agnetic resonance imaging)")  # noqa
+
+    has_invalid_syn = ~df.loc[f_irm, "conceptId"].isin(
+        df.loc[syn
+               & df.loc[:, "term"].str.contains("imagerie par résonance magnétique", regex=False), "conceptId"].unique() # noqa
+    )
+
+    idx = df.loc[pt & f_irm
                  & (~df.loc[:, "term"].str.contains("IRM", regex=False, case=False))].index # noqa
 
-    idx = idx.union(df.loc[syn
-                           & (df.loc[:, "FSN"].str.contains("MRI", regex=False))
-                           & (~df.loc[:, "term"].str.contains("imagerie par résonance magnétique", regex=False, case=False))].index) # noqa
-
-    idx = idx.union(df.loc[pt
-                           & (df.loc[:, "FSN"].str.contains("magnetic resonance angiography", regex=False, case=False)) # noqa
-                           & (~df.loc[:, "term"].str.contains("angiographie par IRM", regex=False, case=False))].index) # noqa
-
-    idx = idx.union(df.loc[syn
-                           & (df.loc[:, "FSN"].str.contains("magnetic resonance angiography", regex=False, case=False)) # noqa
-                           & (~df.loc[:, "term"].str.contains("angiographie par imagerie par résonance magnétique", regex=False, case=False))].index) # noqa
+    idx = idx.union(df.loc[syn & has_invalid_syn].index)
 
     if not idx.empty:
         df = pd.merge(df, pd.DataFrame(data={"pr12": ["1"] * len(idx)}, index=idx),
@@ -890,15 +950,17 @@ def _check_pr13(df: pd.DataFrame, pt: pd.Series, syn: pd.Series) -> pd.DataFrame
         DataFrame du fichier avec une colonne identifiant les
         descriptions ne respectant pas la règle pr13.
     """
-    idx = df.loc[pt
-                 & (df.loc[:, "FSN"].str.contains("(?:guided|guidance)", case=False))
+    f_guided = df.loc[:, "FSN"].str.contains("(?:guided|guidance)")  # noqa
+
+    has_invalid_syn = ~df.loc[f_guided, "conceptId"].isin(
+        df.loc[syn
+               & df.loc[:, "term"].str.contains("sous guidage", regex=False), "conceptId"].unique() # noqa
+    )
+
+    idx = df.loc[pt & f_guided
                  & (~df.loc[:, "term"].str.contains("guidée? par", case=False))].index
 
-    idx = idx.union(df.loc[syn
-                           & (df.loc[:, "FSN"].str.contains("(?:guided|guidance)", case=False)) # noqa
-                           & (~df.loc[:, "term"].str.contains("sous guidage", regex=False, case=False))].index) # noqa
-
-    idx = idx.difference(df.loc[df.loc[:, "FSN"].str.contains("(?:fluoroscopy|fluoroscopic)", case=False)].index) # noqa
+    idx = idx.union(df.loc[syn & has_invalid_syn].index)
 
     if not idx.empty:
         df = pd.merge(df, pd.DataFrame(data={"pr13": ["1"] * len(idx)}, index=idx),
@@ -919,21 +981,17 @@ def _check_pr14(df: pd.DataFrame, pt: pd.Series, syn: pd.Series) -> pd.DataFrame
         DataFrame du fichier avec une colonne identifiant les
         descriptions ne respectant pas la règle pr14.
     """
-    idx = df.loc[pt
-                 & (df.loc[:, "FSN"].str.contains(r"(?:fluoroscopy|fluoroscopic)(?![-\w\s\/\(\)':]*(?:guided|guidance))", case=False)) # noqa
-                 & (~df.loc[:, "term"].str.contains("radioscopie", case=False))].index
+    f_fluo = df.loc[:, "FSN"].str.contains("(?:fluoroscopy|fluoroscopic)", case=False)  # noqa
 
-    idx = idx.union(df.loc[syn
-                           & (df.loc[:, "FSN"].str.contains(r"(?:fluoroscopy|fluoroscopic)(?![-\w\s\/\(\)':]*(?:guided|guidance))", case=False)) # noqa
-                           & (~df.loc[:, "term"].str.contains("fluoroscopie", regex=False, case=False))].index) # noqa
+    has_invalid_syn = ~df.loc[f_fluo, "conceptId"].isin(
+        df.loc[syn
+               & df.loc[:, "term"].str.contains("(?:fluoroscopie|fluoroscopique)"), "conceptId"].unique() # noqa
+    )
 
-    idx = idx.union(df.loc[pt
-                           & (df.loc[:, "FSN"].str.contains(r"(?:fluoroscopy|fluoroscopic)[-\w\s\/\(\)':]*(?:guided|guidance)", case=False)) # noqa
-                           & (~df.loc[:, "term"].str.contains("guidée? par radioscopie", case=False))].index) # noqa
+    idx = df.loc[pt & f_fluo
+                 & (~df.loc[:, "term"].str.contains("(?:radioscopie|radioscopique)", case=False))].index # noqa
 
-    idx = idx.union(df.loc[syn
-                           & (df.loc[:, "FSN"].str.contains(r"(?:fluoroscopy|fluoroscopic)[-\w\s\/\(\)':]*(?:guided|guidance)", case=False)) # noqa
-                           & (~df.loc[:, "term"].str.contains("(?:sous guidage radioscopique|guidée? par fluoroscopie)", case=False))].index) # noqa
+    idx = idx.union(df.loc[syn & has_invalid_syn].index)
 
     if not idx.empty:
         df = pd.merge(df, pd.DataFrame(data={"pr14": ["1"] * len(idx)}, index=idx),
@@ -1053,13 +1111,25 @@ def _check_su1(df: pd.DataFrame, pt: pd.Series, syn: pd.Series) -> pd.DataFrame:
         DataFrame du fichier avec une colonne identifiant les descriptions ne respectant
         pas la règle su1-FR.
     """
+    has_invalid_syn = ~df.loc[:, "conceptId"].isin(
+        df.loc[syn
+               & (df.loc[:, "FSN"].str.contains("(?:antibody|immunoglobulin)", case=False)) # noqa
+               & df.loc[:, "term"].str.contains("(?:anticorps|immunoglobuline)"), "conceptId"].unique() # noqa
+    )
+
+    has_invalid_syn_ig = ~df.loc[:, "conceptId"].isin(
+        df.loc[syn
+               & (df.loc[:, "FSN"].str.contains("(?:antibody|immunoglobulin)", case=False)) # noqa
+               & df.loc[:, "term"].str.contains("Ig"), "conceptId"].unique() # noqa
+    )
+
     idx = df.loc[pt
                  & (df.loc[:, "FSN"].str.contains("(?:antibody|immunoglobulin)", case=False)) # noqa
-                 & (~df.loc[:, "term"].str.contains("immunoglobuline", regex=False, case=False))].index # noqa
+                 & (~df.loc[:, "term"].str.contains("(?:anticorps|immunoglobuline)", case=False))].index # noqa
 
-    idx = idx.union(df.loc[syn
-                           & (df.loc[:, "FSN"].str.contains("(?:antibody|immunoglobulin)", case=False)) # noqa
-                           & (~df.loc[:, "term"].str.contains("(?:Ig|anticorps)", case=False))].index) # noqa
+    idx = idx.union(df.loc[syn & has_invalid_syn].index)
+
+    idx = idx.union(df.loc[syn & has_invalid_syn_ig].index)
 
     if not idx.empty:
         df = pd.merge(df, pd.DataFrame(data={"su1": ["1"] * len(idx)}, index=idx),
@@ -1103,7 +1173,7 @@ def _check_su8(df: pd.DataFrame, su: pd.Series, pt: pd.Series) -> pd.DataFrame:
         pas la règle su8-FR.
     """
     idx = df.loc[su & pt
-                 & (df.loc[:, "term"].str.contains("(?:>.*<)", case=False))].index
+                 & (df.loc[:, "term"].str.contains("(?:>.*<)"))].index
 
     if not idx.empty:
         df = pd.merge(df, pd.DataFrame(data={"su8": ["1"] * len(idx)}, index=idx),
@@ -1162,36 +1232,36 @@ def run_editorial_check(df: pd.DataFrame, fts: "server.Server") -> pd.DataFrame:
 
     # Contrôles des règles de Body Structure
     if not df.loc[bs].empty:
-        df = _check_bs2(df)
+        df = _check_bs2(df, pt)
         df = _check_bs3(df, bs, pt, syn)
-        df = _check_bs5(df, bs)
-        df = _check_bs6(df, bs)
-        df = _check_bs7(df, bs)
-        df = _check_bs8(df, pt, syn)
+        df = _check_bs5(df, bs, pt)
+        df = _check_bs6(df, bs, pt)
+        df = _check_bs7(df, bs, pt)
+        df = _check_bs8(df, pt)
         df = _check_bs9(df, pt, syn)
-        df = _check_bs10(df, pt, syn)
-        df = _check_bs11(df, pt, syn)
+        df = _check_bs10(df)
+        df = _check_bs11(df)
         df = _check_bs12(df)
         df = _check_bs13(df)
 
     # Contrôles des règles de Clinical finding
     if not df.loc[co].empty:
         df = _check_co2(df, co)
-        df = _check_co6(df, co)
+        df = _check_co6(df, co, pt, syn)
     if not df.loc[pa].empty:
         df = _check_pa3_1(df)
         df = _check_pa4(df)
-        df = _check_pa6(df)
+        df = _check_pa6(df, pt)
         df = _check_pa7(df)
         df = _check_pa8(df)
         df = _check_pa9(df)
 
     # Contrôles des règles de Pharmaceutical / biological product
     if not df.loc[me].empty:
-        df = _check_me1(df, me)
-        df = _check_me2(df, me)
-        df = _check_me3(df, me)
-        df = _check_me4(df, me)
+        df = _check_me1(df, me, pt)
+        df = _check_me2(df, me, pt)
+        df = _check_me3(df, me, pt)
+        df = _check_me4(df, me, pt)
 
     # Contrôles des règles de Physical object
     if not df.loc[sb].empty:
@@ -1203,7 +1273,7 @@ def run_editorial_check(df: pd.DataFrame, fts: "server.Server") -> pd.DataFrame:
     if not df.loc[pr].empty:
         df = _check_pr2(df, pt, syn)
         df = _check_pr3(df)
-        df = _check_pr4(df, pt, syn)
+        df = _check_pr4(df, pt)
         df = _check_pr9(df, pt, syn)
         df = _check_pr10(df)
         df = _check_pr12(df, pt, syn)
