@@ -79,7 +79,7 @@ def ar6(ar) -> pd.DataFrame:
 def bs() -> pd.DataFrame:
     return pd.DataFrame(
         {"conceptId": ["bs2", "bs2", "bs2",
-                       "bs3_s1", "bs3_s1", "bs3_s2", "bs3_s2", "bs3_s3", "bs3_s3",
+                       "bs3_s1", "bs3_s1", "bs3_s2", "bs3_s2", "bs3_s3", "bs3_s3", "bs3_s3",  # noqa
                        "bs3_e", "bs3_e", "bs3_e",
                        "bs3_p", "bs3_p",
                        "bs5", "bs5", "bs5",
@@ -87,13 +87,13 @@ def bs() -> pd.DataFrame:
                        "bs6_a", "bs6_a", "bs6_a", "bs6_a", "bs6_a",
                        "bs7", "bs7", "bs7", "bs7", "bs7",
                        "bs8", "bs8", "bs8",
-                       "bs9_1", "bs9_1", "bs9_2", "bs9_2", "bs9_3", "bs9_3", "bs9_3",
+                       "bs9_1", "bs9_1", "bs9_2", "bs9_2", "bs9_3", "bs9_3", "bs9_3", "bs9_4",  # noqa
                        "bs10_limb", "bs10_limb", "bs10_leg", "bs10_leg",
                        "bs11_limb", "bs11_limb", "bs11_arm", "bs11_arm",
                        "bs12", "bs12", "bs12",
                        "bs13", "bs13", "bs13", "bs13_bs", "bs13_bs"],
          "FSN": ["Knee joint", "Knee joint", "Knee joint",  # bs2
-                 "Knee structure", "Knee structure", "Knee structure", "Knee structure", "Knee structure", "Knee structure",  # bs3 Structure # noqa
+                 "Knee structure", "Knee structure", "Knee structure", "Knee structure", "Knee structure", "Knee structure", "Knee structure",  # bs3 Structure # noqa
                  "Entire patella", "Entire patella", "Entire patella",  # bs3 Entire
                  "Part of knee", "Part of knee",  # bs3 Part
                  "Knee region", "Knee region", "Knee region",  # bs5
@@ -101,13 +101,13 @@ def bs() -> pd.DataFrame:
                  "Knee area", "Knee area", "Knee area", "Knee area", "Knee area",  # bs6 Area # noqa
                  "Proper patella", "Proper patella", "Proper patella", "Proper patella", "Proper patella",  # bs7 # noqa
                  "Apex of lung", "Apex of lung", "Apex of lung",  # bs8
-                 "Skin of lesser toe", "Skin of lesser toe", "Skin of lesser toe", "Skin of lesser toe", "Skin of lesser toe", "Skin of lesser toe", "Skin of lesser toe",  # bs9 # noqa
+                 "Skin of lesser toe", "Skin of lesser toe", "Skin of lesser toe", "Skin of lesser toe", "Skin of lesser toe", "Skin of lesser toe", "Skin of lesser toe", "Skin of lesser toe",  # bs9 # noqa
                  "Skin of lower limb", "Skin of lower limb", "Skin of lower leg", "Skin of lower leg",  # bs10 # noqa
                  "Skin of upper limb", "Skin of upper limb", "Skin of upper arm", "Skin of upper arm",  # bs11 # noqa
                  "Cerebrum surface", "Cerebrum surface", "Cerebrum surface",  # bs12
                  "Brain surface", "Brain surface", "Brain surface", "Brainstem nerve", "Brainstem nerve"],  # bs13 # noqa
          "term": ["articulation du genou", "genou", "genou",  # bs2
-                  "genou", "genou", "genou, structure", "genou, structure", "genou", "genou, structure",  # bs3 Structure # noqa
+                  "genou", "genou", "genou, structure", "genou, structure", "genou", "genou", "genou, structure",  # bs3 Structure # noqa
                   "rotule entière", "os entier de la rotule", "rotule",  # bs3 Entire
                   "partie du genou", "genou",  # bs3 Part
                   "région du genou", "genou", "genou",  # bs5
@@ -115,13 +115,13 @@ def bs() -> pd.DataFrame:
                   "zone du genou", "surface du genou", "aire du genou", "genou", "genou",  # bs6 Area # noqa
                   "rotule propre", "rotule proprement dite", "os de la rotule proprement dit", "rotule", "rotule",  # bs7 # noqa
                   "apex du poumon", "poumon", "poumon",  # bs8
-                  "peau d'orteil excepté l'hallux", "peau d'orteil excepté l'hallux", "peau d'orteil latéral", "peau d'orteil latéral", "peau d'orteil excepté l'hallux", "peau de petit orteil", "peau d'orteil latéral",  # bs9 # noqa
+                  "peau d'orteil excepté l'hallux", "peau d'orteil excepté l'hallux", "peau d'orteil latéral", "peau d'orteil latéral", "peau d'orteil excepté l'hallux", "peau d'orteil excepté l'hallux", "peau d'orteil latéral", "peau de petit orteil", # bs9 # noqa
                   "Peau du membre inférieur", "Peau de la jambe", "Peau de la partie inférieure de la jambe", "Peau de la jambe",  # bs10 # noqa
                   "Peau du membre supérieur", "Peau du bras", "Peau de la partie supérieure du bras", "Peau du bras",  # bs11 # noqa
                   "surface du cerveau", "surface cérébrale", "surface encéphalique",  # bs12 # noqa
                   "surface de l'encéphale", "surface encéphalique", "surface cérébrale", "nerf du tronc cérébral", "nerf du tronc encéphalique"],  # bs13 # noqa
          "acceptabilityId": ["PREFERRED", "ACCEPTABLE", "PREFERRED",  # bs2
-                             "PREFERRED", "ACCEPTABLE", "PREFERRED", "ACCEPTABLE", "PREFERRED", "ACCEPTABLE",  # bs3 Structure # noqa
+                             "PREFERRED", "ACCEPTABLE", "PREFERRED", "ACCEPTABLE", "PREFERRED", "ACCEPTABLE", "ACCEPTABLE",  # bs3 Structure # noqa
                              "PREFERRED", "PREFERRED", "PREFERRED",  # bs3 Entire
                              "PREFERRED", "PREFERRED",  # bs3 Part
                              "PREFERRED", "ACCEPTABLE", "PREFERRED",  # bs5
@@ -129,7 +129,7 @@ def bs() -> pd.DataFrame:
                              "PREFERRED", "PREFERRED", "PREFERRED", "ACCEPTABLE", "PREFERRED",  # bs6 Area # noqa
                              "PREFERRED", "PREFERRED", "PREFERRED", "ACCEPTABLE", "PREFERRED",  # bs7 # noqa
                              "PREFERRED", "ACCEPTABLE", "PREFERRED",  # bs8
-                             "PREFERRED", "ACCEPTABLE", "PREFERRED", "ACCEPTABLE", "PREFERRED", "ACCEPTABLE", "ACCEPTABLE",  # bs9 # noqa
+                             "PREFERRED", "ACCEPTABLE", "PREFERRED", "ACCEPTABLE", "PREFERRED", "ACCEPTABLE", "ACCEPTABLE", "PREFERRED",  # bs9 # noqa
                              "PREFERRED", "PREFERRED", "PREFERRED", "PREFERRED",  # bs10
                              "PREFERRED", "PREFERRED", "PREFERRED", "PREFERRED",  # bs11
                              "PREFERRED", "PREFERRED", "PREFERRED",  # bs12
@@ -140,7 +140,7 @@ def bs() -> pd.DataFrame:
 @pytest.fixture
 def bs2(bs) -> pd.DataFrame:
     bs2 = pd.Series([float("nan"), float("nan"), "1",  # bs2
-                     float("nan"), float("nan"), float("nan"), float("nan"), float("nan"), float("nan"),  # bs3 Structure # noqa
+                     float("nan"), float("nan"), float("nan"), float("nan"), float("nan"), float("nan"), float("nan"),  # bs3 Structure # noqa
                      float("nan"), float("nan"), float("nan"),  # bs3 Entire
                      float("nan"), float("nan"),  # bs3 Part
                      float("nan"), float("nan"), float("nan"),  # bs5
@@ -148,7 +148,7 @@ def bs2(bs) -> pd.DataFrame:
                      float("nan"), float("nan"), float("nan"), float("nan"), float("nan"),  # bs6 Area # noqa
                      float("nan"), float("nan"), float("nan"), float("nan"), float("nan"),  # bs7 # noqa
                      float("nan"), float("nan"), float("nan"),  # bs8
-                     float("nan"), float("nan"), float("nan"), float("nan"), float("nan"), float("nan"), float("nan"),  # bs9 # noqa
+                     float("nan"), float("nan"), float("nan"), float("nan"), float("nan"), float("nan"), float("nan"), float("nan"),  # bs9 # noqa
                      float("nan"), float("nan"), float("nan"), float("nan"),  # bs10
                      float("nan"), float("nan"), float("nan"), float("nan"),  # bs11
                      float("nan"), float("nan"), float("nan"),  # bs12
@@ -159,7 +159,7 @@ def bs2(bs) -> pd.DataFrame:
 @pytest.fixture
 def bs3(bs) -> pd.DataFrame:
     bs3 = pd.Series([float("nan"), float("nan"), float("nan"),  # bs2
-                     float("nan"), "1", "1", float("nan"), float("nan"), float("nan"),  # bs3 Structure # noqa
+                     float("nan"), "1", "1", float("nan"), float("nan"), float("nan"), float("nan"),  # bs3 Structure # noqa
                      float("nan"), float("nan"), "1",  # bs3 Entire
                      float("nan"), "1",  # bs3 Part
                      float("nan"), float("nan"), float("nan"),  # bs5
@@ -167,7 +167,7 @@ def bs3(bs) -> pd.DataFrame:
                      float("nan"), float("nan"), float("nan"), float("nan"), float("nan"),  # bs6 Area # noqa
                      float("nan"), float("nan"), float("nan"), float("nan"), float("nan"),  # bs7 # noqa
                      float("nan"), float("nan"), float("nan"),  # bs8
-                     float("nan"), float("nan"), float("nan"), float("nan"), float("nan"), float("nan"), float("nan"),  # bs9 # noqa
+                     float("nan"), float("nan"), float("nan"), float("nan"), float("nan"), float("nan"), float("nan"), float("nan"),  # bs9 # noqa
                      float("nan"), float("nan"), float("nan"), float("nan"),  # bs10
                      float("nan"), float("nan"), float("nan"), float("nan"),  # bs11
                      float("nan"), float("nan"), float("nan"),  # bs12
@@ -178,7 +178,7 @@ def bs3(bs) -> pd.DataFrame:
 @pytest.fixture
 def bs5(bs) -> pd.DataFrame:
     bs5 = pd.Series([float("nan"), float("nan"), float("nan"),  # bs2
-                     float("nan"), float("nan"), float("nan"), float("nan"), float("nan"), float("nan"),  # bs3 Structure # noqa
+                     float("nan"), float("nan"), float("nan"), float("nan"), float("nan"), float("nan"), float("nan"),  # bs3 Structure # noqa
                      float("nan"), float("nan"), float("nan"),  # bs3 Entire
                      float("nan"), float("nan"),  # bs3 Part
                      float("nan"), float("nan"), "1",  # bs5
@@ -186,7 +186,7 @@ def bs5(bs) -> pd.DataFrame:
                      float("nan"), float("nan"), float("nan"), float("nan"), float("nan"),  # bs6 Area # noqa
                      float("nan"), float("nan"), float("nan"), float("nan"), float("nan"),  # bs7 # noqa
                      float("nan"), float("nan"), float("nan"),  # bs8
-                     float("nan"), float("nan"), float("nan"), float("nan"), float("nan"), float("nan"), float("nan"),  # bs9 # noqa
+                     float("nan"), float("nan"), float("nan"), float("nan"), float("nan"), float("nan"), float("nan"), float("nan"),  # bs9 # noqa
                      float("nan"), float("nan"), float("nan"), float("nan"),  # bs10
                      float("nan"), float("nan"), float("nan"), float("nan"),  # bs11
                      float("nan"), float("nan"), float("nan"),  # bs12
@@ -197,7 +197,7 @@ def bs5(bs) -> pd.DataFrame:
 @pytest.fixture
 def bs6(bs) -> pd.DataFrame:
     bs6 = pd.Series([float("nan"), float("nan"), float("nan"),  # bs2
-                     float("nan"), float("nan"), float("nan"), float("nan"), float("nan"), float("nan"),  # bs3 Structure # noqa
+                     float("nan"), float("nan"), float("nan"), float("nan"), float("nan"), float("nan"), float("nan"),  # bs3 Structure # noqa
                      float("nan"), float("nan"), float("nan"),  # bs3 Entire
                      float("nan"), float("nan"),  # bs3 Part
                      float("nan"), float("nan"), float("nan"),  # bs5
@@ -205,7 +205,7 @@ def bs6(bs) -> pd.DataFrame:
                      float("nan"), float("nan"), float("nan"), float("nan"), "1",  # bs6 Area # noqa
                      float("nan"), float("nan"), float("nan"), float("nan"), float("nan"),  # bs7 # noqa
                      float("nan"), float("nan"), float("nan"),  # bs8
-                     float("nan"), float("nan"), float("nan"), float("nan"), float("nan"), float("nan"), float("nan"),  # bs9 # noqa
+                     float("nan"), float("nan"), float("nan"), float("nan"), float("nan"), float("nan"), float("nan"), float("nan"),  # bs9 # noqa
                      float("nan"), float("nan"), float("nan"), float("nan"),  # bs10
                      float("nan"), float("nan"), float("nan"), float("nan"),  # bs11
                      float("nan"), float("nan"), float("nan"),  # bs12
@@ -216,7 +216,7 @@ def bs6(bs) -> pd.DataFrame:
 @pytest.fixture
 def bs7(bs) -> pd.DataFrame:
     bs7 = pd.Series([float("nan"), float("nan"), float("nan"),  # bs2
-                     float("nan"), float("nan"), float("nan"), float("nan"), float("nan"), float("nan"),  # bs3 Structure # noqa
+                     float("nan"), float("nan"), float("nan"), float("nan"), float("nan"), float("nan"), float("nan"),  # bs3 Structure # noqa
                      float("nan"), float("nan"), float("nan"),  # bs3 Entire
                      float("nan"), float("nan"),  # bs3 Part
                      float("nan"), float("nan"), float("nan"),  # bs5
@@ -224,7 +224,7 @@ def bs7(bs) -> pd.DataFrame:
                      float("nan"), float("nan"), float("nan"), float("nan"), float("nan"),  # bs6 Area # noqa
                      float("nan"), float("nan"), float("nan"), float("nan"), "1",  # bs7
                      float("nan"), float("nan"), float("nan"),  # bs8
-                     float("nan"), float("nan"), float("nan"), float("nan"), float("nan"), float("nan"), float("nan"),  # bs9 # noqa
+                     float("nan"), float("nan"), float("nan"), float("nan"), float("nan"), float("nan"), float("nan"), float("nan"),  # bs9 # noqa
                      float("nan"), float("nan"), float("nan"), float("nan"),  # bs10
                      float("nan"), float("nan"), float("nan"), float("nan"),  # bs11
                      float("nan"), float("nan"), float("nan"),  # bs12
@@ -235,7 +235,7 @@ def bs7(bs) -> pd.DataFrame:
 @pytest.fixture
 def bs8(bs) -> pd.DataFrame:
     bs8 = pd.Series([float("nan"), float("nan"), float("nan"),  # bs2
-                     float("nan"), float("nan"), float("nan"), float("nan"), float("nan"), float("nan"),  # bs3 Structure # noqa
+                     float("nan"), float("nan"), float("nan"), float("nan"), float("nan"), float("nan"), float("nan"),  # bs3 Structure # noqa
                      float("nan"), float("nan"), float("nan"),  # bs3 Entire
                      float("nan"), float("nan"),  # bs3 Part
                      float("nan"), float("nan"), float("nan"),  # bs5
@@ -243,7 +243,7 @@ def bs8(bs) -> pd.DataFrame:
                      float("nan"), float("nan"), float("nan"), float("nan"), float("nan"),  # bs6 Area # noqa
                      float("nan"), float("nan"), float("nan"), float("nan"), float("nan"),  # bs7 # noqa
                      float("nan"), float("nan"), "1",  # bs8
-                     float("nan"), float("nan"), float("nan"), float("nan"), float("nan"), float("nan"), float("nan"),  # bs9 # noqa
+                     float("nan"), float("nan"), float("nan"), float("nan"), float("nan"), float("nan"), float("nan"), float("nan"),  # bs9 # noqa
                      float("nan"), float("nan"), float("nan"), float("nan"),  # bs10
                      float("nan"), float("nan"), float("nan"), float("nan"),  # bs11
                      float("nan"), float("nan"), float("nan"),  # bs12
@@ -254,7 +254,7 @@ def bs8(bs) -> pd.DataFrame:
 @pytest.fixture
 def bs9(bs) -> pd.DataFrame:
     bs9 = pd.Series([float("nan"), float("nan"), float("nan"),  # bs2
-                     float("nan"), float("nan"), float("nan"), float("nan"), float("nan"), float("nan"),  # bs3 Structure # noqa
+                     float("nan"), float("nan"), float("nan"), float("nan"), float("nan"), float("nan"), float("nan"),  # bs3 Structure # noqa
                      float("nan"), float("nan"), float("nan"),  # bs3 Entire
                      float("nan"), float("nan"),  # bs3 Part
                      float("nan"), float("nan"), float("nan"),  # bs5
@@ -262,7 +262,7 @@ def bs9(bs) -> pd.DataFrame:
                      float("nan"), float("nan"), float("nan"), float("nan"), float("nan"),  # bs6 Area # noqa
                      float("nan"), float("nan"), float("nan"), float("nan"), float("nan"),  # bs7 # noqa
                      float("nan"), float("nan"), float("nan"),  # bs8
-                     float("nan"), "1", "1", float("nan"), float("nan"), "1", float("nan"),  # bs9 # noqa
+                     float("nan"), "1", "1", float("nan"), float("nan"), float("nan"), float("nan"), "1",  # bs9 # noqa
                      float("nan"), float("nan"), float("nan"), float("nan"),  # bs10
                      float("nan"), float("nan"), float("nan"), float("nan"),  # bs11
                      float("nan"), float("nan"), float("nan"),  # bs12
@@ -273,7 +273,7 @@ def bs9(bs) -> pd.DataFrame:
 @pytest.fixture
 def bs10(bs) -> pd.DataFrame:
     bs10 = pd.Series([float("nan"), float("nan"), float("nan"),  # bs2
-                      float("nan"), float("nan"), float("nan"), float("nan"), float("nan"), float("nan"),  # bs3 Structure # noqa
+                      float("nan"), float("nan"), float("nan"), float("nan"), float("nan"), float("nan"), float("nan"),  # bs3 Structure # noqa
                       float("nan"), float("nan"), float("nan"),  # bs3 Entire
                       float("nan"), float("nan"),  # bs3 Part
                       float("nan"), float("nan"), float("nan"),  # bs5
@@ -281,7 +281,7 @@ def bs10(bs) -> pd.DataFrame:
                       float("nan"), float("nan"), float("nan"), float("nan"), float("nan"),  # bs6 Area # noqa
                       float("nan"), float("nan"), float("nan"), float("nan"), float("nan"),  # bs7 # noqa
                       float("nan"), float("nan"), float("nan"),  # bs8
-                      float("nan"), float("nan"), float("nan"), float("nan"), float("nan"), float("nan"), float("nan"),  # bs9 # noqa
+                      float("nan"), float("nan"), float("nan"), float("nan"), float("nan"), float("nan"), float("nan"), float("nan"),  # bs9 # noqa
                       float("nan"), "1", float("nan"), "1",  # bs10
                       float("nan"), float("nan"), float("nan"), float("nan"),  # bs11
                       float("nan"), float("nan"), float("nan"),  # bs12
@@ -292,7 +292,7 @@ def bs10(bs) -> pd.DataFrame:
 @pytest.fixture
 def bs11(bs) -> pd.DataFrame:
     bs11 = pd.Series([float("nan"), float("nan"), float("nan"),  # bs2
-                      float("nan"), float("nan"), float("nan"), float("nan"), float("nan"), float("nan"),  # bs3 Structure # noqa
+                      float("nan"), float("nan"), float("nan"), float("nan"), float("nan"), float("nan"), float("nan"),  # bs3 Structure # noqa
                       float("nan"), float("nan"), float("nan"),  # bs3 Entire
                       float("nan"), float("nan"),  # bs3 Part
                       float("nan"), float("nan"), float("nan"),  # bs5
@@ -300,7 +300,7 @@ def bs11(bs) -> pd.DataFrame:
                       float("nan"), float("nan"), float("nan"), float("nan"), float("nan"),  # bs6 Area # noqa
                       float("nan"), float("nan"), float("nan"), float("nan"), float("nan"),  # bs7 # noqa
                       float("nan"), float("nan"), float("nan"),  # bs8
-                      float("nan"), float("nan"), float("nan"), float("nan"), float("nan"), float("nan"), float("nan"),  # bs9 # noqa
+                      float("nan"), float("nan"), float("nan"), float("nan"), float("nan"), float("nan"), float("nan"), float("nan"),  # bs9 # noqa
                       float("nan"), float("nan"), float("nan"), float("nan"),  # bs10
                       float("nan"), "1", float("nan"), "1",  # bs11
                       float("nan"), float("nan"), float("nan"),  # bs12
@@ -311,7 +311,7 @@ def bs11(bs) -> pd.DataFrame:
 @pytest.fixture
 def bs12(bs) -> pd.DataFrame:
     bs12 = pd.Series([float("nan"), float("nan"), float("nan"),  # bs2
-                      float("nan"), float("nan"), float("nan"), float("nan"), float("nan"), float("nan"),  # bs3 Structure # noqa
+                      float("nan"), float("nan"), float("nan"), float("nan"), float("nan"), float("nan"), float("nan"),  # bs3 Structure # noqa
                       float("nan"), float("nan"), float("nan"),  # bs3 Entire
                       float("nan"), float("nan"),  # bs3 Part
                       float("nan"), float("nan"), float("nan"),  # bs5
@@ -319,7 +319,7 @@ def bs12(bs) -> pd.DataFrame:
                       float("nan"), float("nan"), float("nan"), float("nan"), float("nan"),  # bs6 Area # noqa
                       float("nan"), float("nan"), float("nan"), float("nan"), float("nan"),  # bs7 # noqa
                       float("nan"), float("nan"), float("nan"),  # bs8
-                      float("nan"), float("nan"), float("nan"), float("nan"), float("nan"), float("nan"), float("nan"),  # bs9 # noqa
+                      float("nan"), float("nan"), float("nan"), float("nan"), float("nan"), float("nan"), float("nan"), float("nan"),  # bs9 # noqa
                       float("nan"), float("nan"), float("nan"), float("nan"),  # bs10
                       float("nan"), float("nan"), float("nan"), float("nan"),  # bs11
                       float("nan"), float("nan"), "1",  # bs12
@@ -330,7 +330,7 @@ def bs12(bs) -> pd.DataFrame:
 @pytest.fixture
 def bs13(bs) -> pd.DataFrame:
     bs13 = pd.Series([float("nan"), float("nan"), float("nan"),  # bs2
-                      float("nan"), float("nan"), float("nan"), float("nan"), float("nan"), float("nan"),  # bs3 Structure # noqa
+                      float("nan"), float("nan"), float("nan"), float("nan"), float("nan"), float("nan"), float("nan"),  # bs3 Structure # noqa
                       float("nan"), float("nan"), float("nan"),  # bs3 Entire
                       float("nan"), float("nan"),  # bs3 Part
                       float("nan"), float("nan"), float("nan"),  # bs5
@@ -338,7 +338,7 @@ def bs13(bs) -> pd.DataFrame:
                       float("nan"), float("nan"), float("nan"), float("nan"), float("nan"),  # bs6 Area # noqa
                       float("nan"), float("nan"), float("nan"), float("nan"), float("nan"),  # bs7 # noqa
                       float("nan"), float("nan"), float("nan"),  # bs8
-                      float("nan"), float("nan"), float("nan"), float("nan"), float("nan"), float("nan"), float("nan"),  # bs9 # noqa
+                      float("nan"), float("nan"), float("nan"), float("nan"), float("nan"), float("nan"), float("nan"), float("nan"),  # bs9 # noqa
                       float("nan"), float("nan"), float("nan"), float("nan"),  # bs10
                       float("nan"), float("nan"), float("nan"), float("nan"),  # bs11
                       float("nan"), float("nan"), float("nan"),  # bs12
@@ -353,10 +353,10 @@ def bs13(bs) -> pd.DataFrame:
 def co_pa() -> pd.DataFrame:
     return pd.DataFrame(
         {"conceptId": ["co2", "co2",
-                       "co3_abv1", "co3_abv1", "co3_abv2", "co3_abv2", "co3_abv3", "co3_abv3",  # noqa
-                       "co3_bel1", "co3_bel1", "co3_bel2", "co3_bel2", "co3_bel3", "co3_bel3",  # noqa
-                       "co3_in1", "co3_in1", "co3_in2", "co3_in2", "co3_in3", "co3_in3",
-                       "co3_out1", "co3_out1", "co3_out2", "co3_out2", "co3_out3", "co3_out3",  # noqa
+                       "co6_abv1", "co6_abv1", "co6_abv2", "co6_abv2", "co6_abv3", "co6_abv3", "co6_abv3",  # noqa
+                       "co6_bel1", "co6_bel1", "co6_bel2", "co6_bel2", "co6_bel3", "co6_bel3", "co6_bel3",  # noqa
+                       "co6_in1", "co6_in1", "co6_in2", "co6_in2", "co6_in3", "co6_in3", "co6_in3",  # noqa
+                       "co6_out1", "co6_out1", "co6_out2", "co6_out2", "co6_out3", "co6_out3", "co6_out3",  # noqa
                        "pa3.1", "pa3.1",
                        "pa4_epi", "pa4_epi",
                        "pa4_sei", "pa4_sei", "pa4_sei", "pa4_sei",
@@ -370,10 +370,10 @@ def co_pa() -> pd.DataFrame:
                        "pa9_f", "pa9_f", "pa9_f", "pa9_b", "pa9_b",
                        "pa9_a", "pa9_a"],
          "FSN": ["Neurological finding", "Neurological finding",  # co2
-                 "Iron above reference range", "Iron above reference range", "Iron above reference range", "Iron above reference range", "Protein above reference range", "Protein above reference range",  # co6 above # noqa
-                 "Iron below reference range", "Iron below reference range", "Iron below reference range", "Iron below reference range", "Protein below reference range", "Protein below reference range",  # co6 below # noqa
-                 "Iron within reference range", "Iron within reference range", "Iron within reference range", "Iron within reference range", "Protein within reference range", "Protein within reference range",  # co6 within # noqa
-                 "Iron outside reference range", "Iron outside reference range", "Iron outside reference range", "Iron outside reference range", "Protein outside reference range", "Protein outside reference range",  # co6 outside # noqa
+                 "Iron above reference range", "Iron above reference range", "Iron above reference range", "Iron above reference range", "Protein above reference range", "Protein above reference range", "Protein above reference range",  # co6 above # noqa
+                 "Iron below reference range", "Iron below reference range", "Iron below reference range", "Iron below reference range", "Protein below reference range", "Protein below reference range", "Protein below reference range",  # co6 below # noqa
+                 "Iron within reference range", "Iron within reference range", "Iron within reference range", "Iron within reference range", "Protein within reference range", "Protein within reference range", "Protein within reference range",  # co6 within # noqa
+                 "Iron outside reference range", "Iron outside reference range", "Iron outside reference range", "Iron outside reference range", "Protein outside reference range", "Protein outside reference range", "Protein outside reference range",  # co6 outside # noqa
                  "Pressure injury of hip", "Pressure injury of hip",  # pa3.1
                  "Reflex epilepsy", "Reflex epilepsy",  # pa4 Epilepsy
                  "Seizure disorder", "Seizure disorder", "Seizure disorder", "Seizure disorder",  # pa4 Seizure # noqa
@@ -387,10 +387,10 @@ def co_pa() -> pd.DataFrame:
                  "Furuncle of hand", "Furuncle of hand", "Furuncle of hand", "Boil of hand", "Boil of hand",  # pa9 Furuncle Boil # noqa
                  "Anthrax", "Anthrax"],  # pa9 anthrax
          "term": ["constatation neurologique", "observation neurologique",  # co2
-                  "fer supérieur à l'intervalle de référence", "fer supérieur à l'intervalle de référence", "fer supérieur aux valeurs de référence", "fer supérieur aux valeurs de référence", "protéine supérieure à l'intervalle de référence", "protéine supérieure aux valeurs de référence",  # co6 above # noqa
-                  "fer inférieur à l'intervalle de référence", "fer inférieur à l'intervalle de référence", "fer inférieur aux valeurs de référence", "fer inférieur aux valeurs de référence", "protéine inférieure à l'intervalle de référence", "protéine inférieure aux valeurs de référence",  # co6 below # noqa
-                  "fer dans l'intervalle de référence", "fer dans l'intervalle de référence", "fer dans les valeurs de référence", "fer dans les valeurs de référence", "protéine dans l'intervalle de référence", "protéine dans les valeurs de référence",  # co6 within # noqa
-                  "fer en dehors de l'intervalle de référence", "fer en dehors de l'intervalle de référence", "fer en dehors des valeurs de référence", "fer en dehors des valeurs de référence", "protéine en dehors de l'intervalle de référence", "protéine en dehors des valeurs de référence",  # co6 outside # noqa
+                  "fer supérieur à l'intervalle de référence", "fer supérieur à l'intervalle de référence", "fer supérieur aux valeurs de référence", "fer supérieur aux valeurs de référence", "protéine supérieure à l'intervalle de référence", "protéine supérieure à l'intervalle de référence", "protéine supérieure aux valeurs de référence",  # co6 above # noqa
+                  "fer inférieur à l'intervalle de référence", "fer inférieur à l'intervalle de référence", "fer inférieur aux valeurs de référence", "fer inférieur aux valeurs de référence", "protéine inférieure à l'intervalle de référence", "protéine inférieure à l'intervalle de référence", "protéine inférieure aux valeurs de référence",  # co6 below # noqa
+                  "fer dans l'intervalle de référence", "fer dans l'intervalle de référence", "fer dans les valeurs de référence", "fer dans les valeurs de référence", "protéine dans l'intervalle de référence", "protéine dans l'intervalle de référence", "protéine dans les valeurs de référence",  # co6 within # noqa
+                  "fer en dehors de l'intervalle de référence", "fer en dehors de l'intervalle de référence", "fer en dehors des valeurs de référence", "fer en dehors des valeurs de référence", "protéine en dehors de l'intervalle de référence", "protéine en dehors de l'intervalle de référence", "protéine en dehors des valeurs de référence",  # co6 outside # noqa
                   "escarre de la hanche", "blessure par pression de la hanche",  # pa3.1
                   "épilepsie réflexe", "crise réflexe",  # pa4 Epilepsy
                   "crise", "convulsion", "trouble convulsif", "épilepsie",  # pa4 Seizure # noqa
@@ -404,10 +404,10 @@ def co_pa() -> pd.DataFrame:
                   "furoncle de la main", "folliculite nécrotique de la main", "maladie de la main", "clou de la main", "maladie de la main",  # pa9 Furuncle Boil # noqa
                   "maladie du charbon", "anthrax"],  # pa9 anthrax
          "acceptabilityId": ["PREFERRED", "PREFERRED",  # co2
-                             "PREFERRED", "ACCEPTABLE", "PREFERRED", "ACCEPTABLE", "PREFERRED", "ACCEPTABLE",  # co6 above # noqa
-                             "PREFERRED", "ACCEPTABLE", "PREFERRED", "ACCEPTABLE", "PREFERRED", "ACCEPTABLE",  # co6 below # noqa
-                             "PREFERRED", "ACCEPTABLE", "PREFERRED", "ACCEPTABLE", "PREFERRED", "ACCEPTABLE",  # co6 within # noqa
-                             "PREFERRED", "ACCEPTABLE", "PREFERRED", "ACCEPTABLE", "PREFERRED", "ACCEPTABLE",  # co6 outside # noqa
+                             "PREFERRED", "ACCEPTABLE", "PREFERRED", "ACCEPTABLE", "PREFERRED", "ACCEPTABLE", "ACCEPTABLE",  # co6 above # noqa
+                             "PREFERRED", "ACCEPTABLE", "PREFERRED", "ACCEPTABLE", "PREFERRED", "ACCEPTABLE", "ACCEPTABLE",  # co6 below # noqa
+                             "PREFERRED", "ACCEPTABLE", "PREFERRED", "ACCEPTABLE", "PREFERRED", "ACCEPTABLE", "ACCEPTABLE",  # co6 within # noqa
+                             "PREFERRED", "ACCEPTABLE", "PREFERRED", "ACCEPTABLE", "PREFERRED", "ACCEPTABLE", "ACCEPTABLE",  # co6 outside # noqa
                              "PREFERRED", "PREFERRED",  # pa3.1
                              "PREFERRED", "PREFERRED",  # pa4 Epilepsy
                              "PREFERRED", "PREFERRED", "PREFERRED", "PREFERRED",  # pa4 Seizure # noqa
@@ -426,10 +426,10 @@ def co_pa() -> pd.DataFrame:
 @pytest.fixture
 def co2(co_pa) -> pd.DataFrame:
     co2 = pd.Series([float("nan"), "1",  # co2
-                     float("nan"), float("nan"), float("nan"), float("nan"), float("nan"), float("nan"),  # co6 above # noqa
-                     float("nan"), float("nan"), float("nan"), float("nan"), float("nan"), float("nan"),  # co6 below # noqa
-                     float("nan"), float("nan"), float("nan"), float("nan"), float("nan"), float("nan"),  # co6 within # noqa
-                     float("nan"), float("nan"), float("nan"), float("nan"), float("nan"), float("nan"),  # co6 outside # noqa
+                     float("nan"), float("nan"), float("nan"), float("nan"), float("nan"), float("nan"), float("nan"),   # co6 above # noqa
+                     float("nan"), float("nan"), float("nan"), float("nan"), float("nan"), float("nan"), float("nan"),   # co6 below # noqa
+                     float("nan"), float("nan"), float("nan"), float("nan"), float("nan"), float("nan"), float("nan"),   # co6 within # noqa
+                     float("nan"), float("nan"), float("nan"), float("nan"), float("nan"), float("nan"), float("nan"),   # co6 outside # noqa
                      float("nan"), float("nan"),  # pa3.1
                      float("nan"), float("nan"),  # pa4 Epilepsy
                      float("nan"), float("nan"), float("nan"), float("nan"),  # pa4 Seizure # noqa
@@ -448,10 +448,10 @@ def co2(co_pa) -> pd.DataFrame:
 @pytest.fixture
 def co6(co_pa) -> pd.DataFrame:
     co6 = pd.Series([float("nan"), float("nan"),  # co2
-                     float("nan"), "1", "1", float("nan"), float("nan"), float("nan"),  # co6 above # noqa
-                     float("nan"), "1", "1", float("nan"), float("nan"), float("nan"),  # co6 below # noqa
-                     float("nan"), "1", "1", float("nan"), float("nan"), float("nan"),  # co6 within # noqa
-                     float("nan"), "1", "1", float("nan"), float("nan"), float("nan"),  # co6 outside # noqa
+                     float("nan"), "1", "1", float("nan"), float("nan"), float("nan"), float("nan"),   # co6 above # noqa
+                     float("nan"), "1", "1", float("nan"), float("nan"), float("nan"), float("nan"),   # co6 below # noqa
+                     float("nan"), "1", "1", float("nan"), float("nan"), float("nan"), float("nan"),   # co6 within # noqa
+                     float("nan"), "1", "1", float("nan"), float("nan"), float("nan"), float("nan"),   # co6 outside # noqa
                      float("nan"), float("nan"),  # pa3.1
                      float("nan"), float("nan"),  # pa4 Epilepsy
                      float("nan"), float("nan"), float("nan"), float("nan"),  # pa4 Seizure # noqa
@@ -470,10 +470,10 @@ def co6(co_pa) -> pd.DataFrame:
 @pytest.fixture
 def pa3_1(co_pa) -> pd.DataFrame:
     pa3_1 = pd.Series([float("nan"), float("nan"),  # co2
-                       float("nan"), float("nan"), float("nan"), float("nan"), float("nan"), float("nan"),  # co6 above # noqa
-                       float("nan"), float("nan"), float("nan"), float("nan"), float("nan"), float("nan"),  # co6 below # noqa
-                       float("nan"), float("nan"), float("nan"), float("nan"), float("nan"), float("nan"),  # co6 within # noqa
-                       float("nan"), float("nan"), float("nan"), float("nan"), float("nan"), float("nan"),  # co6 outside # noqa
+                       float("nan"), float("nan"), float("nan"), float("nan"), float("nan"), float("nan"), float("nan"),   # co6 above # noqa
+                       float("nan"), float("nan"), float("nan"), float("nan"), float("nan"), float("nan"), float("nan"),   # co6 below # noqa
+                       float("nan"), float("nan"), float("nan"), float("nan"), float("nan"), float("nan"), float("nan"),   # co6 within # noqa
+                       float("nan"), float("nan"), float("nan"), float("nan"), float("nan"), float("nan"), float("nan"),   # co6 outside # noqa
                        float("nan"), "1",  # pa3.1
                        float("nan"), float("nan"),  # pa4 Epilepsy
                        float("nan"), float("nan"), float("nan"), float("nan"),  # pa4 Seizure # noqa
@@ -492,10 +492,10 @@ def pa3_1(co_pa) -> pd.DataFrame:
 @pytest.fixture
 def pa4(co_pa) -> pd.DataFrame:
     pa4 = pd.Series([float("nan"), float("nan"),  # co2
-                     float("nan"), float("nan"), float("nan"), float("nan"), float("nan"), float("nan"),  # co6 above # noqa
-                     float("nan"), float("nan"), float("nan"), float("nan"), float("nan"), float("nan"),  # co6 below # noqa
-                     float("nan"), float("nan"), float("nan"), float("nan"), float("nan"), float("nan"),  # co6 within # noqa
-                     float("nan"), float("nan"), float("nan"), float("nan"), float("nan"), float("nan"),  # co6 outside # noqa
+                     float("nan"), float("nan"), float("nan"), float("nan"), float("nan"), float("nan"), float("nan"),   # co6 above # noqa
+                     float("nan"), float("nan"), float("nan"), float("nan"), float("nan"), float("nan"), float("nan"),   # co6 below # noqa
+                     float("nan"), float("nan"), float("nan"), float("nan"), float("nan"), float("nan"), float("nan"),   # co6 within # noqa
+                     float("nan"), float("nan"), float("nan"), float("nan"), float("nan"), float("nan"), float("nan"),   # co6 outside # noqa
                      float("nan"), float("nan"),  # pa3.1
                      float("nan"), "1",  # pa4 Epilepsy
                      float("nan"), float("nan"), float("nan"), "1",  # pa4 Seizure # noqa
@@ -514,10 +514,10 @@ def pa4(co_pa) -> pd.DataFrame:
 @pytest.fixture
 def pa6(co_pa) -> pd.DataFrame:
     pa6 = pd.Series([float("nan"), float("nan"),  # co2
-                     float("nan"), float("nan"), float("nan"), float("nan"), float("nan"), float("nan"),  # co6 above # noqa
-                     float("nan"), float("nan"), float("nan"), float("nan"), float("nan"), float("nan"),  # co6 below # noqa
-                     float("nan"), float("nan"), float("nan"), float("nan"), float("nan"), float("nan"),  # co6 within # noqa
-                     float("nan"), float("nan"), float("nan"), float("nan"), float("nan"), float("nan"),  # co6 outside # noqa
+                     float("nan"), float("nan"), float("nan"), float("nan"), float("nan"), float("nan"), float("nan"),   # co6 above # noqa
+                     float("nan"), float("nan"), float("nan"), float("nan"), float("nan"), float("nan"), float("nan"),   # co6 below # noqa
+                     float("nan"), float("nan"), float("nan"), float("nan"), float("nan"), float("nan"), float("nan"),   # co6 within # noqa
+                     float("nan"), float("nan"), float("nan"), float("nan"), float("nan"), float("nan"), float("nan"),   # co6 outside # noqa
                      float("nan"), float("nan"),  # pa3.1
                      float("nan"), float("nan"),  # pa4 Epilepsy
                      float("nan"), float("nan"), float("nan"), float("nan"),  # pa4 Seizure # noqa
@@ -536,10 +536,10 @@ def pa6(co_pa) -> pd.DataFrame:
 @pytest.fixture
 def pa7(co_pa) -> pd.DataFrame:
     pa7 = pd.Series([float("nan"), float("nan"),  # co2
-                     float("nan"), float("nan"), float("nan"), float("nan"), float("nan"), float("nan"),  # co6 above # noqa
-                     float("nan"), float("nan"), float("nan"), float("nan"), float("nan"), float("nan"),  # co6 below # noqa
-                     float("nan"), float("nan"), float("nan"), float("nan"), float("nan"), float("nan"),  # co6 within # noqa
-                     float("nan"), float("nan"), float("nan"), float("nan"), float("nan"), float("nan"),  # co6 outside # noqa
+                     float("nan"), float("nan"), float("nan"), float("nan"), float("nan"), float("nan"), float("nan"),   # co6 above # noqa
+                     float("nan"), float("nan"), float("nan"), float("nan"), float("nan"), float("nan"), float("nan"),   # co6 below # noqa
+                     float("nan"), float("nan"), float("nan"), float("nan"), float("nan"), float("nan"), float("nan"),   # co6 within # noqa
+                     float("nan"), float("nan"), float("nan"), float("nan"), float("nan"), float("nan"), float("nan"),   # co6 outside # noqa
                      float("nan"), float("nan"),  # pa3.1
                      float("nan"), float("nan"),  # pa4 Epilepsy
                      float("nan"), float("nan"), float("nan"), float("nan"),  # pa4 Seizure # noqa
@@ -558,10 +558,10 @@ def pa7(co_pa) -> pd.DataFrame:
 @pytest.fixture
 def pa8(co_pa) -> pd.DataFrame:
     pa8 = pd.Series([float("nan"), float("nan"),  # co2
-                     float("nan"), float("nan"), float("nan"), float("nan"), float("nan"), float("nan"),  # co6 above # noqa
-                     float("nan"), float("nan"), float("nan"), float("nan"), float("nan"), float("nan"),  # co6 below # noqa
-                     float("nan"), float("nan"), float("nan"), float("nan"), float("nan"), float("nan"),  # co6 within # noqa
-                     float("nan"), float("nan"), float("nan"), float("nan"), float("nan"), float("nan"),  # co6 outside # noqa
+                     float("nan"), float("nan"), float("nan"), float("nan"), float("nan"), float("nan"), float("nan"),   # co6 above # noqa
+                     float("nan"), float("nan"), float("nan"), float("nan"), float("nan"), float("nan"), float("nan"),   # co6 below # noqa
+                     float("nan"), float("nan"), float("nan"), float("nan"), float("nan"), float("nan"), float("nan"),   # co6 within # noqa
+                     float("nan"), float("nan"), float("nan"), float("nan"), float("nan"), float("nan"), float("nan"),   # co6 outside # noqa
                      float("nan"), float("nan"),  # pa3.1
                      float("nan"), float("nan"),  # pa4 Epilepsy
                      float("nan"), float("nan"), float("nan"), float("nan"),  # pa4 Seizure # noqa
@@ -580,10 +580,10 @@ def pa8(co_pa) -> pd.DataFrame:
 @pytest.fixture
 def pa9(co_pa) -> pd.DataFrame:
     pa9 = pd.Series([float("nan"), float("nan"),  # co2
-                     float("nan"), float("nan"), float("nan"), float("nan"), float("nan"), float("nan"),  # co6 above # noqa
-                     float("nan"), float("nan"), float("nan"), float("nan"), float("nan"), float("nan"),  # co6 below # noqa
-                     float("nan"), float("nan"), float("nan"), float("nan"), float("nan"), float("nan"),  # co6 within # noqa
-                     float("nan"), float("nan"), float("nan"), float("nan"), float("nan"), float("nan"),  # co6 outside # noqa
+                     float("nan"), float("nan"), float("nan"), float("nan"), float("nan"), float("nan"), float("nan"),   # co6 above # noqa
+                     float("nan"), float("nan"), float("nan"), float("nan"), float("nan"), float("nan"), float("nan"),   # co6 below # noqa
+                     float("nan"), float("nan"), float("nan"), float("nan"), float("nan"), float("nan"), float("nan"),   # co6 within # noqa
+                     float("nan"), float("nan"), float("nan"), float("nan"), float("nan"), float("nan"), float("nan"),   # co6 outside # noqa
                      float("nan"), float("nan"),  # pa3.1
                      float("nan"), float("nan"),  # pa4 Epilepsy
                      float("nan"), float("nan"), float("nan"), float("nan"),  # pa4 Seizure # noqa
