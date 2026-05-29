@@ -59,7 +59,7 @@ if __name__ == "__main__":
     fsn.loc[:, "FSN"] = [fts.get_fsn(sctid) for sctid in fsn.loc[:, "conceptId"]]
     preview = pd.merge(preview, fsn, how="left", on="conceptId")
     preview = preview[["id", "active", "_type_", "conceptId", "FSN", "term",
-                       "caseSignificanceId", "acceptabilityId"]]
+                       "caseSignificanceId", "acceptabilityId", "notes"]]
 
     # Vérification du respect des règles éditoriales
     print("\n## Respect des règles éditoriales ##")

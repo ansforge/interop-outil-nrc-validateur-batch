@@ -11,22 +11,23 @@ COL = {
     "VAL": ["Concept ID", "FSN"],
     "ADD": ["Concept ID", "GB/US FSN Term (For reference only)",
             "Preferred Term (For reference only)", "Translated Term", "Language Code",
-            "Case significance", "Type", "Language reference set", "Acceptability"],
+            "Case significance", "Type", "Language reference set", "Acceptability",
+            "Notes"],
     "CHG": ["Description ID", "Preferred Term (For reference only)",
             "Term (For reference only)", "Case significance", "Type",
-            "Language reference set", "Acceptability"],
+            "Language reference set", "Acceptability", "Notes"],
     "REP": ["Concept ID", "Description ID", "Preferred Term (For reference only)",
             "Term (For reference only)", "Inactivation Reason",
             "Association Target ID1", "Association Target ID2",
             "Association Target ID3", "Association Target ID4",
             "New Replacement Description ID", "Replacement term (For reference only)",
             "New Translated Term", "Language Code", "Case significance", "Type",
-            "Language reference set", "Acceptability"],
+            "Language reference set", "Acceptability", "Notes"],
     "INA": ["Description ID Or Term",
             "Language Code (require if the term is specified)", "Concept ID (Optional)",
             "Preferred Term (For reference only)", "Term (For reference only)",
             "Inactivation Reason", "Association Target ID1", "Association Target ID2",
-            "Association Target ID3", "Association Target ID4"]
+            "Association Target ID3", "Association Target ID4", "Notes"]
 }
 
 
@@ -62,9 +63,9 @@ class Batch:
 
         # Formatage du batch à ajouter
         add = self.df.loc[:, ["Concept ID", "Translated Term", "Case significance",
-                              "Acceptability"]]
+                              "Acceptability", "Notes"]]
         add.columns = ["conceptId", "term", "caseSignificanceId",
-                       "acceptabilityId"]
+                       "acceptabilityId", "notes"]
         add.loc[:, "_type_"] = ["ADD"] * len(add)
         add.loc[:, "active"] = ["1"] * len(add)
 
@@ -86,9 +87,10 @@ class Batch:
             DataFrame avec la mise à jour des métadonnées du batch
         """
         # Formatage des changements de métadonnées
-        chg = self.df.loc[:, ["Description ID", "Case significance", "Acceptability"]]
+        chg = self.df.loc[:, ["Description ID", "Case significance", "Acceptability",
+                              "Notes"]]
         chg.set_index("Description ID", inplace=True)
-        chg.columns = ["caseSignificanceId", "acceptabilityId"]
+        chg.columns = ["caseSignificanceId", "acceptabilityId", "notes"]
         chg.loc[:, "_type_"] = ["CHG"] * len(chg)
 
         # Changement des descriptions du batch
@@ -107,10 +109,10 @@ class Batch:
             DataFrame avec le remplacement des descriptions du batch
         """
         rep = self.df.loc[:, ["Concept ID", "Description ID", "New Translated Term",
-                              "Case significance", "Acceptability"]]
+                              "Case significance", "Acceptability", "Notes"]]
         rep.set_index("Description ID", inplace=True)
         rep.columns = ["conceptId", "term", "caseSignificanceId",
-                       "acceptabilityId"]
+                       "acceptabilityId", "notes"]
         rep.loc[:, "_type_"] = ["REP"] * len(rep)
         rep.loc[:, "active"] = ["1"] * len(rep)
 
@@ -121,7 +123,7 @@ class Batch:
 
         # Ajout des descriptions de remplacement
         add = rep.loc[:, ["active", "conceptId", "term", "caseSignificanceId",
-                          "acceptabilityId", "_type_"]]
+                          "acceptabilityId", "notes", "_type_"]]
         preview.reset_index(inplace=True)
         preview = pd.concat([preview, add], ignore_index=True)
         preview.set_index("id", inplace=True)
@@ -139,10 +141,13 @@ class Batch:
             DataFrame avec l'inactivation des descriptions du batch
         """
         # Formatage des inactivations du batch
-        ina = self.df.loc[:, ["Description ID Or Term"]]
+        ina = self.df.loc[:, ["Description ID Or Term", "Notes"]]
         ina.loc[:, "active"] = ["0"] * len(ina)
         ina.loc[:, "_type_"] = ["INA"] * len(ina)
         ina.set_index("Description ID Or Term", inplace=True)
+
+        ina = ina.loc[:, ["active", "Notes", "_type_"]]
+        ina.columns = ["active", "notes", "_type_"]
 
         # Inactivation des descriptions du batch
         preview.update(ina)
