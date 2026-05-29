@@ -960,31 +960,36 @@ def hs1(hs) -> pd.DataFrame:
 @pytest.fixture
 def ec() -> pd.DataFrame:
     return pd.DataFrame(
-        {"conceptId": ["1", "1", "2", "2", "3", "3", "4", "4"],
-         "FSN": ["implant submitted as specimen", "implant submitted as specimen",
-                 "pharyngeal washings", "pharyngeal washings",
-                 "cervix cytologic material", "cervix cytologic material",
-                 "intravenous infusion fluid sample",
-                 "intravenous infusion fluid sample"],
-         "term": ["implant présenté comme échantillon", "échantillon d'implant",
-                  "liquide de lavage pharyngien", "lavage pharyngien",
-                  "matériel cytologique du col utérin", "matériel cervical",
-                  "échantillon de liquide de perfusion intraveineuse",
-                  "échantillon de perfusion intraveineuse"]}
+        {"conceptId": ["ec2_sub", "ec2_sub",
+                       "ec2_wash", "ec2_wash",
+                       "ec2_cyto", "ec2_cyto",
+                       "ec4", "ec4"],
+         "FSN": ["Implant submitted as specimen", "Implant submitted as specimen",  # ec2 Submitted # noqa
+                 "Pharyngeal washings", "Pharyngeal washings",  # ec2 Washings
+                 "Cervix cytologic material", "Cervix cytologic material",  # ec2 Cytologic # noqa
+                 "Intravenous infusion fluid sample", "Intravenous infusion fluid sample"],  # ec4 # noqa
+         "term": ["implant présenté comme échantillon", "échantillon d'implant",  # ec2 Submitted # noqa
+                  "liquide de lavage pharyngien", "lavage pharyngien",  # ec2 Washings
+                  "matériel cytologique du col utérin", "matériel cervical",  # ec2 Cytologic # noqa
+                  "échantillon de liquide de perfusion intraveineuse", "échantillon de perfusion intraveineuse"]}  # ec4 # noqa
     )
 
 
 @pytest.fixture
 def ec2(ec) -> pd.DataFrame:
-    ec2 = pd.Series([float("nan"), "1", float("nan"), "1", float("nan"), "1",
-                     float("nan"), float("nan")], name="ec2")
+    ec2 = pd.Series([float("nan"), "1",  # ec2 Submitted
+                     float("nan"), "1",  # ec2 Washings
+                     float("nan"), "1",  # ec2 Cytologic
+                     float("nan"), float("nan")], name="ec2")  # ec4
     return pd.concat([ec, ec2], axis=1)
 
 
 @pytest.fixture
 def ec4(ec) -> pd.DataFrame:
-    ec4 = pd.Series([float("nan"), float("nan"), float("nan"), float("nan"),
-                     float("nan"), float("nan"), float("nan"), "1"], name="ec4")
+    ec4 = pd.Series([float("nan"), float("nan"),  # ec2 Submitted
+                     float("nan"), float("nan"),  # ec2 Washings
+                     float("nan"), float("nan"),  # ec2 Cytologic
+                     float("nan"), "1"], name="ec4")  # ec4
     return pd.concat([ec, ec4], axis=1)
 
 
