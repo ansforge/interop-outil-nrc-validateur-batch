@@ -942,8 +942,8 @@ def pr15(pr) -> pd.DataFrame:
 @pytest.fixture
 def hs() -> pd.DataFrame:
     return pd.DataFrame(
-        {"conceptId": ["1"] * 2,
-         "FSN": ["asthma familial history"] * 2,
+        {"conceptId": ["hs1"] * 2,
+         "FSN": ["Asthma familial history"] * 2,
          "term": ["antécédent familial d'asthme", "antécédents familiaux d'asthme"]}
     )
 
