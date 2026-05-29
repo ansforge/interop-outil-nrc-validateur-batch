@@ -999,55 +999,40 @@ def ec4(ec) -> pd.DataFrame:
 @pytest.fixture
 def su() -> pd.DataFrame:
     return pd.DataFrame(
-        {"conceptId": ["1", "1", "1", "1", "2", "2", "2", "3", "4", "5", "6", "7", "8",
-                       "9", "10", "11", "11"],
-         "FSN": ["rabies virus antibody", "rabies virus antibody",
-                 "rabies virus antibody", "rabies virus antibody",
-                 "rabies virus immunoglobulin", "rabies virus immunoglobulin",
-                 "rabies virus immunoglobulin", "meta-hydroxybenzoate",
-                 "ortho-hydroxybenzoate", "para-hydroxybenzoate", "m-hydroxybenzoate",
-                 "X-meta-hydroxybenzoate", "X-ortho-hydroxybenzoate",
-                 "X-para-hydroxybenzoate", "X-m-hydroxybenzoate", "moenomycin B>1<",
-                 "moenomycin B>1<"],
-         "term": ["Ig antirabique", "immunoglobuline antirabique",
-                  "immunoglobuline antirabique", "Ig antirabique",
-                  "immunoglobuline antirabique", "anticorps antirabique",
-                  "immunoglobuline antirabique", "méta-hydroxybenzoate",
-                  "ortho-hydroxybenzoate", "para-hydroxybenzoate", "m-hydroxybenzoate",
-                  "X-méta-hydroxybenzoate", "X-ortho-hydroxybenzoate",
-                  "X-para-hydroxybenzoate", "X-m-hydroxybenzoate", "moénomycine B>1<",
-                  "moénomycine B1"],
-         "acceptabilityId": ["PREFERRED", "PREFERRED", "ACCEPTABLE", "ACCEPTABLE",
-                             "PREFERRED", "ACCEPTABLE", "ACCEPTABLE", "PREFERRED",
-                             "PREFERRED", "PREFERRED", "PREFERRED", "PREFERRED",
-                             "PREFERRED", "PREFERRED", "PREFERRED", "PREFERRED",
-                             "PREFERRED"]}
+        {"conceptId": ["su1_1", "su1_1", "su1_2", "su1_2", "su1_2", "su1_3", "su1_3", "su1_3", "su1_3",  # noqa
+                       "su3_o", "su3_o", "su3_m", "su3_m", "su3_p", "su3_p",
+                       "su8", "su8"],
+         "FSN": ["rabies virus antibody", "rabies virus antibody", "rabies virus antibody", "rabies virus antibody", "rabies virus antibody", "rabies virus immunoglobulin", "rabies virus immunoglobulin", "rabies virus immunoglobulin", "rabies virus immunoglobulin",  # su1 # noqa
+                 "ortho-hydroxybenzoate", "ortho-hydroxybenzoate", "meta-hydroxybenzoate", "meta-hydroxybenzoate", "para-hydroxybenzoate", "para-hydroxybenzoate",  # su3 # noqa
+                 "moenomycin B>1<", "moenomycin B>1<"],  # su8
+         "term": ["immunoglobuline antirabique", "immunoglobuline antirabique", "Ig antirabique", "Ig antirabique", "anticorps antirabique", "anticorps antirabique", "anticorps antirabique", "Ig antirabique", "immunoglobuline antirabique",  # su1 # noqa
+                  "o-hydroxybenzoate", "ortho-hydroxybenzoate", "m-hydroxybenzoate", "méta-hydroxybenzoate", "p-hydroxybenzoate", "para-hydroxybenzoate",  # su3 # noqa
+                  "moénomycine B1", "moénomycine B>1<",],  # su8
+         "acceptabilityId": ["PREFERRED", "ACCEPTABLE", "PREFERRED", "ACCEPTABLE", "ACCEPTABLE", "PREFERRED", "ACCEPTABLE", "ACCEPTABLE", "ACCEPTABLE",  # su1 # noqa
+                             "PREFERRED", "PREFERRED", "PREFERRED", "PREFERRED", "PREFERRED", "PREFERRED",  # su3 # noqa
+                             "PREFERRED", "PREFERRED"]}  # su8
     )
 
 
 @pytest.fixture
 def su1(su) -> pd.DataFrame:
-    su1 = pd.Series(["1", float("nan"), float("nan"), "1", float("nan"), float("nan"),
-                     "1", float("nan"), float("nan"), float("nan"), float("nan"),
-                     float("nan"), float("nan"), float("nan"), float("nan"),
-                     float("nan"), float("nan")], name="su1")
+    su1 = pd.Series([float("nan"), "1", "1", float("nan"), float("nan"), float("nan"), float("nan"), float("nan"), float("nan"),  # su1 # noqa
+                     float("nan"), float("nan"), float("nan"), float("nan"), float("nan"), float("nan"),  # su3 # noqa
+                     float("nan"), float("nan")], name="su1")  # su8
     return pd.concat([su, su1], axis=1)
 
 
 @pytest.fixture
 def su3(su) -> pd.DataFrame:
-    su3 = pd.Series([float("nan"), float("nan"), float("nan"), float("nan"),
-                     float("nan"), float("nan"), float("nan"), "1", "1", "1",
-                     float("nan"), "1", "1", "1", float("nan"), float("nan"),
-                     float("nan")], name="su3")
+    su3 = pd.Series([float("nan"), float("nan"), float("nan"), float("nan"), float("nan"), float("nan"), float("nan"), float("nan"), float("nan"),  # su1 # noqa
+                     float("nan"), "1", float("nan"), "1", float("nan"), "1",  # su3 # noqa
+                     float("nan"), float("nan")], name="su3")
     return pd.concat([su, su3], axis=1)
 
 
 @pytest.fixture
 def su8(su) -> pd.DataFrame:
-    su8 = pd.Series([float("nan"), float("nan"), float("nan"), float("nan"),
-                     float("nan"), float("nan"), float("nan"), float("nan"),
-                     float("nan"), float("nan"), float("nan"), float("nan"),
-                     float("nan"), float("nan"), float("nan"), "1",
-                     float("nan")], name="su8")
+    su8 = pd.Series([float("nan"), float("nan"), float("nan"), float("nan"), float("nan"), float("nan"), float("nan"), float("nan"), float("nan"),  # su1 # noqa
+                     float("nan"), float("nan"), float("nan"), float("nan"), float("nan"), float("nan"),  # su3 # noqa
+                     float("nan"), "1"], name="su8")
     return pd.concat([su, su8], axis=1)
