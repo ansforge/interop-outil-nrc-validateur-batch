@@ -285,14 +285,14 @@ def check_pt(df: pd.DataFrame) -> pd.DataFrame:
         DataFrame du fichier avec une colonne identifiant les concepts ayant moins ou
         plus d'un PT
     """
-    df.loc[:, "E_multiple_pt"] = [""] * len(df)
+    pt = df.loc[(df.loc[:, "acceptabilityId"] == "PREFERRED")
+                & (df.loc[:, "active"] == "1"), ["conceptId", "acceptabilityId"]]
+    error = pt[pt.duplicated("conceptId") == True]  # noqa
 
-    pt = df.loc[df.loc[:, "acceptabilityId"] == "PREFERRED",
-                ["conceptId", "acceptabilityId"]]
-    error = pt[pt.duplicated("conceptId") == True] # noqa
-    error.loc[:, "E_multiple_pt"] = ["1"] * len(error)
+    if not error.empty:
+        error.loc[:, "E_multiple_pt"] = ["1"] * len(error)
+        df.update(error)
 
-    df.update(error)
     return df
 
 
