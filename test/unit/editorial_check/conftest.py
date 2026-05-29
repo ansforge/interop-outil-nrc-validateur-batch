@@ -682,40 +682,42 @@ def me4(me) -> pd.DataFrame:
 @pytest.fixture
 def sb() -> pd.DataFrame:
     return pd.DataFrame(
-        {"conceptId": ["1", "1", "2", "2", "3", "3", "3", "3"],
-         "FSN": ["evacuated blood collection tube, K2EDTA/aprotinin",
-                 "evacuated blood collection tube, K2EDTA/aprotinin",
-                 "evacuated urine specimen container, boric acid (H3BO3)",
-                 "evacuated urine specimen container, boric acid (H3BO3)",
-                 "stent", "stent", "stent", "stent"],
-         "term": ["tube sous vide EDTA avec anticoagulant irréversible-K2/aprotinine pour prélèvement sanguin", # noqa
-                             "tube sous vide EDTA avec anticoagulant irréversible-K2/aprotinine", # noqa
-                             "support sous vide boraté pour prélèvement urinaire",
-                             "acide borique pour prélèvement urinaire", "endoprothèse",
-                             "stent", "stent", "endoprothèse"],
-         "acceptabilityId": ["PREFERRED", "PREFERRED", "PREFERRED", "PREFERRED",
-                             "PREFERRED", "ACCEPTABLE", "PREFERRED", "ACCEPTABLE"]}
+        {"conceptId": ["sb1", "sb1", "sb1",
+                       "sb2", "sb2", "sb2",
+                       "sb3_1", "sb3_1", "sb3_2", "sb3_2", "sb3_3", "sb3_3", "sb3_3"],
+         "FSN": ["Evacuated blood collection tube, K2EDTA/aprotinin", "Evacuated blood collection tube, K2EDTA/aprotinin", "Evacuated blood collection tube, K2EDTA/aprotinin",  # sb1 # noqa
+                 "Evacuated urine specimen container, boric acid (H3BO3)", "Evacuated urine specimen container, boric acid (H3BO3)", "Evacuated urine specimen container, boric acid (H3BO3)",  # sb2 # noqa
+                 "Metal stent", "Metal stent", "Metal stent", "Metal stent", "Metal stent", "Metal stent", "Metal stent"],  # sb3 # noqa
+         "term": ["tube sous vide EDTA avec anticoagulant irréversible-K2/aprotinine pour prélèvement sanguin", "tube sous vide EDTA avec anticoagulant irréversible-K2/aprotinine", "tube sous vide EDTA avec anticoagulant irréversible-K2/aprotinine",  # sb1 # noqa
+                  "support sous vide boraté pour prélèvement urinaire", "acide borique pour prélèvement urinaire", "acide borique pour prélèvement urinaire",  # sb2 # noqa
+                  "endoprothèse métallique", "endoprothèse métallique", "stent métallique", "stent métallique", "endoprothèse métallique", "endoprothèse métallique", "stent métallique"],  # sb3 # noqa
+         "acceptabilityId": ["PREFERRED", "ACCEPTABLE", "PREFERRED",  # sb1
+                             "PREFERRED", "ACCEPTABLE", "PREFERRED",  # sb2
+                             "PREFERRED", "ACCEPTABLE", "PREFERRED", "ACCEPTABLE", "PREFERRED", "ACCEPTABLE", "ACCEPTABLE"]}  # sb3 # noqa
     )
 
 
 @pytest.fixture
 def sb1(sb) -> pd.DataFrame:
-    sb1 = pd.Series([float("nan"), "1", float("nan"), float("nan"), float("nan"),
-                     float("nan"), float("nan"), float("nan")], name="sb1")
+    sb1 = pd.Series([float("nan"), float("nan"), "1",  # sb1
+                     float("nan"), float("nan"), float("nan"),  # sb2
+                     float("nan"), float("nan"), float("nan"), float("nan"), float("nan"), float("nan"), float("nan")], name="sb1")  # sb3 # noqa
     return pd.concat([sb, sb1], axis=1)
 
 
 @pytest.fixture
 def sb2(sb) -> pd.DataFrame:
-    sb2 = pd.Series([float("nan"), float("nan"), float("nan"), "1", float("nan"),
-                     float("nan"), float("nan"), float("nan")], name="sb2")
+    sb2 = pd.Series([float("nan"), float("nan"), float("nan"),  # sb1
+                     float("nan"), float("nan"), "1",  # sb2
+                     float("nan"), float("nan"), float("nan"), float("nan"), float("nan"), float("nan"), float("nan")], name="sb2")  # sb3 # noqa
     return pd.concat([sb, sb2], axis=1)
 
 
 @pytest.fixture
 def sb3(sb) -> pd.DataFrame:
-    sb3 = pd.Series([float("nan"), float("nan"), float("nan"), float("nan"),
-                     float("nan"), float("nan"), "1", "1"], name="sb3")
+    sb3 = pd.Series([float("nan"), float("nan"), float("nan"),  # sb1
+                     float("nan"), float("nan"), float("nan"),  # sb2
+                     float("nan"), "1", "1", float("nan"), float("nan"), float("nan"), float("nan")], name="sb3")  # sb3 # noqa
     return pd.concat([sb, sb3], axis=1)
 
 
