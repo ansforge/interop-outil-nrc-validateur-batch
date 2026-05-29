@@ -605,45 +605,74 @@ def pa9(co_pa) -> pd.DataFrame:
 @pytest.fixture
 def me() -> pd.DataFrame:
     return pd.DataFrame(
-        {"conceptId": ["1", "1", "2", "2", "3", "3"],
-         "FSN": ["product containing amoxicilline", "product containing amoxicilline",
-                 "product containing only amoxicilline",
-                 "product containing only amoxicilline",
-                 "product containing precisely captopril 25 mg/1 each conventional release oral tablet (clinical drug)", # noqa
-                 "product containing precisely captopril 25 mg/1 each conventional release oral tablet (clinical drug)"], # noqa
-         "term": ["produit contenant amoxicilline", "amoxicilline",
-                  "produit contenant uniquement amoxicilline",
-                  "produit contenant amoxicilline",
-                  "produit contenant précisément captopril en comprimé oral à 25 mg",
-                  "captopril 25 mg, comprimé oral en libération conventionnelle"]}
+        {"conceptId": ["me1_p", "me1_p", "me1_p",
+                       "me1_v", "me1_v", "me1_v",
+                       "me2_p", "me2_p", "me2_p",
+                       "me2_v", "me2_v", "me2_v",
+                       "me3", "me3", "me3",
+                       "me4", "me4", "me4"],
+         "FSN": ["Product containing amoxicilline", "Product containing amoxicilline", "Product containing amoxicilline",  # me1 Product # noqa
+                 "Vaccine product containing Dengue virus antigen", "Vaccine product containing Dengue virus antigen", "Vaccine product containing Dengue virus antigen",  # me1 Vaccin # noqa
+                 "Product containing only amoxicilline", "Product containing only amoxicilline", "Product containing only amoxicilline",  # me2 Product # noqa
+                 "Vaccine product containing only Dengue virus antigen", "Vaccine product containing only Dengue virus antigen", "Vaccine product containing only Dengue virus antigen",  # me2 Vaccin # noqa
+                 "Product containing precisely amoxicilline (clinical drug)", "Product containing precisely amoxicilline (clinical drug)", "Product containing precisely amoxicilline (clinical drug)",  # me3 # noqa
+                 "Product containing precisely amoxicilline conventional release oral tablet", "Product containing precisely amoxicilline conventional release oral tablet", "Product containing precisely amoxicilline conventional release oral tablet"],  # me4 # noqa
+         "term": ["produit contenant amoxicilline", "amoxicilline", "amoxicilline",  # me1 Product # noqa
+                  "vaccin contenant des antigènes du virus de la dengue", "vaccin contre la dengue", "vaccin contre la dengue",  # me1 Vaccin # noqa
+                  "produit contenant uniquement amoxicilline", "amoxicilline", "amoxicilline",  # me2 Product # noqa
+                  "vaccin contenant uniquement des antigènes du virus de la dengue", "vaccin contre la dengue", "vaccin contre la dengue",  # me2 Vaccin # noqa
+                  "produit contenant précisément amoxicilline", "amoxicilline", "amoxicilline",  # me3 # noqa
+                  "amoxicilline, comprimé oral", "amoxicilline, libération conventionnelle, comprimé oral", "amoxicilline, libération conventionnelle, comprimé oral"],  # me4 # noqa
+         "acceptabilityId": ["PREFERRED", "ACCEPTABLE", "PREFERRED",  # me1 Product
+                             "PREFERRED", "ACCEPTABLE", "PREFERRED",  # me1 Vaccin
+                             "PREFERRED", "ACCEPTABLE", "PREFERRED",  # me2 Product
+                             "PREFERRED", "ACCEPTABLE", "PREFERRED",  # me2 Vaccin
+                             "PREFERRED", "ACCEPTABLE", "PREFERRED",  # me3
+                             "PREFERRED", "ACCEPTABLE", "PREFERRED"]}  # me4
     )
 
 
 @pytest.fixture
 def me1(me) -> pd.DataFrame:
-    me1 = pd.Series([float("nan"), "1", float("nan"), float("nan"), float("nan"),
-                     float("nan")], name="me1")
+    me1 = pd.Series([float("nan"), float("nan"), "1",  # me1 Product
+                     float("nan"), float("nan"), "1",  # me1 Vaccin
+                     float("nan"), float("nan"), float("nan"),  # me2 Product
+                     float("nan"), float("nan"), float("nan"),  # me2 Vaccin
+                     float("nan"), float("nan"), float("nan"),  # me3
+                     float("nan"), float("nan"), float("nan")], name="me1")  # me4
     return pd.concat([me, me1], axis=1)
 
 
 @pytest.fixture
 def me2(me) -> pd.DataFrame:
-    me2 = pd.Series([float("nan"), float("nan"), float("nan"), "1", float("nan"),
-                     float("nan")], name="me2")
+    me2 = pd.Series([float("nan"), float("nan"), float("nan"),  # me1 Product
+                     float("nan"), float("nan"), float("nan"),  # me1 Vaccin
+                     float("nan"), float("nan"), "1",  # me2 Product
+                     float("nan"), float("nan"), "1",  # me2 Vaccin
+                     float("nan"), float("nan"), float("nan"),  # me3
+                     float("nan"), float("nan"), float("nan")], name="me2")  # me4
     return pd.concat([me, me2], axis=1)
 
 
 @pytest.fixture
 def me3(me) -> pd.DataFrame:
-    me3 = pd.Series([float("nan"), float("nan"), float("nan"), float("nan"),
-                     float("nan"), "1"], name="me3")
+    me3 = pd.Series([float("nan"), float("nan"), float("nan"),  # me1 Product
+                     float("nan"), float("nan"), float("nan"),  # me1 Vaccin
+                     float("nan"), float("nan"), float("nan"),  # me2 Product
+                     float("nan"), float("nan"), float("nan"),  # me2 Vaccin
+                     float("nan"), float("nan"), "1",  # me3
+                     float("nan"), float("nan"), float("nan")], name="me3")  # me4
     return pd.concat([me, me3], axis=1)
 
 
 @pytest.fixture
 def me4(me) -> pd.DataFrame:
-    me4 = pd.Series([float("nan"), float("nan"), float("nan"), float("nan"),
-                     float("nan"), "1"], name="me4")
+    me4 = pd.Series([float("nan"), float("nan"), float("nan"),  # me1 Product
+                     float("nan"), float("nan"), float("nan"),  # me1 Vaccin
+                     float("nan"), float("nan"), float("nan"),  # me2 Product
+                     float("nan"), float("nan"), float("nan"),  # me2 Vaccin
+                     float("nan"), float("nan"), float("nan"),  # me3
+                     float("nan"), float("nan"), "1"], name="me4")  # me4
     return pd.concat([me, me4], axis=1)
 
 
