@@ -727,212 +727,194 @@ def sb3(sb) -> pd.DataFrame:
 @pytest.fixture
 def pr() -> pd.DataFrame:
     return pd.DataFrame(
-        {"conceptId": ["1", "1", "1", "1", "2", "2", "2", "2", "3", "3", "4", "4", "5",
-                       "5", "5", "5", "6", "6", "6", "6", "7", "7", "8", "8", "8", "8",
-                       "9", "9", "9", "9", "10", "10", "10", "10", "10", "11", "11"],
-         "FSN": ["MRI for neuromuscular procedure", "MRI for neuromuscular procedure",
-                 "MRI for neuromuscular procedure", "MRI for neuromuscular procedure",
-                 "perirenal operation using ultrasound guidance",
-                 "perirenal operation using ultrasound guidance",
-                 "perirenal operation using ultrasound guidance",
-                 "perirenal operation using ultrasound guidance",
-                 "telephone consultation", "telephone consultation",
-                 "removal of foreign body from head",
-                 "removal of foreign body from head",
-                 "magnet extraction of foreign body from head",
-                 "magnet extraction of foreign body from head",
-                 "magnet extraction of foreign body from head",
-                 "magnet extraction of foreign body from head",
-                 "excisional biopsy of breast mass",
-                 "excisional biopsy of breast mass",
-                 "excisional biopsy of breast mass",
-                 "excisional biopsy of breast mass", "incisional biopsy of brain",
-                 "incisional biopsy of brain",
-                 "magnetic resonance angiography of chest",
-                 "magnetic resonance angiography of chest",
-                 "magnetic resonance angiography of chest",
-                 "magnetic resonance angiography of chest",
-                 "fluoroscopy of trachea", "fluoroscopy of trachea",
-                 "fluoroscopy of trachea", "fluoroscopy of trachea",
-                 "pleurodesis using fluoroscopic guidance",
-                 "pleurodesis using fluoroscopic guidance",
-                 "pleurodesis using fluoroscopic guidance",
-                 "pleurodesis using fluoroscopic guidance",
-                 "pleurodesis using fluoroscopic guidance",
-                 "hepatitis education", "hepatitis education"],
-         "term": ["IRM pour procédure neuromusculaire",
-                             "imagerie par résonance magnétique pour intervention neuromusculaire", # noqa
-                             "imagerie par résonance magnétique pour intervention neuromusculaire", # noqa
-                             "IRM pour procédure neuromusculaire",
-                             "intervention chirurgicale périrénale guidée par échographie", # noqa
-                             "chirurgie périrénale sous guidage échographique",
-                             "opération périrénale guidée par échographie",
-                             "intervention chirurgicale sous guidage échographique",
-                             "consultation téléphonique", "rendez-vous téléphonique",
-                             "retrait d'un corps étranger de la tête",
-                             "extraction d'un corps étranger de la tête",
-                             "extraction avec un aimant d'un corps étranger de la tête",
-                             "retrait d'un corps étranger de la tête à l'aide d'un aimant", # noqa
-                             "retrait d'un corps étranger de la tête à l'aide d'un aimant", # noqa
-                             "extraction avec un aimant d'un corps étranger de la tête",
-                             "biopsie-exérèse d'une masse mammaire",
-                             "biopsie excisionnelle d'une masse mammaire",
-                             "biopsie excisionnelle d'une masse mammaire",
-                             "biopsie-exérèse d'une masse mammaire",
-                             "biopsie incisionnelle de l'encéphale",
-                             "biopsie par incision de l'encéphale",
-                             "angiographie par IRM du thorax",
-                             "angiographie par imagerie par résonance magnétique du thorax", # noqa
-                             "angiographie par imagerie par résonance magnétique du thorax", # noqa
-                             "angiographie par IRM du thorax",
-                             "radioscopie de la trachée", "fluoroscopie de la trachée",
-                             "fluoroscopie de la trachée", "radioscopie de la trachée",
-                             "pleurodèse guidée par radioscopie",
-                             "pleurodèse sous guidage radioscopique",
-                             "pleurodèse guidée par fluoroscopie",
-                             "pleurodèse sous guidage radioscopique",
-                             "pleurodèse guidée par radioscopie",
-                             "éducation concernant l'hépatite",
-                             "formation concernant l'hépatite"],
-         "acceptabilityId": ["PREFERRED", "ACCEPTABLE", "PREFERRED", "ACCEPTABLE",
-                             "PREFERRED", "ACCEPTABLE", "ACCEPTABLE", "PREFERRED",
-                             "PREFERRED", "PREFERRED", "PREFERRED", "PREFERRED",
-                             "PREFERRED", "ACCEPTABLE", "PREFERRED", "ACCEPTABLE",
-                             "PREFERRED", "ACCEPTABLE", "PREFERRED", "ACCEPTABLE",
-                             "PREFERRED", "PREFERRED", "PREFERRED", "ACCEPTABLE",
-                             "PREFERRED", "ACCEPTABLE", "PREFERRED", "ACCEPTABLE",
-                             "PREFERRED", "ACCEPTABLE", "PREFERRED", "ACCEPTABLE",
-                             "ACCEPTABLE", "PREFERRED", "ACCEPTABLE", "PREFERRED",
-                             "PREFERRED"]}
+        {"conceptId": ["pr2_1", "pr2_1", "pr2_2", "pr2_2", "pr2_3", "pr2_3", "pr2_3",
+                       "pr2_chir1", "pr2_chir1", "pr2_chir2", "pr2_chir2", "pr2_chir2", "pr2_chir3", "pr2_chir3", "pr2_chir3", "pr2_chir3",  # noqa
+                       "pr3", "pr3",
+                       "pr4", "pr4",
+                       "pr4_magne", "pr4_magne",
+                       "pr9_1", "pr9_1", "pr9_2", "pr9_2", "pr9_3", "pr9_3", "pr9_3",
+                       "pr10", "pr10",
+                       "pr12_1", "pr12_1", "pr12_2", "pr12_2", "pr12_3", "pr12_3", "pr12_3",  # noqa
+                       "pr13_1", "pr13_1", "pr13_2", "pr13_2", "pr13_3", "pr13_3", "pr13_3",  # noqa
+                       "pr14_1", "pr14_1", "pr14_2", "pr14_2", "pr14_3", "pr14_3", "pr14_3",  # noqa
+                       "pr15", "pr15"],
+         "FSN": ["Head procedure", "Head procedure", "Head procedure", "Head procedure", "Head procedure", "Head procedure", "Head procedure",  # pr2 # noqa
+                 "Head surgical procedure", "Head surgical procedure", "Head operation", "Head operation", "Head operation", "Head operation", "Head operation", "Head operation", "Head operation",  # pr2 Chirurgie # noqa
+                 "Telephone consultation", "Telephone consultation",  # pr3
+                 "Removal of foreign body from head", "Removal of foreign body from head",  # pr4 # noqa
+                 "Magnet extraction of foreign body from head", "Magnet extraction of foreign body from head",  # pr4 Magnétique # noqa
+                 "Excisional biopsy of mass", "Excisional biopsy of mass", "Excisional biopsy of mass", "Excisional biopsy of mass", "Excisional biopsy of mass", "Excisional biopsy of mass", "Excisional biopsy of mass",  # pr9 # noqa
+                 "Incisional biopsy of brain", "Incisional biopsy of brain",  # pr10
+                 "Chest MRI", "Chest MRI", "Chest magnetic resonance imaging", "Chest magnetic resonance imaging", "Magnetic resonance angiography of chest", "Magnetic resonance angiography of chest", "Magnetic resonance angiography of chest",  # pr12 # noqa
+                 "Excision using imaging guidance", "Excision using imaging guidance", "Excision using imaging guidance", "Excision using imaging guidance", "Excision using imaging guidance", "Excision using imaging guidance", "Excision using imaging guidance",  # pr13 # noqa
+                 "Fluoroscopy of trachea", "Fluoroscopy of trachea", "Fluoroscopic imaging of trachea", "Fluoroscopic imaging of trachea", "Fluoroscopy of trachea", "Fluoroscopy of trachea", "Fluoroscopy of trachea",  # pr14 # noqa
+                 "Hepatitis education", "Hepatitis education"],  # pr15
+         "term": ["procédure de la tête", "procédure de la tête", "intervention de la tête", "intervention de la tête", "procédure de la tête", "procédure de la tête", "intervention de la tête",  # pr2 # noqa
+                  "intervention chirurgicale de la tête", "opération de la tête", "opération de la tête", "opération de la tête", "chirurgie de la tête", "intervention chirurgicale de la tête", "intervention chirurgicale de la tête", "opération de la tête", "chirurgie de la tête",  # pr2 Chirurgie # noqa
+                  "consultation téléphonique", "rendez-vous téléphonique",  # pr3
+                  "retrait d'un corps étranger de la tête", "extraction d'un corps étranger de la tête",  # pr4 # noqa
+                  "extraction avec un aimant d'un corps étranger de la tête", "retrait d'un corps étranger de la tête à l'aide d'un aimant",  # pr4 Magnétique # noqa
+                  "biopsie-exérèse d'une masse", "biopsie-exérèse d'une masse", "biopsie excisionnelle d'une masse", "biopsie excisionnelle d'une masse", "biopsie-exérèse d'une masse", "biopsie-exérèse d'une masse", "biopsie excisionnelle d'une masse",  # pr9 # noqa
+                  "biopsie incisionnelle de l'encéphale", "biopsie de l'encéphale",  # pr10 # noqa
+                  "IRM du thorax", "IRM du thorax", "imagerie par résonance magnétique du thorax", "imagerie par résonance magnétique du thorax", "angiographie par IRM du thorax", "angiographie par IRM du thorax", "angiographie par imagerie par résonance magnétique du thorax",  # pr12 # noqa
+                  "excision de la trachée guidée par imagerie", "excision de la trachée guidée par imagerie", "excision de la trachée sous guidage par imagerie", "excision de la trachée sous guidage par imagerie", "excision de la trachée guidée par imagerie", "excision de la trachée guidée par imagerie", "excision de la trachée sous guidage par imagerie",  # pr13 # noqa
+                  "radioscopie de la trachée", "radioscopie de la trachée", "examen fluoroscopique de la trachée", "examen fluoroscopique de la trachée", "radioscopie de la trachée", "radioscopie de la trachée", "fluoroscopie de la trachée",  # pr14 # noqa
+                  "éducation concernant l'hépatite", "formation concernant l'hépatite"],  # pr15 # noqa
+         "acceptabilityId": ["PREFERRED", "ACCEPTABLE", "PREFERRED", "ACCEPTABLE", "PREFERRED", "ACCEPTABLE", "ACCEPTABLE",  # pr2 # noqa
+                             "PREFERRED", "ACCEPTABLE", "PREFERRED", "ACCEPTABLE", "ACCEPTABLE", "PREFERRED", "ACCEPTABLE", "ACCEPTABLE", "ACCEPTABLE",  # pr2 Chirurgie # noqa
+                             "PREFERRED", "PREFERRED",  # pr3
+                             "PREFERRED", "PREFERRED",  # pr4
+                             "PREFERRED", "PREFERRED",  # pr4 Magnétique
+                             "PREFERRED", "ACCEPTABLE", "PREFERRED", "ACCEPTABLE", "PREFERRED", "ACCEPTABLE", "ACCEPTABLE",  # pr9 # noqa
+                             "PREFERRED", "PREFERRED",  # pr10
+                             "PREFERRED", "ACCEPTABLE", "PREFERRED", "ACCEPTABLE", "PREFERRED", "ACCEPTABLE", "ACCEPTABLE",  # pr12 # noqa
+                             "PREFERRED", "ACCEPTABLE", "PREFERRED", "ACCEPTABLE", "PREFERRED", "ACCEPTABLE", "ACCEPTABLE",  # pr13 # noqa
+                             "PREFERRED", "ACCEPTABLE", "PREFERRED", "ACCEPTABLE", "PREFERRED", "ACCEPTABLE", "ACCEPTABLE",  # pr14 # noqa
+                             "PREFERRED", "PREFERRED"]}  # pr15
     )
 
 
 @pytest.fixture
 def pr2(pr) -> pd.DataFrame:
-    pr2 = pd.Series([float("nan"), float("nan"), "1", "1", float("nan"), float("nan"),
-                     float("nan"), float("nan"), float("nan"), float("nan"),
-                     float("nan"), float("nan"), float("nan"), float("nan"),
-                     float("nan"), float("nan"), float("nan"), float("nan"),
-                     float("nan"), float("nan"), float("nan"), float("nan"),
-                     float("nan"), float("nan"), float("nan"), float("nan"),
-                     float("nan"), float("nan"), float("nan"), float("nan"),
-                     float("nan"), float("nan"), float("nan"), float("nan"),
-                     float("nan"), float("nan"), float("nan")], name="pr2")
+    pr2 = pd.Series([float("nan"), "1", "1", float("nan"), float("nan"), float("nan"), float("nan"),  # pr2 # noqa
+                     float("nan"), "1", "1", float("nan"), float("nan"), float("nan"), float("nan"), float("nan"), float("nan"),  # pr2 Chirurgie # noqa
+                     float("nan"), float("nan"),  # pr3
+                     float("nan"), float("nan"),  # pr4
+                     float("nan"), float("nan"),  # pr4 Magnétique
+                     float("nan"), float("nan"), float("nan"), float("nan"), float("nan"), float("nan"), float("nan"),  # pr9 # noqa
+                     float("nan"), float("nan"),  # pr10
+                     float("nan"), float("nan"), float("nan"), float("nan"), float("nan"), float("nan"), float("nan"),  # pr12 # noqa
+                     float("nan"), float("nan"), float("nan"), float("nan"), float("nan"), float("nan"), float("nan"),  # pr13 # noqa
+                     float("nan"), float("nan"), float("nan"), float("nan"), float("nan"), float("nan"), float("nan"),  # pr14 # noqa
+                     float("nan"), float("nan")], name="pr2")  # pr15
     return pd.concat([pr, pr2], axis=1)
 
 
 @pytest.fixture
 def pr3(pr) -> pd.DataFrame:
-    pr3 = pd.Series([float("nan"), float("nan"), float("nan"), float("nan"),
-                     float("nan"), float("nan"), float("nan"), float("nan"),
-                     float("nan"), "1", float("nan"), float("nan"), float("nan"),
-                     float("nan"), float("nan"), float("nan"), float("nan"),
-                     float("nan"), float("nan"), float("nan"), float("nan"),
-                     float("nan"), float("nan"), float("nan"), float("nan"),
-                     float("nan"), float("nan"), float("nan"), float("nan"),
-                     float("nan"), float("nan"), float("nan"), float("nan"),
-                     float("nan"), float("nan"), float("nan"), float("nan")],
-                    name="pr3")
+    pr3 = pd.Series([float("nan"), float("nan"), float("nan"), float("nan"), float("nan"), float("nan"), float("nan"),  # pr2 # noqa
+                     float("nan"), float("nan"), float("nan"), float("nan"), float("nan"), float("nan"), float("nan"), float("nan"), float("nan"),  # pr2 Chirurgie # noqa
+                     float("nan"), "1",  # pr3
+                     float("nan"), float("nan"),  # pr4
+                     float("nan"), float("nan"),  # pr4 Magnétique
+                     float("nan"), float("nan"), float("nan"), float("nan"), float("nan"), float("nan"), float("nan"),  # pr9 # noqa
+                     float("nan"), float("nan"),  # pr10
+                     float("nan"), float("nan"), float("nan"), float("nan"), float("nan"), float("nan"), float("nan"),  # pr12 # noqa
+                     float("nan"), float("nan"), float("nan"), float("nan"), float("nan"), float("nan"), float("nan"),  # pr13 # noqa
+                     float("nan"), float("nan"), float("nan"), float("nan"), float("nan"), float("nan"), float("nan"),  # pr14 # noqa
+                     float("nan"), float("nan")], name="pr3")  # pr15
     return pd.concat([pr, pr3], axis=1)
 
 
 @pytest.fixture
 def pr4(pr) -> pd.DataFrame:
-    pr4 = pd.Series([float("nan"), float("nan"), float("nan"), float("nan"),
-                     float("nan"), float("nan"), float("nan"), float("nan"),
-                     float("nan"), float("nan"), float("nan"), "1", float("nan"),
-                     float("nan"), "1", "1", float("nan"), float("nan"), float("nan"),
-                     float("nan"), float("nan"), float("nan"), float("nan"),
-                     float("nan"), float("nan"), float("nan"), float("nan"),
-                     float("nan"), float("nan"), float("nan"), float("nan"),
-                     float("nan"), float("nan"), float("nan"), float("nan"),
-                     float("nan"), float("nan")], name="pr4")
+    pr4 = pd.Series([float("nan"), float("nan"), float("nan"), float("nan"), float("nan"), float("nan"), float("nan"),  # pr2 # noqa
+                     float("nan"), float("nan"), float("nan"), float("nan"), float("nan"), float("nan"), float("nan"), float("nan"), float("nan"),  # pr2 Chirurgie # noqa
+                     float("nan"), float("nan"),  # pr3
+                     float("nan"), "1",  # pr4
+                     float("nan"), "1",  # pr4 Magnétique
+                     float("nan"), float("nan"), float("nan"), float("nan"), float("nan"), float("nan"), float("nan"),  # pr9 # noqa
+                     float("nan"), float("nan"),  # pr10
+                     float("nan"), float("nan"), float("nan"), float("nan"), float("nan"), float("nan"), float("nan"),  # pr12 # noqa
+                     float("nan"), float("nan"), float("nan"), float("nan"), float("nan"), float("nan"), float("nan"),  # pr13 # noqa
+                     float("nan"), float("nan"), float("nan"), float("nan"), float("nan"), float("nan"), float("nan"),  # pr14 # noqa
+                     float("nan"), float("nan")], name="pr4")  # pr15
     return pd.concat([pr, pr4], axis=1)
 
 
 @pytest.fixture
 def pr9(pr) -> pd.DataFrame:
-    pr9 = pd.Series([float("nan"), float("nan"), float("nan"), float("nan"),
-                     float("nan"), float("nan"), float("nan"), float("nan"),
-                     float("nan"), float("nan"), float("nan"), float("nan"),
-                     float("nan"), float("nan"), float("nan"), float("nan"),
-                     float("nan"), float("nan"), "1", "1", float("nan"), float("nan"),
-                     float("nan"), float("nan"), float("nan"), float("nan"),
-                     float("nan"), float("nan"), float("nan"), float("nan"),
-                     float("nan"), float("nan"), float("nan"), float("nan"),
-                     float("nan"), float("nan"), float("nan")], name="pr9")
+    pr9 = pd.Series([float("nan"), float("nan"), float("nan"), float("nan"), float("nan"), float("nan"), float("nan"),  # pr2 # noqa
+                     float("nan"), float("nan"), float("nan"), float("nan"), float("nan"), float("nan"), float("nan"), float("nan"), float("nan"),  # pr2 Chirurgie # noqa
+                     float("nan"), float("nan"),  # pr3
+                     float("nan"), float("nan"),  # pr4
+                     float("nan"), float("nan"),  # pr4 Magnétique
+                     float("nan"), "1", "1", float("nan"), float("nan"), float("nan"), float("nan"),  # pr9 # noqa
+                     float("nan"), float("nan"),  # pr10
+                     float("nan"), float("nan"), float("nan"), float("nan"), float("nan"), float("nan"), float("nan"),  # pr12 # noqa
+                     float("nan"), float("nan"), float("nan"), float("nan"), float("nan"), float("nan"), float("nan"),  # pr13 # noqa
+                     float("nan"), float("nan"), float("nan"), float("nan"), float("nan"), float("nan"), float("nan"),  # pr14 # noqa
+                     float("nan"), float("nan")], name="pr9")  # pr15
     return pd.concat([pr, pr9], axis=1)
 
 
 @pytest.fixture
 def pr10(pr) -> pd.DataFrame:
-    pr10 = pd.Series([float("nan"), float("nan"), float("nan"), float("nan"),
-                      float("nan"), float("nan"), float("nan"), float("nan"),
-                      float("nan"), float("nan"), float("nan"), float("nan"),
-                      float("nan"), float("nan"), float("nan"), float("nan"),
-                      float("nan"), float("nan"), float("nan"), float("nan"),
-                      float("nan"), "1", float("nan"), float("nan"), float("nan"),
-                      float("nan"), float("nan"), float("nan"), float("nan"),
-                      float("nan"), float("nan"), float("nan"), float("nan"),
-                      float("nan"), float("nan"), float("nan"), float("nan")],
-                     name="pr10")
+    pr10 = pd.Series([float("nan"), float("nan"), float("nan"), float("nan"), float("nan"), float("nan"), float("nan"),  # pr2 # noqa
+                     float("nan"), float("nan"), float("nan"), float("nan"), float("nan"), float("nan"), float("nan"), float("nan"), float("nan"),  # pr2 Chirurgie # noqa
+                     float("nan"), float("nan"),  # pr3
+                     float("nan"), float("nan"),  # pr4
+                     float("nan"), float("nan"),  # pr4 Magnétique
+                     float("nan"), float("nan"), float("nan"), float("nan"), float("nan"), float("nan"), float("nan"),  # pr9 # noqa
+                     float("nan"), "1",   # pr10
+                     float("nan"), float("nan"), float("nan"), float("nan"), float("nan"), float("nan"), float("nan"),  # pr12 # noqa
+                     float("nan"), float("nan"), float("nan"), float("nan"), float("nan"), float("nan"), float("nan"),  # pr13 # noqa
+                     float("nan"), float("nan"), float("nan"), float("nan"), float("nan"), float("nan"), float("nan"),  # pr14 # noqa
+                     float("nan"), float("nan")], name="pr10")  # pr15
     return pd.concat([pr, pr10], axis=1)
 
 
 @pytest.fixture
 def pr12(pr) -> pd.DataFrame:
-    pr12 = pd.Series([float("nan"), float("nan"), "1", "1", float("nan"), float("nan"),
-                      float("nan"), float("nan"), float("nan"), float("nan"),
-                      float("nan"), float("nan"), float("nan"), float("nan"),
-                      float("nan"), float("nan"), float("nan"), float("nan"),
-                      float("nan"), float("nan"), float("nan"), float("nan"),
-                      float("nan"), float("nan"), "1", "1", float("nan"), float("nan"),
-                      float("nan"), float("nan"), float("nan"), float("nan"),
-                      float("nan"), float("nan"), float("nan"), float("nan"),
-                      float("nan")], name="pr12")
+    pr12 = pd.Series([float("nan"), float("nan"), float("nan"), float("nan"), float("nan"), float("nan"), float("nan"),  # pr2 # noqa
+                     float("nan"), float("nan"), float("nan"), float("nan"), float("nan"), float("nan"), float("nan"), float("nan"), float("nan"),  # pr2 Chirurgie # noqa
+                     float("nan"), float("nan"),  # pr3
+                     float("nan"), float("nan"),  # pr4
+                     float("nan"), float("nan"),  # pr4 Magnétique
+                     float("nan"), float("nan"), float("nan"), float("nan"), float("nan"), float("nan"), float("nan"),  # pr9 # noqa
+                     float("nan"), float("nan"),  # pr10
+                     float("nan"), "1", "1", float("nan"), float("nan"), float("nan"), float("nan"),  # pr12 # noqa
+                     float("nan"), float("nan"), float("nan"), float("nan"), float("nan"), float("nan"), float("nan"),  # pr13 # noqa
+                     float("nan"), float("nan"), float("nan"), float("nan"), float("nan"), float("nan"), float("nan"),  # pr14 # noqa
+                     float("nan"), float("nan")], name="pr12")  # pr15
     return pd.concat([pr, pr12], axis=1)
 
 
 @pytest.fixture
 def pr13(pr) -> pd.DataFrame:
-    pr13 = pd.Series([float("nan"), float("nan"), float("nan"), float("nan"),
-                      float("nan"), float("nan"), "1", "1", float("nan"), float("nan"),
-                      float("nan"), float("nan"), float("nan"), float("nan"),
-                      float("nan"), float("nan"), float("nan"), float("nan"),
-                      float("nan"), float("nan"), float("nan"), float("nan"),
-                      float("nan"), float("nan"), float("nan"), float("nan"),
-                      float("nan"), float("nan"), float("nan"), float("nan"),
-                      float("nan"), float("nan"), float("nan"), float("nan"),
-                      float("nan"), float("nan"), float("nan")], name="pr13")
+    pr13 = pd.Series([float("nan"), float("nan"), float("nan"), float("nan"), float("nan"), float("nan"), float("nan"),  # pr2 # noqa
+                     float("nan"), float("nan"), float("nan"), float("nan"), float("nan"), float("nan"), float("nan"), float("nan"), float("nan"),  # pr2 Chirurgie # noqa
+                     float("nan"), float("nan"),  # pr3
+                     float("nan"), float("nan"),  # pr4
+                     float("nan"), float("nan"),  # pr4 Magnétique
+                     float("nan"), float("nan"), float("nan"), float("nan"), float("nan"), float("nan"), float("nan"),  # pr9 # noqa
+                     float("nan"), float("nan"),  # pr10
+                     float("nan"), float("nan"), float("nan"), float("nan"), float("nan"), float("nan"), float("nan"),  # pr12 # noqa
+                     float("nan"), "1", "1", float("nan"), float("nan"), float("nan"), float("nan"),  # pr13 # noqa
+                     float("nan"), float("nan"), float("nan"), float("nan"), float("nan"), float("nan"), float("nan"),  # pr14 # noqa
+                     float("nan"), float("nan")], name="pr13")  # pr15
     return pd.concat([pr, pr13], axis=1)
 
 
 @pytest.fixture
 def pr14(pr) -> pd.DataFrame:
-    pr14 = pd.Series([float("nan"), float("nan"), float("nan"), float("nan"),
-                      float("nan"), float("nan"), float("nan"), float("nan"),
-                      float("nan"), float("nan"), float("nan"), float("nan"),
-                      float("nan"), float("nan"), float("nan"), float("nan"),
-                      float("nan"), float("nan"), float("nan"), float("nan"),
-                      float("nan"), float("nan"), float("nan"), float("nan"),
-                      float("nan"), float("nan"), float("nan"), float("nan"),
-                      "1", "1", float("nan"), float("nan"), float("nan"), "1", "1",
-                      float("nan"), float("nan")], name="pr14")
+    pr14 = pd.Series([float("nan"), float("nan"), float("nan"), float("nan"), float("nan"), float("nan"), float("nan"),  # pr2 # noqa
+                     float("nan"), float("nan"), float("nan"), float("nan"), float("nan"), float("nan"), float("nan"), float("nan"), float("nan"),  # pr2 Chirurgie # noqa
+                     float("nan"), float("nan"),  # pr3
+                     float("nan"), float("nan"),  # pr4
+                     float("nan"), float("nan"),  # pr4 Magnétique
+                     float("nan"), float("nan"), float("nan"), float("nan"), float("nan"), float("nan"), float("nan"),  # pr9 # noqa
+                     float("nan"), float("nan"),  # pr10
+                     float("nan"), float("nan"), float("nan"), float("nan"), float("nan"), float("nan"), float("nan"),  # pr12 # noqa
+                     float("nan"), float("nan"), float("nan"), float("nan"), float("nan"), float("nan"), float("nan"),  # pr13 # noqa
+                     float("nan"), "1", "1", float("nan"), float("nan"), float("nan"), float("nan"),  # pr14 # noqa
+                     float("nan"), float("nan")], name="pr14")  # pr15
     return pd.concat([pr, pr14], axis=1)
 
 
 @pytest.fixture
 def pr15(pr) -> pd.DataFrame:
-    pr15 = pd.Series([float("nan"), float("nan"), float("nan"), float("nan"),
-                      float("nan"), float("nan"), float("nan"), float("nan"),
-                      float("nan"), float("nan"), float("nan"), float("nan"),
-                      float("nan"), float("nan"), float("nan"), float("nan"),
-                      float("nan"), float("nan"), float("nan"), float("nan"),
-                      float("nan"), float("nan"), float("nan"), float("nan"),
-                      float("nan"), float("nan"), float("nan"), float("nan"),
-                      float("nan"), float("nan"), float("nan"), float("nan"),
-                      float("nan"), float("nan"), float("nan"), float("nan"), "1"],
-                     name="pr15")
+    pr15 = pd.Series([float("nan"), float("nan"), float("nan"), float("nan"), float("nan"), float("nan"), float("nan"),  # pr2 # noqa
+                     float("nan"), float("nan"), float("nan"), float("nan"), float("nan"), float("nan"), float("nan"), float("nan"), float("nan"),  # pr2 Chirurgie # noqa
+                     float("nan"), float("nan"),  # pr3
+                     float("nan"), float("nan"),  # pr4
+                     float("nan"), float("nan"),  # pr4 Magnétique
+                     float("nan"), float("nan"), float("nan"), float("nan"), float("nan"), float("nan"), float("nan"),  # pr9 # noqa
+                     float("nan"), float("nan"),  # pr10
+                     float("nan"), float("nan"), float("nan"), float("nan"), float("nan"), float("nan"), float("nan"),  # pr12 # noqa
+                     float("nan"), float("nan"), float("nan"), float("nan"), float("nan"), float("nan"), float("nan"),  # pr13 # noqa
+                     float("nan"), float("nan"), float("nan"), float("nan"), float("nan"), float("nan"), float("nan"),  # pr14 # noqa
+                     float("nan"), "1"], name="pr15")  # pr15
     return pd.concat([pr, pr15], axis=1)
 
 

@@ -29,8 +29,7 @@ def test_check_pr4(df_in: pd.DataFrame, df_out: pd.DataFrame,
     input = request.getfixturevalue(df_in)
     output = request.getfixturevalue(df_out)
     pt = (input.loc[:, "acceptabilityId"] == "PREFERRED")
-    syn = (input.loc[:, "acceptabilityId"] == "ACCEPTABLE")
-    pd.testing.assert_frame_equal(editorial_check._check_pr4(input, pt, syn), output)
+    pd.testing.assert_frame_equal(editorial_check._check_pr4(input, pt), output)
 
 
 @pytest.mark.parametrize("df_in, df_out", [("null", "null"), ("pr", "pr9")])
