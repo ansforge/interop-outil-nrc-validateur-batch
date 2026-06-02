@@ -93,3 +93,11 @@ def test_check_pa9(df_in: pd.DataFrame, df_out: pd.DataFrame,
     input = request.getfixturevalue(df_in)
     output = request.getfixturevalue(df_out)
     pd.testing.assert_frame_equal(editorial_check._check_pa9(input), output)
+
+
+@pytest.mark.parametrize("df_in, df_out", [("null", "null"), ("co_pa", "pa10")])
+def test_check_pa10(df_in: pd.DataFrame, df_out: pd.DataFrame,
+                    request: pytest.FixtureRequest) -> None:
+    input = request.getfixturevalue(df_in)
+    output = request.getfixturevalue(df_out)
+    pd.testing.assert_frame_equal(editorial_check._check_pa10(input), output)

@@ -640,6 +640,29 @@ def _check_pa9(df: pd.DataFrame) -> pd.DataFrame:
     return df
 
 
+def _check_pa10(df: pd.DataFrame) -> pd.DataFrame:
+    """Identifie les descriptions ne respectant pas la règle pa10
+
+    args:
+        df: DataFrame à valider
+
+    returns:
+        DataFrame du fichier avec une colonne identifiant les
+        descriptions ne respectant pas la règle pa10.
+    """
+    idx = df.loc[(df.loc[:, "FSN"].str.contains("vapor", regex=False, case=False))
+                 & (~df.loc[:, "term"].str.contains("vapeurs", regex=False, case=False))].index  # noqa
+
+    idx = idx.union(df.loc[(df.loc[:, "FSN"].str.contains("fumes", regex=False, case=False)) # noqa
+                           & (~df.loc[:, "term"].str.contains("(?:émanations|fumées)", case=False))].index) # noqa
+
+    if not idx.empty:
+        df = pd.merge(df, pd.DataFrame(data={"pa10": ["1"] * len(idx)}, index=idx),
+                      how="left", left_index=True, right_index=True, validate="1:1")
+
+    return df
+
+
 ##############################################
 # Règles Pharmaceutical / biological product #
 ##############################################

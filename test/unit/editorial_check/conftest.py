@@ -371,7 +371,9 @@ def co_pa() -> pd.DataFrame:
                        "pa8_sf", "pa8_sf",
                        "pa9_c", "pa9_c",
                        "pa9_f", "pa9_f", "pa9_f", "pa9_b", "pa9_b",
-                       "pa9_a", "pa9_a"],
+                       "pa9_a", "pa9_a",
+                       "pa10_v", "pa10_v",
+                       "pa10_f", "pa10_f", "pa10_f"],
          "FSN": ["Neurological finding", "Neurological finding",  # co2
                  "Iron above reference range", "Iron above reference range", "Iron above reference range", "Iron above reference range", "Protein above reference range", "Protein above reference range", "Protein above reference range",  # co6 above # noqa
                  "Iron below reference range", "Iron below reference range", "Iron below reference range", "Iron below reference range", "Protein below reference range", "Protein below reference range", "Protein below reference range",  # co6 below # noqa
@@ -391,7 +393,9 @@ def co_pa() -> pd.DataFrame:
                  "Superficial frostbite of thorax", "Superficial frostbite of thorax",  # pa8 Superficial frostbite # noqa
                  "Carbuncle of breast", "Carbuncle of breast",  # pa9 Carbuncle
                  "Furuncle of hand", "Furuncle of hand", "Furuncle of hand", "Boil of hand", "Boil of hand",  # pa9 Furuncle Boil # noqa
-                 "Anthrax", "Anthrax"],  # pa9 anthrax
+                 "Anthrax", "Anthrax",  # pa9 anthrax
+                 "Bronchitis caused by vapor", "Bronchitis caused by vapor",  # pa10 vapor # noqa
+                 "Bronchitis caused by chemical fumes", "Bronchitis caused by chemical fumes", "Bronchitis caused by chemical fumes"],  # pa10 fumes # noqa
          "term": ["constatation neurologique", "observation neurologique",  # co2
                   "fer supérieur à l'intervalle de référence", "fer supérieur à l'intervalle de référence", "fer supérieur aux valeurs de référence", "fer supérieur aux valeurs de référence", "protéine supérieure à l'intervalle de référence", "protéine supérieure à l'intervalle de référence", "protéine supérieure aux valeurs de référence",  # co6 above # noqa
                   "fer inférieur à l'intervalle de référence", "fer inférieur à l'intervalle de référence", "fer inférieur aux valeurs de référence", "fer inférieur aux valeurs de référence", "protéine inférieure à l'intervalle de référence", "protéine inférieure à l'intervalle de référence", "protéine inférieure aux valeurs de référence",  # co6 below # noqa
@@ -411,7 +415,9 @@ def co_pa() -> pd.DataFrame:
                   "gelure superficielle du thorax", "engelure superficielle du thorax",  # pa8 Superficial frostbite # noqa
                   "anthrax du sein", "maladie du sein",  # pa9 Carbuncle
                   "furoncle de la main", "folliculite nécrotique de la main", "maladie de la main", "clou de la main", "maladie de la main",  # pa9 Furuncle Boil # noqa
-                  "maladie du charbon", "anthrax"],  # pa9 anthrax
+                  "maladie du charbon", "anthrax",  # pa9 anthrax
+                  "bronchite causée par des vapeurs", "bronchite causée par des émanations",  # pa10 vapor # noqa
+                  "bronchite causée par des émanations chimiques", "bronchite causée par des fumées chimiques", "bronchite causée par chemical fumes"],  # pa10 fumes # noqa
          "acceptabilityId": ["PREFERRED", "PREFERRED",  # co2
                              "PREFERRED", "ACCEPTABLE", "PREFERRED", "ACCEPTABLE", "PREFERRED", "ACCEPTABLE", "ACCEPTABLE",  # co6 above # noqa
                              "PREFERRED", "ACCEPTABLE", "PREFERRED", "ACCEPTABLE", "PREFERRED", "ACCEPTABLE", "ACCEPTABLE",  # co6 below # noqa
@@ -431,7 +437,9 @@ def co_pa() -> pd.DataFrame:
                              "PREFERRED", "PREFERRED",  # pa8 Superficial frostbite
                              "PREFERRED", "PREFERRED",  # pa9 Carbuncle
                              "PREFERRED", "PREFERRED", "PREFERRED", "PREFERRED", "PREFERRED",  # pa9 Furuncle Boil # noqa
-                             "PREFERRED", "PREFERRED"]}  # pa9 anthrax
+                             "PREFERRED", "PREFERRED",  # pa9 anthrax
+                             "PREFERRED", "PREFERRED",  # pa10 vapor # noqa
+                             "PREFERRED", "PREFERRED", "PREFERRED"]}  # pa10 fumes # noqa
     )
 
 
@@ -456,7 +464,9 @@ def co2(co_pa) -> pd.DataFrame:
                      float("nan"), float("nan"),  # pa8 Superficial frostbite
                      float("nan"), float("nan"),  # pa9 Carbuncle
                      float("nan"), float("nan"), float("nan"), float("nan"), float("nan"),  # pa9 Furuncle Boil # noqa
-                     float("nan"), float("nan")], name="co2")  # pa9 anthrax
+                     float("nan"), float("nan"),  # pa9 anthrax
+                     float("nan"), float("nan"),  # pa10 vapor
+                     float("nan"), float("nan"), float("nan")], name="co2")  # pa10 fumes # noqa
     return pd.concat([co_pa, co2], axis=1)
 
 
@@ -481,7 +491,9 @@ def co6(co_pa) -> pd.DataFrame:
                      float("nan"), float("nan"),  # pa8 Superficial frostbite
                      float("nan"), float("nan"),  # pa9 Carbuncle
                      float("nan"), float("nan"), float("nan"), float("nan"), float("nan"),  # pa9 Furuncle Boil # noqa
-                     float("nan"), float("nan")], name="co6")  # pa9 anthrax
+                     float("nan"), float("nan"),  # pa9 anthrax
+                     float("nan"), float("nan"),  # pa10 vapor
+                     float("nan"), float("nan"), float("nan")], name="co6")  # pa10 fumes # noqa
     return pd.concat([co_pa, co6], axis=1)
 
 
@@ -506,7 +518,9 @@ def pa2(co_pa) -> pd.DataFrame:
                      float("nan"), float("nan"),  # pa8 Superficial frostbite
                      float("nan"), float("nan"),  # pa9 Carbuncle
                      float("nan"), float("nan"), float("nan"), float("nan"), float("nan"),  # pa9 Furuncle Boil # noqa
-                     float("nan"), float("nan")], name="pa2")  # pa9 anthrax
+                     float("nan"), float("nan"),  # pa9 anthrax
+                     float("nan"), float("nan"),  # pa10 vapor
+                     float("nan"), float("nan"), float("nan")], name="pa2")  # pa10 fumes # noqa
     return pd.concat([co_pa, pa2], axis=1)
 
 
@@ -531,7 +545,9 @@ def pa3_1(co_pa) -> pd.DataFrame:
                        float("nan"), float("nan"),  # pa8 Superficial frostbite
                        float("nan"), float("nan"),  # pa9 Carbuncle
                        float("nan"), float("nan"), float("nan"), float("nan"), float("nan"),  # pa9 Furuncle Boil # noqa
-                       float("nan"), float("nan")], name="pa3.1")  # pa9 anthrax
+                       float("nan"), float("nan"),  # pa9 anthrax
+                       float("nan"), float("nan"),  # pa10 vapor
+                       float("nan"), float("nan"), float("nan")], name="pa3.1")  # pa10 fumes # noqa
     return pd.concat([co_pa, pa3_1], axis=1)
 
 
@@ -556,7 +572,9 @@ def pa4(co_pa) -> pd.DataFrame:
                      float("nan"), float("nan"),  # pa8 Superficial frostbite
                      float("nan"), float("nan"),  # pa9 Carbuncle
                      float("nan"), float("nan"), float("nan"), float("nan"), float("nan"),  # pa9 Furuncle Boil # noqa
-                     float("nan"), float("nan")], name="pa4")  # pa9 anthrax
+                     float("nan"), float("nan"),  # pa9 anthrax
+                     float("nan"), float("nan"),  # pa10 vapor
+                     float("nan"), float("nan"), float("nan")], name="pa4")  # pa10 fumes # noqa
     return pd.concat([co_pa, pa4], axis=1)
 
 
@@ -581,7 +599,9 @@ def pa5(co_pa) -> pd.DataFrame:
                      float("nan"), float("nan"),  # pa8 Superficial frostbite
                      float("nan"), float("nan"),  # pa9 Carbuncle
                      float("nan"), float("nan"), float("nan"), float("nan"), float("nan"),  # pa9 Furuncle Boil # noqa
-                     float("nan"), float("nan")], name="pa5")  # pa9 anthrax
+                     float("nan"), float("nan"),  # pa9 anthrax
+                     float("nan"), float("nan"),  # pa10 vapor
+                     float("nan"), float("nan"), float("nan")], name="pa5")  # pa10 fumes # noqa
     return pd.concat([co_pa, pa5], axis=1)
 
 
@@ -606,7 +626,9 @@ def pa6(co_pa) -> pd.DataFrame:
                      float("nan"), float("nan"),  # pa8 Superficial frostbite
                      float("nan"), float("nan"),  # pa9 Carbuncle
                      float("nan"), float("nan"), float("nan"), float("nan"), float("nan"),  # pa9 Furuncle Boil # noqa
-                     float("nan"), float("nan")], name="pa6")  # pa9 anthrax
+                     float("nan"), float("nan"),  # pa9 anthrax
+                     float("nan"), float("nan"),  # pa10 vapor
+                     float("nan"), float("nan"), float("nan")], name="pa6")  # pa10 fumes # noqa
     return pd.concat([co_pa, pa6], axis=1)
 
 
@@ -631,7 +653,9 @@ def pa7(co_pa) -> pd.DataFrame:
                      float("nan"), float("nan"),  # pa8 Superficial frostbite
                      float("nan"), float("nan"),  # pa9 Carbuncle
                      float("nan"), float("nan"), float("nan"), float("nan"), float("nan"),  # pa9 Furuncle Boil # noqa
-                     float("nan"), float("nan")], name="pa7")  # pa9 anthrax
+                     float("nan"), float("nan"),  # pa9 anthrax
+                     float("nan"), float("nan"),  # pa10 vapor
+                     float("nan"), float("nan"), float("nan")], name="pa7")  # pa10 fumes # noqa
     return pd.concat([co_pa, pa7], axis=1)
 
 
@@ -656,7 +680,9 @@ def pa8(co_pa) -> pd.DataFrame:
                      float("nan"), "1",  # pa8 Superficial frostbite
                      float("nan"), float("nan"),  # pa9 Carbuncle
                      float("nan"), float("nan"), float("nan"), float("nan"), float("nan"),  # pa9 Furuncle Boil # noqa
-                     float("nan"), float("nan")], name="pa8")  # pa9 anthrax
+                     float("nan"), float("nan"),  # pa9 anthrax
+                     float("nan"), float("nan"),  # pa10 vapor
+                     float("nan"), float("nan"), float("nan")], name="pa8")  # pa10 fumes # noqa
     return pd.concat([co_pa, pa8], axis=1)
 
 
@@ -681,8 +707,37 @@ def pa9(co_pa) -> pd.DataFrame:
                      float("nan"), float("nan"),  # pa8 Superficial frostbite
                      float("nan"), "1",  # pa9 Carbuncle
                      float("nan"), float("nan"), "1", float("nan"), "1",  # pa9 Furuncle Boil # noqa
-                     float("nan"), "1"], name="pa9")  # pa9 anthrax
+                     float("nan"), "1",  # pa9 anthrax
+                     float("nan"), float("nan"),  # pa10 vapor
+                     float("nan"), float("nan"), float("nan")], name="pa9")  # pa10 fumes # noqa
     return pd.concat([co_pa, pa9], axis=1)
+
+
+@pytest.fixture
+def pa10(co_pa) -> pd.DataFrame:
+    pa10 = pd.Series([float("nan"), float("nan"),  # co2
+                     float("nan"), float("nan"), float("nan"), float("nan"), float("nan"), float("nan"), float("nan"),   # co6 above # noqa
+                     float("nan"), float("nan"), float("nan"), float("nan"), float("nan"), float("nan"), float("nan"),   # co6 below # noqa
+                     float("nan"), float("nan"), float("nan"), float("nan"), float("nan"), float("nan"), float("nan"),   # co6 within # noqa
+                     float("nan"), float("nan"), float("nan"), float("nan"), float("nan"), float("nan"), float("nan"),   # co6 outside # noqa
+                     float("nan"), float("nan"), float("nan"), float("nan"), float("nan"),  # pa2 # noqa
+                     float("nan"), float("nan"), float("nan"), float("nan"), float("nan"), float("nan"), float("nan"),  # pa2 Complication # noqa
+                     float("nan"), float("nan"),  # pa3.1
+                     float("nan"), float("nan"),  # pa4 Epilepsy
+                     float("nan"), float("nan"), float("nan"), float("nan"),  # pa4 Seizure # noqa
+                     float("nan"), float("nan"),  # pa4 Convulsion
+                     float("nan"), float("nan"),  # pa5
+                     float("nan"), float("nan"),  # pa6
+                     float("nan"), float("nan"), float("nan"),  # pa7
+                     float("nan"), float("nan"),  # pa8 Chilblain
+                     float("nan"), float("nan"),  # pa8 Frostbite
+                     float("nan"), float("nan"),  # pa8 Superficial frostbite
+                     float("nan"), float("nan"),  # pa9 Carbuncle
+                     float("nan"), float("nan"), float("nan"), float("nan"), float("nan"),  # pa9 Furuncle Boil # noqa
+                     float("nan"), float("nan"),  # pa9 anthrax
+                     float("nan"), "1",  # pa10 vapor
+                     float("nan"), float("nan"), "1"], name="pa10")  # pa10 fumes # noqa
+    return pd.concat([co_pa, pa10], axis=1)
 
 
 ############################################################
