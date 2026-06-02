@@ -526,6 +526,26 @@ def _check_pa4(df: pd.DataFrame) -> pd.DataFrame:
     return df
 
 
+def _check_pa5(df: pd.DataFrame) -> pd.DataFrame:
+    """Identifie les descriptions ne respectant pas la règle pa5
+
+    args:
+        df: DataFrame à valider
+
+    returns:
+        DataFrame du fichier avec une colonne identifiant les
+        descriptions ne respectant pas la règle pa5.
+    """
+    idx = df.loc[(df.loc[:, "FSN"].str.contains("disease", regex=False, case=False)) # noqa
+                 & (~df.loc[:, "term"].str.contains("maladie", regex=False, case=False))].index # noqa
+
+    if not idx.empty:
+        df = pd.merge(df, pd.DataFrame(data={"pa5": ["1"] * len(idx)}, index=idx),
+                      how="left", left_index=True, right_index=True, validate="1:1")
+
+    return df
+
+
 def _check_pa6(df: pd.DataFrame, pt: pd.Series) -> pd.DataFrame:
     """Identifie les descriptions ne respectant pas la règle pa6
 

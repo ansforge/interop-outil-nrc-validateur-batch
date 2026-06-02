@@ -363,6 +363,7 @@ def co_pa() -> pd.DataFrame:
                        "pa4_epi", "pa4_epi",
                        "pa4_sei", "pa4_sei", "pa4_sei", "pa4_sei",
                        "pa4_con", "pa4_con",
+                       "pa5", "pa5",
                        "pa6", "pa6",
                        "pa7_1", "pa7_2", "pa7_2",
                        "pa8_c", "pa8_c",
@@ -382,6 +383,7 @@ def co_pa() -> pd.DataFrame:
                  "Reflex epilepsy", "Reflex epilepsy",  # pa4 Epilepsy
                  "Seizure issue", "Seizure issue", "Seizure issue", "Seizure issue",  # pa4 Seizure # noqa
                  "Uremic convulsion", "Uremic convulsion",  # pa4 Convulsion
+                 "Heart disease", "Heart disease",  # pa5
                  "Visual impairment", "Visual impairment",  # pa6
                  "Primary osteoporosis", "Primary siphilis", "Primary siphilis",  # pa7
                  "Chilblain", "Chilblain",  # pa8 Chilblain
@@ -401,6 +403,7 @@ def co_pa() -> pd.DataFrame:
                   "épilepsie réflexe", "crise réflexe",  # pa4 Epilepsy
                   "crise", "convulsion", "trouble convulsif", "épilepsie",  # pa4 Seizure # noqa
                   "convulsions urémiques", "crise urémique",  # pa4 Convulsion
+                  "maladie cardiaque", "problème cardiaque",  # pa5
                   "atteinte de la vision", "déficience visuelle",  # pa6
                   "ostéoporose primitive", "syphilis primaire", "syphilis primordiale",  # pa7 # noqa
                   "engelure", "gelure",  # pa8 Chilblain
@@ -420,6 +423,7 @@ def co_pa() -> pd.DataFrame:
                              "PREFERRED", "PREFERRED",  # pa4 Epilepsy
                              "PREFERRED", "PREFERRED", "PREFERRED", "PREFERRED",  # pa4 Seizure # noqa
                              "PREFERRED", "PREFERRED",  # pa4 Convulsion
+                             "PREFERRED", "PREFERRED",  # pa5
                              "PREFERRED", "PREFERRED",  # pa6
                              "PREFERRED", "PREFERRED", "PREFERRED",  # pa7
                              "PREFERRED", "PREFERRED",  # pa8 Chilblain
@@ -444,6 +448,7 @@ def co2(co_pa) -> pd.DataFrame:
                      float("nan"), float("nan"),  # pa4 Epilepsy
                      float("nan"), float("nan"), float("nan"), float("nan"),  # pa4 Seizure # noqa
                      float("nan"), float("nan"),  # pa4 Convulsion
+                     float("nan"), float("nan"),  # pa5
                      float("nan"), float("nan"),  # pa6
                      float("nan"), float("nan"), float("nan"),  # pa7
                      float("nan"), float("nan"),  # pa8 Chilblain
@@ -468,6 +473,7 @@ def co6(co_pa) -> pd.DataFrame:
                      float("nan"), float("nan"),  # pa4 Epilepsy
                      float("nan"), float("nan"), float("nan"), float("nan"),  # pa4 Seizure # noqa
                      float("nan"), float("nan"),  # pa4 Convulsion
+                     float("nan"), float("nan"),  # pa5
                      float("nan"), float("nan"),  # pa6
                      float("nan"), float("nan"), float("nan"),  # pa7
                      float("nan"), float("nan"),  # pa8 Chilblain
@@ -492,6 +498,7 @@ def pa2(co_pa) -> pd.DataFrame:
                      float("nan"), float("nan"),  # pa4 Epilepsy
                      float("nan"), float("nan"), float("nan"), float("nan"),  # pa4 Seizure # noqa
                      float("nan"), float("nan"),  # pa4 Convulsion
+                     float("nan"), float("nan"),  # pa5
                      float("nan"), float("nan"),  # pa6
                      float("nan"), float("nan"), float("nan"),  # pa7
                      float("nan"), float("nan"),  # pa8 Chilblain
@@ -516,6 +523,7 @@ def pa3_1(co_pa) -> pd.DataFrame:
                        float("nan"), float("nan"),  # pa4 Epilepsy
                        float("nan"), float("nan"), float("nan"), float("nan"),  # pa4 Seizure # noqa
                        float("nan"), float("nan"),  # pa4 Convulsion
+                       float("nan"), float("nan"),  # pa5
                        float("nan"), float("nan"),  # pa6
                        float("nan"), float("nan"), float("nan"),  # pa7
                        float("nan"), float("nan"),  # pa8 Chilblain
@@ -540,6 +548,7 @@ def pa4(co_pa) -> pd.DataFrame:
                      float("nan"), "1",  # pa4 Epilepsy
                      float("nan"), float("nan"), float("nan"), "1",  # pa4 Seizure # noqa
                      float("nan"), "1",  # pa4 Convulsion
+                     float("nan"), float("nan"),  # pa5
                      float("nan"), float("nan"),  # pa6
                      float("nan"), float("nan"), float("nan"),  # pa7
                      float("nan"), float("nan"),  # pa8 Chilblain
@@ -549,6 +558,31 @@ def pa4(co_pa) -> pd.DataFrame:
                      float("nan"), float("nan"), float("nan"), float("nan"), float("nan"),  # pa9 Furuncle Boil # noqa
                      float("nan"), float("nan")], name="pa4")  # pa9 anthrax
     return pd.concat([co_pa, pa4], axis=1)
+
+
+@pytest.fixture
+def pa5(co_pa) -> pd.DataFrame:
+    pa5 = pd.Series([float("nan"), float("nan"),  # co2
+                     float("nan"), float("nan"), float("nan"), float("nan"), float("nan"), float("nan"), float("nan"),   # co6 above # noqa
+                     float("nan"), float("nan"), float("nan"), float("nan"), float("nan"), float("nan"), float("nan"),   # co6 below # noqa
+                     float("nan"), float("nan"), float("nan"), float("nan"), float("nan"), float("nan"), float("nan"),   # co6 within # noqa
+                     float("nan"), float("nan"), float("nan"), float("nan"), float("nan"), float("nan"), float("nan"),   # co6 outside # noqa
+                     float("nan"), float("nan"), float("nan"), float("nan"), float("nan"),  # pa2 # noqa
+                     float("nan"), float("nan"), float("nan"), float("nan"), float("nan"), float("nan"), float("nan"),  # pa2 Complication # noqa
+                     float("nan"), float("nan"),  # pa3.1
+                     float("nan"), float("nan"),  # pa4 Epilepsy
+                     float("nan"), float("nan"), float("nan"), float("nan"),  # pa4 Seizure # noqa
+                     float("nan"), float("nan"),  # pa4 Convulsion
+                     float("nan"), "1",  # pa5
+                     float("nan"), float("nan"),  # pa6
+                     float("nan"), float("nan"), float("nan"),  # pa7
+                     float("nan"), float("nan"),  # pa8 Chilblain
+                     float("nan"), float("nan"),  # pa8 Frostbite
+                     float("nan"), float("nan"),  # pa8 Superficial frostbite
+                     float("nan"), float("nan"),  # pa9 Carbuncle
+                     float("nan"), float("nan"), float("nan"), float("nan"), float("nan"),  # pa9 Furuncle Boil # noqa
+                     float("nan"), float("nan")], name="pa5")  # pa9 anthrax
+    return pd.concat([co_pa, pa5], axis=1)
 
 
 @pytest.fixture
@@ -564,6 +598,7 @@ def pa6(co_pa) -> pd.DataFrame:
                      float("nan"), float("nan"),  # pa4 Epilepsy
                      float("nan"), float("nan"), float("nan"), float("nan"),  # pa4 Seizure # noqa
                      float("nan"), float("nan"),  # pa4 Convulsion
+                     float("nan"), float("nan"),  # pa5
                      float("nan"), "1",  # pa6
                      float("nan"), float("nan"), float("nan"),  # pa7
                      float("nan"), float("nan"),  # pa8 Chilblain
@@ -588,6 +623,7 @@ def pa7(co_pa) -> pd.DataFrame:
                      float("nan"), float("nan"),  # pa4 Epilepsy
                      float("nan"), float("nan"), float("nan"), float("nan"),  # pa4 Seizure # noqa
                      float("nan"), float("nan"),  # pa4 Convulsion
+                     float("nan"), float("nan"),  # pa5
                      float("nan"), float("nan"),  # pa6
                      float("nan"), float("nan"), "1",  # pa7
                      float("nan"), float("nan"),  # pa8 Chilblain
@@ -612,6 +648,7 @@ def pa8(co_pa) -> pd.DataFrame:
                      float("nan"), float("nan"),  # pa4 Epilepsy
                      float("nan"), float("nan"), float("nan"), float("nan"),  # pa4 Seizure # noqa
                      float("nan"), float("nan"),  # pa4 Convulsion
+                     float("nan"), float("nan"),  # pa5
                      float("nan"), float("nan"),  # pa6
                      float("nan"), float("nan"), float("nan"),  # pa7
                      float("nan"), "1",  # pa8 Chilblain
@@ -636,6 +673,7 @@ def pa9(co_pa) -> pd.DataFrame:
                      float("nan"), float("nan"),  # pa4 Epilepsy
                      float("nan"), float("nan"), float("nan"), float("nan"),  # pa4 Seizure # noqa
                      float("nan"), float("nan"),  # pa4 Convulsion
+                     float("nan"), float("nan"),  # pa5
                      float("nan"), float("nan"),  # pa6
                      float("nan"), float("nan"), float("nan"),  # pa7
                      float("nan"), float("nan"),  # pa8 Chilblain
