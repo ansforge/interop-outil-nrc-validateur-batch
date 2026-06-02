@@ -443,6 +443,43 @@ def _check_co6(df: pd.DataFrame, co: pd.Series, pt: pd.Series,
     return df
 
 
+def _check_pa2(df: pd.DataFrame, pt: pd.Series, syn: pd.Series) -> pd.DataFrame:
+    """Identifie les descriptions ne respectant pas la règle pa2
+
+    args:
+        df: DataFrame à valider
+        pt: Filtre sur les termes préférés de `df`
+        syn: Filtre sur les synonymes acceptables de `df`
+
+    returns:
+        DataFrame du fichier avec une colonne identifiant les
+        descriptions ne respectant pas la règle pa2.
+    """
+    sctid = df.loc[(df.loc[:, "FSN"].str.contains("disorder", regex=False, case=False))
+                   & ((df.loc[:, "acceptabilityId"] == "PREFERRED")
+                      & (df.loc[:, "term"].str.contains("complication", regex=False))),
+                   "conceptId"].unique()
+
+    f_complication = df.loc[:, "conceptId"].isin(sctid)
+
+    has_invalid_syn = ~df.loc[f_complication, "conceptId"].isin(
+        df.loc[syn
+               & df.loc[:, "term"].str.contains("problème", regex=False), "conceptId"].unique() # noqa
+    )
+
+    idx = df.loc[pt
+                 & (df.loc[:, "FSN"].str.contains("disorder", regex=False, case=False))
+                 & (~df.loc[:, "term"].str.contains("(?:trouble|affection|anomalie|complication|maladie)", case=False))].index # noqa
+
+    idx = idx.union(df.loc[syn & has_invalid_syn].index)
+
+    if not idx.empty:
+        df = pd.merge(df, pd.DataFrame(data={"pa2": ["1"] * len(idx)}, index=idx),
+                      how="left", left_index=True, right_index=True, validate="1:1")
+
+    return df
+
+
 def _check_pa3_1(df: pd.DataFrame) -> pd.DataFrame:
     """Identifie les descriptions ne respectant pas la règle pa3.1
 

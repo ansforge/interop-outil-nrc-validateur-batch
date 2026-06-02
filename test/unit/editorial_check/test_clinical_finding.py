@@ -28,6 +28,16 @@ def test_check_co6(df_in: pd.DataFrame, df_out: pd.DataFrame,
                                   output)
 
 
+@pytest.mark.parametrize("df_in, df_out", [("null", "null"), ("co_pa", "pa2")])
+def test_check_pa2(df_in: pd.DataFrame, df_out: pd.DataFrame,
+                   request: pytest.FixtureRequest) -> None:
+    input = request.getfixturevalue(df_in)
+    output = request.getfixturevalue(df_out)
+    pt = (input.loc[:, "acceptabilityId"] == "PREFERRED")
+    syn = (input.loc[:, "acceptabilityId"] == "ACCEPTABLE")
+    pd.testing.assert_frame_equal(editorial_check._check_pa2(input, pt, syn), output)
+
+
 @pytest.mark.parametrize("df_in, df_out", [("null", "null"), ("co_pa", "pa3_1")])
 def test_check_pa3_1(df_in: pd.DataFrame, df_out: pd.DataFrame,
                      request: pytest.FixtureRequest) -> None:

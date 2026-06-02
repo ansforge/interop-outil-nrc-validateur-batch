@@ -357,6 +357,8 @@ def co_pa() -> pd.DataFrame:
                        "co6_bel1", "co6_bel1", "co6_bel2", "co6_bel2", "co6_bel3", "co6_bel3", "co6_bel3",  # noqa
                        "co6_in1", "co6_in1", "co6_in2", "co6_in2", "co6_in3", "co6_in3", "co6_in3",  # noqa
                        "co6_out1", "co6_out1", "co6_out2", "co6_out2", "co6_out3", "co6_out3", "co6_out3",  # noqa
+                       "pa2_trouble", "pa2_affection", "pa2_anomalie", "pa2_maladie", "pa2",  # noqa
+                       "pa2_comp1", "pa2_comp1", "pa2_comp2", "pa2_comp2", "pa2_comp3", "pa2_comp3", "pa2_comp3",  # noqa
                        "pa3.1", "pa3.1",
                        "pa4_epi", "pa4_epi",
                        "pa4_sei", "pa4_sei", "pa4_sei", "pa4_sei",
@@ -374,9 +376,11 @@ def co_pa() -> pd.DataFrame:
                  "Iron below reference range", "Iron below reference range", "Iron below reference range", "Iron below reference range", "Protein below reference range", "Protein below reference range", "Protein below reference range",  # co6 below # noqa
                  "Iron within reference range", "Iron within reference range", "Iron within reference range", "Iron within reference range", "Protein within reference range", "Protein within reference range", "Protein within reference range",  # co6 within # noqa
                  "Iron outside reference range", "Iron outside reference range", "Iron outside reference range", "Iron outside reference range", "Protein outside reference range", "Protein outside reference range", "Protein outside reference range",  # co6 outside # noqa
+                 "Eating disorder", "Disorder of skin", "Chromosomal disorder", "Iatrogenic disorder", "Sleep disorder",  # pa2 # noqa
+                 "Disorder of pancreatic stent", "Disorder of pancreatic stent", "Disorder of pancreatic stent", "Disorder of pancreatic stent", "Disorder of pancreatic stent", "Disorder of pancreatic stent", "Disorder of pancreatic stent",  # pa2 Complication # noqa
                  "Pressure injury of hip", "Pressure injury of hip",  # pa3.1
                  "Reflex epilepsy", "Reflex epilepsy",  # pa4 Epilepsy
-                 "Seizure disorder", "Seizure disorder", "Seizure disorder", "Seizure disorder",  # pa4 Seizure # noqa
+                 "Seizure issue", "Seizure issue", "Seizure issue", "Seizure issue",  # pa4 Seizure # noqa
                  "Uremic convulsion", "Uremic convulsion",  # pa4 Convulsion
                  "Visual impairment", "Visual impairment",  # pa6
                  "Primary osteoporosis", "Primary siphilis", "Primary siphilis",  # pa7
@@ -391,6 +395,8 @@ def co_pa() -> pd.DataFrame:
                   "fer inférieur à l'intervalle de référence", "fer inférieur à l'intervalle de référence", "fer inférieur aux valeurs de référence", "fer inférieur aux valeurs de référence", "protéine inférieure à l'intervalle de référence", "protéine inférieure à l'intervalle de référence", "protéine inférieure aux valeurs de référence",  # co6 below # noqa
                   "fer dans l'intervalle de référence", "fer dans l'intervalle de référence", "fer dans les valeurs de référence", "fer dans les valeurs de référence", "protéine dans l'intervalle de référence", "protéine dans l'intervalle de référence", "protéine dans les valeurs de référence",  # co6 within # noqa
                   "fer en dehors de l'intervalle de référence", "fer en dehors de l'intervalle de référence", "fer en dehors des valeurs de référence", "fer en dehors des valeurs de référence", "protéine en dehors de l'intervalle de référence", "protéine en dehors de l'intervalle de référence", "protéine en dehors des valeurs de référence",  # co6 outside # noqa
+                  "trouble de l'alimentation", "affection cutanée", "anomalie chromosomique", "maladie iatrogénique", "sommeil défaillant",  # pa2 # noqa
+                  "complication d'endoprothèse pancréatique", "complication d'endoprothèse pancréatique", "problème de stent pancréatique", "problème de stent pancréatique", "complication d'endoprothèse pancréatique", "complication d'endoprothèse pancréatique", "problème de stent pancréatique",  # pa2 Complication # noqa
                   "escarre de la hanche", "blessure par pression de la hanche",  # pa3.1
                   "épilepsie réflexe", "crise réflexe",  # pa4 Epilepsy
                   "crise", "convulsion", "trouble convulsif", "épilepsie",  # pa4 Seizure # noqa
@@ -408,6 +414,8 @@ def co_pa() -> pd.DataFrame:
                              "PREFERRED", "ACCEPTABLE", "PREFERRED", "ACCEPTABLE", "PREFERRED", "ACCEPTABLE", "ACCEPTABLE",  # co6 below # noqa
                              "PREFERRED", "ACCEPTABLE", "PREFERRED", "ACCEPTABLE", "PREFERRED", "ACCEPTABLE", "ACCEPTABLE",  # co6 within # noqa
                              "PREFERRED", "ACCEPTABLE", "PREFERRED", "ACCEPTABLE", "PREFERRED", "ACCEPTABLE", "ACCEPTABLE",  # co6 outside # noqa
+                             "PREFERRED", "ACCEPTABLE", "PREFERRED", "ACCEPTABLE", "PREFERRED",  # pa2 # noqa
+                             "PREFERRED", "ACCEPTABLE", "PREFERRED", "ACCEPTABLE", "PREFERRED", "ACCEPTABLE", "ACCEPTABLE",  # pa2 Complication # noqa
                              "PREFERRED", "PREFERRED",  # pa3.1
                              "PREFERRED", "PREFERRED",  # pa4 Epilepsy
                              "PREFERRED", "PREFERRED", "PREFERRED", "PREFERRED",  # pa4 Seizure # noqa
@@ -430,6 +438,8 @@ def co2(co_pa) -> pd.DataFrame:
                      float("nan"), float("nan"), float("nan"), float("nan"), float("nan"), float("nan"), float("nan"),   # co6 below # noqa
                      float("nan"), float("nan"), float("nan"), float("nan"), float("nan"), float("nan"), float("nan"),   # co6 within # noqa
                      float("nan"), float("nan"), float("nan"), float("nan"), float("nan"), float("nan"), float("nan"),   # co6 outside # noqa
+                     float("nan"), float("nan"), float("nan"), float("nan"), float("nan"),  # pa2 # noqa
+                     float("nan"), float("nan"), float("nan"), float("nan"), float("nan"), float("nan"), float("nan"),  # pa2 Complication # noqa
                      float("nan"), float("nan"),  # pa3.1
                      float("nan"), float("nan"),  # pa4 Epilepsy
                      float("nan"), float("nan"), float("nan"), float("nan"),  # pa4 Seizure # noqa
@@ -452,6 +462,8 @@ def co6(co_pa) -> pd.DataFrame:
                      float("nan"), "1", "1", float("nan"), float("nan"), float("nan"), float("nan"),   # co6 below # noqa
                      float("nan"), "1", "1", float("nan"), float("nan"), float("nan"), float("nan"),   # co6 within # noqa
                      float("nan"), "1", "1", float("nan"), float("nan"), float("nan"), float("nan"),   # co6 outside # noqa
+                     float("nan"), float("nan"), float("nan"), float("nan"), float("nan"),  # pa2 # noqa
+                     float("nan"), float("nan"), float("nan"), float("nan"), float("nan"), float("nan"), float("nan"),  # pa2 Complication # noqa
                      float("nan"), float("nan"),  # pa3.1
                      float("nan"), float("nan"),  # pa4 Epilepsy
                      float("nan"), float("nan"), float("nan"), float("nan"),  # pa4 Seizure # noqa
@@ -468,12 +480,38 @@ def co6(co_pa) -> pd.DataFrame:
 
 
 @pytest.fixture
+def pa2(co_pa) -> pd.DataFrame:
+    pa2 = pd.Series([float("nan"), float("nan"),  # co2
+                     float("nan"), float("nan"), float("nan"), float("nan"), float("nan"), float("nan"), float("nan"),   # co6 above # noqa
+                     float("nan"), float("nan"), float("nan"), float("nan"), float("nan"), float("nan"), float("nan"),   # co6 below # noqa
+                     float("nan"), float("nan"), float("nan"), float("nan"), float("nan"), float("nan"), float("nan"),   # co6 within # noqa
+                     float("nan"), float("nan"), float("nan"), float("nan"), float("nan"), float("nan"), float("nan"),   # co6 outside # noqa
+                     float("nan"), float("nan"), float("nan"), float("nan"), "1",  # pa2 # noqa
+                     float("nan"), "1", "1", float("nan"), float("nan"), float("nan"), float("nan"),  # pa2 Complication # noqa
+                     float("nan"), float("nan"),  # pa3.1
+                     float("nan"), float("nan"),  # pa4 Epilepsy
+                     float("nan"), float("nan"), float("nan"), float("nan"),  # pa4 Seizure # noqa
+                     float("nan"), float("nan"),  # pa4 Convulsion
+                     float("nan"), float("nan"),  # pa6
+                     float("nan"), float("nan"), float("nan"),  # pa7
+                     float("nan"), float("nan"),  # pa8 Chilblain
+                     float("nan"), float("nan"),  # pa8 Frostbite
+                     float("nan"), float("nan"),  # pa8 Superficial frostbite
+                     float("nan"), float("nan"),  # pa9 Carbuncle
+                     float("nan"), float("nan"), float("nan"), float("nan"), float("nan"),  # pa9 Furuncle Boil # noqa
+                     float("nan"), float("nan")], name="pa2")  # pa9 anthrax
+    return pd.concat([co_pa, pa2], axis=1)
+
+
+@pytest.fixture
 def pa3_1(co_pa) -> pd.DataFrame:
     pa3_1 = pd.Series([float("nan"), float("nan"),  # co2
                        float("nan"), float("nan"), float("nan"), float("nan"), float("nan"), float("nan"), float("nan"),   # co6 above # noqa
                        float("nan"), float("nan"), float("nan"), float("nan"), float("nan"), float("nan"), float("nan"),   # co6 below # noqa
                        float("nan"), float("nan"), float("nan"), float("nan"), float("nan"), float("nan"), float("nan"),   # co6 within # noqa
                        float("nan"), float("nan"), float("nan"), float("nan"), float("nan"), float("nan"), float("nan"),   # co6 outside # noqa
+                       float("nan"), float("nan"), float("nan"), float("nan"), float("nan"),  # pa2 # noqa
+                       float("nan"), float("nan"), float("nan"), float("nan"), float("nan"), float("nan"), float("nan"),  # pa2 Complication # noqa
                        float("nan"), "1",  # pa3.1
                        float("nan"), float("nan"),  # pa4 Epilepsy
                        float("nan"), float("nan"), float("nan"), float("nan"),  # pa4 Seizure # noqa
@@ -496,6 +534,8 @@ def pa4(co_pa) -> pd.DataFrame:
                      float("nan"), float("nan"), float("nan"), float("nan"), float("nan"), float("nan"), float("nan"),   # co6 below # noqa
                      float("nan"), float("nan"), float("nan"), float("nan"), float("nan"), float("nan"), float("nan"),   # co6 within # noqa
                      float("nan"), float("nan"), float("nan"), float("nan"), float("nan"), float("nan"), float("nan"),   # co6 outside # noqa
+                     float("nan"), float("nan"), float("nan"), float("nan"), float("nan"),  # pa2 # noqa
+                     float("nan"), float("nan"), float("nan"), float("nan"), float("nan"), float("nan"), float("nan"),  # pa2 Complication # noqa
                      float("nan"), float("nan"),  # pa3.1
                      float("nan"), "1",  # pa4 Epilepsy
                      float("nan"), float("nan"), float("nan"), "1",  # pa4 Seizure # noqa
@@ -518,6 +558,8 @@ def pa6(co_pa) -> pd.DataFrame:
                      float("nan"), float("nan"), float("nan"), float("nan"), float("nan"), float("nan"), float("nan"),   # co6 below # noqa
                      float("nan"), float("nan"), float("nan"), float("nan"), float("nan"), float("nan"), float("nan"),   # co6 within # noqa
                      float("nan"), float("nan"), float("nan"), float("nan"), float("nan"), float("nan"), float("nan"),   # co6 outside # noqa
+                     float("nan"), float("nan"), float("nan"), float("nan"), float("nan"),  # pa2 # noqa
+                     float("nan"), float("nan"), float("nan"), float("nan"), float("nan"), float("nan"), float("nan"),  # pa2 Complication # noqa
                      float("nan"), float("nan"),  # pa3.1
                      float("nan"), float("nan"),  # pa4 Epilepsy
                      float("nan"), float("nan"), float("nan"), float("nan"),  # pa4 Seizure # noqa
@@ -540,6 +582,8 @@ def pa7(co_pa) -> pd.DataFrame:
                      float("nan"), float("nan"), float("nan"), float("nan"), float("nan"), float("nan"), float("nan"),   # co6 below # noqa
                      float("nan"), float("nan"), float("nan"), float("nan"), float("nan"), float("nan"), float("nan"),   # co6 within # noqa
                      float("nan"), float("nan"), float("nan"), float("nan"), float("nan"), float("nan"), float("nan"),   # co6 outside # noqa
+                     float("nan"), float("nan"), float("nan"), float("nan"), float("nan"),  # pa2 # noqa
+                     float("nan"), float("nan"), float("nan"), float("nan"), float("nan"), float("nan"), float("nan"),  # pa2 Complication # noqa
                      float("nan"), float("nan"),  # pa3.1
                      float("nan"), float("nan"),  # pa4 Epilepsy
                      float("nan"), float("nan"), float("nan"), float("nan"),  # pa4 Seizure # noqa
@@ -562,6 +606,8 @@ def pa8(co_pa) -> pd.DataFrame:
                      float("nan"), float("nan"), float("nan"), float("nan"), float("nan"), float("nan"), float("nan"),   # co6 below # noqa
                      float("nan"), float("nan"), float("nan"), float("nan"), float("nan"), float("nan"), float("nan"),   # co6 within # noqa
                      float("nan"), float("nan"), float("nan"), float("nan"), float("nan"), float("nan"), float("nan"),   # co6 outside # noqa
+                     float("nan"), float("nan"), float("nan"), float("nan"), float("nan"),  # pa2 # noqa
+                     float("nan"), float("nan"), float("nan"), float("nan"), float("nan"), float("nan"), float("nan"),  # pa2 Complication # noqa
                      float("nan"), float("nan"),  # pa3.1
                      float("nan"), float("nan"),  # pa4 Epilepsy
                      float("nan"), float("nan"), float("nan"), float("nan"),  # pa4 Seizure # noqa
@@ -584,6 +630,8 @@ def pa9(co_pa) -> pd.DataFrame:
                      float("nan"), float("nan"), float("nan"), float("nan"), float("nan"), float("nan"), float("nan"),   # co6 below # noqa
                      float("nan"), float("nan"), float("nan"), float("nan"), float("nan"), float("nan"), float("nan"),   # co6 within # noqa
                      float("nan"), float("nan"), float("nan"), float("nan"), float("nan"), float("nan"), float("nan"),   # co6 outside # noqa
+                     float("nan"), float("nan"), float("nan"), float("nan"), float("nan"),  # pa2 # noqa
+                     float("nan"), float("nan"), float("nan"), float("nan"), float("nan"), float("nan"), float("nan"),  # pa2 Complication # noqa
                      float("nan"), float("nan"),  # pa3.1
                      float("nan"), float("nan"),  # pa4 Epilepsy
                      float("nan"), float("nan"), float("nan"), float("nan"),  # pa4 Seizure # noqa
