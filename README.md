@@ -190,8 +190,8 @@ Les tableaux ci-dessous indiquent les [règles éditoriales de l'édition franç
 | Identifiant de règle | Statut d'implémentation |
 | -------------------- | :---------------------: |
 | pa2                  |            ❌            |
-| pa3                  |            ✅            |
-| pa3.1                |            ❌            |
+| pa3                  |            ❌            |
+| pa3.1                |            ✅            |
 | pa4                  |            ✅            |
 | pa5                  |            ❌            |
 | pa6                  |            ✅            |
@@ -303,6 +303,7 @@ Les tableaux ci-dessous indiquent les [règles éditoriales de l'édition franç
 | su6-FR               |            ❌            |
 | su7-FR               |            ❌            |
 | su8-FR               |            ✅            |
+| su9-FR               |            ❌            |
 
 ## Licence
 Sous licence MIT, voir le fichier `LICENSE` pour plus d'informations.
