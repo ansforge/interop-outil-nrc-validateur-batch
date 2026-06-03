@@ -1124,15 +1124,19 @@ def su() -> pd.DataFrame:
     return pd.DataFrame(
         {"conceptId": ["su1_1", "su1_1", "su1_2", "su1_2", "su1_2", "su1_3", "su1_3", "su1_3", "su1_3",  # noqa
                        "su3_o", "su3_o", "su3_m", "su3_m", "su3_p", "su3_p",
+                       "su6", "su6", "su6",
                        "su8", "su8"],
          "FSN": ["rabies virus antibody", "rabies virus antibody", "rabies virus antibody", "rabies virus antibody", "rabies virus antibody", "rabies virus immunoglobulin", "rabies virus immunoglobulin", "rabies virus immunoglobulin", "rabies virus immunoglobulin",  # su1 # noqa
                  "ortho-hydroxybenzoate", "ortho-hydroxybenzoate", "meta-hydroxybenzoate", "meta-hydroxybenzoate", "para-hydroxybenzoate", "para-hydroxybenzoate",  # su3 # noqa
+                 "Paroxetine hydrochloride acetone solvate", "Paroxetine hydrochloride acetone solvate", "Paroxetine hydrochloride acetone solvate",  # su6 # noqa
                  "moenomycin B>1<", "moenomycin B>1<"],  # su8
          "term": ["immunoglobuline antirabique", "immunoglobuline antirabique", "Ig antirabique", "Ig antirabique", "anticorps antirabique", "anticorps antirabique", "anticorps antirabique", "Ig antirabique", "immunoglobuline antirabique",  # su1 # noqa
                   "o-hydroxybenzoate", "ortho-hydroxybenzoate", "m-hydroxybenzoate", "méta-hydroxybenzoate", "p-hydroxybenzoate", "para-hydroxybenzoate",  # su3 # noqa
+                  "parparoxétine chlorhydrate acétone solvate", "parparoxétine chlorhydrate solvate d’acétone", "parparoxétine chlorhydrate solvate d’acétone",  # su6 # noqa
                   "moénomycine B1", "moénomycine B>1<",],  # su8
          "acceptabilityId": ["PREFERRED", "ACCEPTABLE", "PREFERRED", "ACCEPTABLE", "ACCEPTABLE", "PREFERRED", "ACCEPTABLE", "ACCEPTABLE", "ACCEPTABLE",  # su1 # noqa
                              "PREFERRED", "PREFERRED", "PREFERRED", "PREFERRED", "PREFERRED", "PREFERRED",  # su3 # noqa
+                             "PREFERRED", "ACCEPTABLE", "PREFERRED",  # su6
                              "PREFERRED", "PREFERRED"]}  # su8
     )
 
@@ -1141,6 +1145,7 @@ def su() -> pd.DataFrame:
 def su1(su) -> pd.DataFrame:
     su1 = pd.Series([float("nan"), "1", "1", float("nan"), float("nan"), float("nan"), float("nan"), float("nan"), float("nan"),  # su1 # noqa
                      float("nan"), float("nan"), float("nan"), float("nan"), float("nan"), float("nan"),  # su3 # noqa
+                     float("nan"), float("nan"), float("nan"),  # su6
                      float("nan"), float("nan")], name="su1")  # su8
     return pd.concat([su, su1], axis=1)
 
@@ -1149,13 +1154,24 @@ def su1(su) -> pd.DataFrame:
 def su3(su) -> pd.DataFrame:
     su3 = pd.Series([float("nan"), float("nan"), float("nan"), float("nan"), float("nan"), float("nan"), float("nan"), float("nan"), float("nan"),  # su1 # noqa
                      float("nan"), "1", float("nan"), "1", float("nan"), "1",  # su3 # noqa
+                     float("nan"), float("nan"), float("nan"),  # su6
                      float("nan"), float("nan")], name="su3")
     return pd.concat([su, su3], axis=1)
+
+
+@pytest.fixture
+def su6(su) -> pd.DataFrame:
+    su6 = pd.Series([float("nan"), float("nan"), float("nan"), float("nan"), float("nan"), float("nan"), float("nan"), float("nan"), float("nan"),  # su1 # noqa
+                     float("nan"), float("nan"), float("nan"), float("nan"), float("nan"), float("nan"),  # su3 # noqa
+                     float("nan"), float("nan"), "1",  # su6
+                     float("nan"), float("nan")], name="su6")
+    return pd.concat([su, su6], axis=1)
 
 
 @pytest.fixture
 def su8(su) -> pd.DataFrame:
     su8 = pd.Series([float("nan"), float("nan"), float("nan"), float("nan"), float("nan"), float("nan"), float("nan"), float("nan"), float("nan"),  # su1 # noqa
                      float("nan"), float("nan"), float("nan"), float("nan"), float("nan"), float("nan"),  # su3 # noqa
+                     float("nan"), float("nan"), float("nan"),  # su6
                      float("nan"), "1"], name="su8")
     return pd.concat([su, su8], axis=1)

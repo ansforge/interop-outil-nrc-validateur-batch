@@ -1191,20 +1191,19 @@ def _check_su1(df: pd.DataFrame, pt: pd.Series, syn: pd.Series) -> pd.DataFrame:
         DataFrame du fichier avec une colonne identifiant les descriptions ne respectant
         pas la règle su1-FR.
     """
-    has_invalid_syn = ~df.loc[:, "conceptId"].isin(
+    f_ab_ig = df.loc[:, "FSN"].str.contains("(?:antibody|immunoglobulin)", case=False)
+
+    has_invalid_syn = ~df.loc[f_ab_ig, "conceptId"].isin(
         df.loc[syn
-               & (df.loc[:, "FSN"].str.contains("(?:antibody|immunoglobulin)", case=False)) # noqa
                & df.loc[:, "term"].str.contains("(?:anticorps|immunoglobuline)"), "conceptId"].unique() # noqa
     )
 
-    has_invalid_syn_ig = ~df.loc[:, "conceptId"].isin(
+    has_invalid_syn_ig = ~df.loc[f_ab_ig, "conceptId"].isin(
         df.loc[syn
-               & (df.loc[:, "FSN"].str.contains("(?:antibody|immunoglobulin)", case=False)) # noqa
                & df.loc[:, "term"].str.contains("Ig"), "conceptId"].unique() # noqa
     )
 
-    idx = df.loc[pt
-                 & (df.loc[:, "FSN"].str.contains("(?:antibody|immunoglobulin)", case=False)) # noqa
+    idx = df.loc[pt & f_ab_ig
                  & (~df.loc[:, "term"].str.contains("(?:anticorps|immunoglobuline)", case=False))].index # noqa
 
     idx = idx.union(df.loc[syn & has_invalid_syn].index)
@@ -1235,6 +1234,29 @@ def _check_su3(df: pd.DataFrame, su: pd.Series, pt: pd.Series) -> pd.DataFrame:
 
     if not idx.empty:
         df = pd.merge(df, pd.DataFrame(data={"su3": ["1"] * len(idx)}, index=idx),
+                      how="left", left_index=True, right_index=True, validate="1:1")
+
+    return df
+
+
+def _check_su6(df: pd.DataFrame, su: pd.Series, pt: pd.Series) -> pd.DataFrame:
+    """Identifie les descriptions ne respectant pas la règle su6-FR.
+
+    args:
+        df: DataFrame à valider
+        su: Filtre sur les Substance de `df`
+        pt: Filtre sur les termes préférés de `df`
+
+    returns:
+        DataFrame du fichier avec une colonne identifiant les descriptions ne respectant
+        pas la règle su6-FR.
+    """
+    idx = df.loc[su & pt
+                 & (df.loc[:, "FSN"].str.contains("solvate", regex=False, case=False))
+                 & (~df.loc[:, "term"].str.endswith("solvate"))].index
+
+    if not idx.empty:
+        df = pd.merge(df, pd.DataFrame(data={"su6": ["1"] * len(idx)}, index=idx),
                       how="left", left_index=True, right_index=True, validate="1:1")
 
     return df
