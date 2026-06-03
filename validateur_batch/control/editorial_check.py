@@ -1351,12 +1351,15 @@ def run_editorial_check(df: pd.DataFrame, fts: "server.Server") -> pd.DataFrame:
         df = _check_co2(df, co)
         df = _check_co6(df, co, pt, syn)
     if not df.loc[pa].empty:
+        df = _check_pa2(df, pt, syn)
         df = _check_pa3_1(df)
         df = _check_pa4(df)
+        df = _check_pa5(df)
         df = _check_pa6(df, pt)
         df = _check_pa7(df)
         df = _check_pa8(df)
         df = _check_pa9(df)
+        df = _check_pa10(df)
 
     # Contrôles des règles de Pharmaceutical / biological product
     if not df.loc[me].empty:
@@ -1396,6 +1399,7 @@ def run_editorial_check(df: pd.DataFrame, fts: "server.Server") -> pd.DataFrame:
     if not df.loc[su].empty:
         df = _check_su1(df, pt, syn)
         df = _check_su3(df, su, pt)
+        df = _check_su6(df, su, pt)
         df = _check_su8(df, su, pt)
 
     nb = len(df.columns) - nb

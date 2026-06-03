@@ -189,16 +189,16 @@ Les tableaux ci-dessous indiquent les [règles éditoriales de l'édition franç
 #### Constatation clinique - Sous-hiérarchie maladie (pa)
 | Identifiant de règle | Statut d'implémentation |
 | -------------------- | :---------------------: |
-| pa2                  |            ❌            |
+| pa2                  |            ✅            |
 | pa3                  |            ❌            |
 | pa3.1                |            ✅            |
 | pa4                  |            ✅            |
-| pa5                  |            ❌            |
+| pa5                  |            ✅            |
 | pa6                  |            ✅            |
 | pa7                  |            ✅            |
 | pa8                  |            ✅            |
 | pa9                  |            ✅            |
-| pa10                 |            ❌            |
+| pa10                 |            ✅            |
 | pa11                 |            ❌            |
 
 #### Échantillon (ec)
@@ -300,7 +300,7 @@ Les tableaux ci-dessous indiquent les [règles éditoriales de l'édition franç
 | su3-FR               |            ✅            |
 | su4-FR               |            ❌            |
 | su5-FR               |            ❌            |
-| su6-FR               |            ❌            |
+| su6-FR               |            ✅            |
 | su7-FR               |            ❌            |
 | su8-FR               |            ✅            |
 | su9-FR               |            ❌            |
