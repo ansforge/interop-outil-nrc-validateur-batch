@@ -850,7 +850,7 @@ def _check_pr2(df: pd.DataFrame, pt: pd.Series, syn: pd.Series) -> pd.DataFrame:
         descriptions ne respectant pas la règle pr2.
     """
     # Filtre FSN
-    f_procedure = ((df.loc[:, "FSN"].str.contains("procedure", regex=False, case=False))
+    f_procedure = ((df.loc[:, "FSN"].str.contains(r"procedure(?!\))", case=False))
                    & (~df.loc[:, "FSN"].str.contains("surgical", regex=False, case=False)))  # noqa
     f_surgery = df.loc[:, "FSN"].str.contains("(?:operation|surgery|surgical)", case=False)  # noqa
 
@@ -1370,8 +1370,8 @@ def run_editorial_check(df: pd.DataFrame, fts: "server.Server") -> pd.DataFrame:
 
     # Contrôles des règles de Physical object
     if not df.loc[sb].empty:
-        df = _check_sb1(df)
-        df = _check_sb2(df)
+        df = _check_sb1(df, pt)
+        df = _check_sb2(df, pt)
         df = _check_sb3(df, pt, syn)
 
     # Contrôles des règles de Procedure
