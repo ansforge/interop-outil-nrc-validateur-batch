@@ -48,7 +48,7 @@ Ce fichier correspond à l'onglet **Description Additions** du template d'import
 
 Le chemin vers ce fichier est passé par l'argument ```--add```. Les colonnes attendues sont :
 ```python
-["Concept ID", "GB/US FSN Term (For reference only)", "Preferred Term (For reference only)", "Translated Term", "Language Code", "Case significance", "Type", "Language reference set", "Acceptability"]
+["Concept ID", "GB/US FSN Term (For reference only)", "Preferred Term (For reference only)", "Translated Term", "Language Code", "Case significance", "Type", "Language reference set", "Acceptability", "Notes"]
 ```
 
 ### Métadonnées de descriptions à modifier
@@ -56,7 +56,7 @@ Ce fichier correspond à l'onglet **Description Changes** du template d'import b
 
 Le chemin vers ce fichier est passé par l'argument ```--chg```. Les colonnes attendues sont :
 ```python
-["Description ID", "Preferred Term (For reference only)", "Term (For reference only)", "Case significance", "Type", "Language reference set", "Acceptability"]
+["Description ID", "Preferred Term (For reference only)", "Term (For reference only)", "Case significance", "Type", "Language reference set", "Acceptability", "Notes"]
 ```
 
 ### Descriptions à remplacer par une nouvelle traduction
@@ -64,7 +64,7 @@ Ce fichier correspond à l'onglet **Description Replacements** du template d'imp
 
 Le chemin vers ce fichier est passé par l'argument ```--rep```. Les colonnes attendues sont :
 ```python
-["Concept ID", "Description ID", "Preferred Term (For reference only)", "Term (For reference only)", "Inactivation Reason", "Association Target ID1", "Association Target ID2", "Association Target ID3", "Association Target ID4", "New Replacement Description ID", "Replacement term (For reference only)", "New Translated Term", "Language Code", "Case significance", "Type", "Language reference set", "Acceptability"]
+["Concept ID", "Description ID", "Preferred Term (For reference only)", "Term (For reference only)", "Inactivation Reason", "Association Target ID1", "Association Target ID2", "Association Target ID3", "Association Target ID4", "New Replacement Description ID", "Replacement term (For reference only)", "New Translated Term", "Language Code", "Case significance", "Type", "Language reference set", "Acceptability", "Notes"]
 ```
 
 ### Descriptions à inactiver
@@ -72,7 +72,7 @@ Ce fichier correspond à l'onglet **Description Inactivations** du template d'im
 
 Le chemin vers ce fichier est passé par l'argument ```--ina```. Les colonnes attendues sont :
 ```python
-["Description ID Or Term", "Language Code (require if the term is specified)", "Concept ID (Optional)", "Preferred Term (For reference only)", "Term (For reference only)", "Inactivation Reason", "Association Target ID1", "Association Target ID2", "Association Target ID3", "Association Target ID4"]
+["Description ID Or Term", "Language Code (require if the term is specified)", "Concept ID (Optional)", "Preferred Term (For reference only)", "Term (For reference only)", "Inactivation Reason", "Association Target ID1", "Association Target ID2", "Association Target ID3", "Association Target ID4", "Notes"]
 ```
 
 ## Règles implémentées
