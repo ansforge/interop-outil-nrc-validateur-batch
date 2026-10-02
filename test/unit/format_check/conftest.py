@@ -6,10 +6,6 @@ import responses
 from typing import Any, Dict, Generator
 
 
-def pytest_addoption(parser):
-    parser.addoption("--endpoint", action="store")
-
-
 ####################################
 # Fixtures mimant une réponse JSON #
 ####################################

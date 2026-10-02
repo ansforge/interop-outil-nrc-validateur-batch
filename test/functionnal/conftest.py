@@ -6,10 +6,6 @@ import responses
 from typing import Any, Dict, Generator
 
 
-def pytest_addoption(parser):
-    parser.addoption("--endpoint", action="store")
-
-
 @pytest.fixture
 def fts_editorial(pytestconfig) -> Generator[responses.RequestsMock, Any, None]:
     sb = op.join(pytestconfig.getoption("endpoint"),
