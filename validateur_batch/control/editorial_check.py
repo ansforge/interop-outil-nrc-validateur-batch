@@ -9,10 +9,10 @@ if TYPE_CHECKING:
 def _get_correct_case(cs: pd.DataFrame) -> pd.DataFrame:
     """Corrige les descriptions labelisées 'CS' en 'cI'
 
-    args:
+    Args:
         cs: Descriptions labelisées comme 'CS'`
 
-    returns:
+    Returns:
         DataFrame avec les identifiants de descriptions comme index et
         la correction de casse comme valeur
     """
@@ -33,10 +33,10 @@ def _get_correct_case(cs: pd.DataFrame) -> pd.DataFrame:
 def _check_ar2(df: pd.DataFrame) -> pd.DataFrame:
     """Identifie les descriptions ne respectant pas la règle ar2.
 
-    args:
+    Args:
         df: DataFrame à valider
 
-    returns:
+    Returns:
         DataFrame du fichier avec une colonne identifiant les
         descriptions ne respectant pas la règle ar2.
     """
@@ -51,11 +51,11 @@ def _check_ar2(df: pd.DataFrame) -> pd.DataFrame:
 def _check_ar6(df: pd.DataFrame, sb: pd.Series) -> pd.DataFrame:
     """Identifie les descriptions ne respectant pas la règle ar6.
 
-    args:
+    Args:
         df: DataFrame à valider
         sb: Filtre sur les Physical object de `df`
 
-    returns:
+    Returns:
         DataFrame du fichier avec une colonne identifiant les
         descriptions ne respectant pas la règle ar6.
     """
@@ -74,11 +74,11 @@ def _check_ar6(df: pd.DataFrame, sb: pd.Series) -> pd.DataFrame:
 def _check_bs2(df: pd.DataFrame, pt: pd.Series) -> pd.DataFrame:
     """Identifie les descriptions ne respectant pas la règle bs2.
 
-    args:
+    Args:
         df: DataFrame à valider
         pt: Filtre sur les termes préférés de `df`
 
-    returns:
+    Returns:
         DataFrame du fichier avec une colonne identifiant les
         descriptions ne respectant pas la règle bs2.
     """
@@ -95,13 +95,13 @@ def _check_bs3(df: pd.DataFrame, bs: pd.Series, pt: pd.Series,
                syn: pd.Series) -> pd.DataFrame:
     """Identifie les descriptions ne respectant pas la règle bs3
 
-    args:
+    Args:
         df: DataFrame à valider
         bs: Filtre sur les Body structure de `df`
         pt: Filtre sur les termes préférés de `df`
         syn: Filtre sur les synonymes acceptables de `df`
 
-    returns:
+    Returns:
         DataFrame du fichier avec une colonne identifiant les
         descriptions ne respectant pas la règle bs3
     """
@@ -134,12 +134,12 @@ def _check_bs3(df: pd.DataFrame, bs: pd.Series, pt: pd.Series,
 def _check_bs5(df: pd.DataFrame, bs: pd.Series, pt: pd.Series) -> pd.DataFrame:
     """Identifie les descriptions ne respectant pas la règle bs5
 
-    args:
+    Args:
         df: DataFrame à valider
         bs: Filtre sur les Body structure de `df`
         pt: Filtre sur les termes préférés de `df`
 
-    returns:
+    Returns:
         DataFrame du fichier avec une colonne identifiant les
         descriptions ne respectant pas la règle bs5.
     """
@@ -157,12 +157,12 @@ def _check_bs5(df: pd.DataFrame, bs: pd.Series, pt: pd.Series) -> pd.DataFrame:
 def _check_bs6(df: pd.DataFrame, bs: pd.Series, pt: pd.Series) -> pd.DataFrame:
     """Identifie les descriptions ne respectant pas la règle bs6
 
-    args:
+    Args:
         df: DataFrame à valider
         bs: Filtre sur les Body structure de `df`
         pt: Filtre sur les termes préférés de `df`
 
-    returns:
+    Returns:
         DataFrame du fichier avec une colonne identifiant les
         descriptions ne respectant pas la règle bs6.
     """
@@ -180,12 +180,12 @@ def _check_bs6(df: pd.DataFrame, bs: pd.Series, pt: pd.Series) -> pd.DataFrame:
 def _check_bs7(df: pd.DataFrame, bs: pd.Series, pt: pd.Series) -> pd.DataFrame:
     """Identifie les descriptions ne respectant pas la règle bs6
 
-    args:
+    Args:
         df: DataFrame à valider
         bs: Filtre sur les Body structure de `df`
         pt: Filtre sur les termes préférés de `df`
 
-    returns:
+    Returns:
         DataFrame du fichier avec une colonne identifiant les
         descriptions ne respectant pas la règle bs7.
     """
@@ -203,11 +203,11 @@ def _check_bs7(df: pd.DataFrame, bs: pd.Series, pt: pd.Series) -> pd.DataFrame:
 def _check_bs8(df: pd.DataFrame, pt: pd.Series) -> pd.DataFrame:
     """Identifie les descriptions ne respectant pas la règle bs8
 
-    args:
+    Args:
         df: DataFrame à valider
         pt: Filtre sur les termes préférés de `df`
 
-    returns:
+    Returns:
         DataFrame du fichier avec une colonne identifiant les
         descriptions ne respectant pas la règle bs8.
     """
@@ -225,12 +225,12 @@ def _check_bs8(df: pd.DataFrame, pt: pd.Series) -> pd.DataFrame:
 def _check_bs9(df: pd.DataFrame, pt: pd.Series, syn: pd.Series) -> pd.DataFrame:
     """Identifie les descriptions ne respectant pas la règle bs9.
 
-    args:
+    Args:
         df: DataFrame à valider
         pt: Filtre sur les termes préférés de `df`
         syn: Filtre sur les synonymes acceptables de `df`
 
-    returns:
+    Returns:
         DataFrame du fichier avec une colonne identifiant les
         descriptions ne respectant pas la règle bs9.
     """
@@ -259,10 +259,10 @@ def _check_bs9(df: pd.DataFrame, pt: pd.Series, syn: pd.Series) -> pd.DataFrame:
 def _check_bs10(df: pd.DataFrame) -> pd.DataFrame:
     """Identifie les descriptions ne respectant pas la règle bs10-FR
 
-    args:
+    Args:
         df: DataFrame à valider
 
-    returns:
+    Returns:
         DataFrame du fichier avec une colonne identifiant les
         descriptions ne respectant pas la règle bs10.
     """
@@ -282,10 +282,10 @@ def _check_bs10(df: pd.DataFrame) -> pd.DataFrame:
 def _check_bs11(df: pd.DataFrame) -> pd.DataFrame:
     """Identifie les descriptions ne respectant pas la règle bs11-FR
 
-    args:
+    Args:
         df: DataFrame à valider
 
-    returns:
+    Returns:
         DataFrame du fichier avec une colonne identifiant les
         descriptions ne respectant pas la règle bs11-FR.
     """
@@ -305,10 +305,10 @@ def _check_bs11(df: pd.DataFrame) -> pd.DataFrame:
 def _check_bs12(df: pd.DataFrame) -> pd.DataFrame:
     """Identifie les descriptions ne respectant pas la règle bs12
 
-    args:
+    Args:
         df: DataFrame à valider
 
-    returns:
+    Returns:
         DataFrame du fichier avec une colonne identifiant les
         descriptions ne respectant pas la règle bs12.
     """
@@ -325,10 +325,10 @@ def _check_bs12(df: pd.DataFrame) -> pd.DataFrame:
 def _check_bs13(df: pd.DataFrame) -> pd.DataFrame:
     """Identifie les descriptions ne respectant pas la règle bs13
 
-    args:
+    Args:
         df: DataFrame à valider
 
-    returns:
+    Returns:
         DataFrame du fichier avec une colonne identifiant les
         descriptions ne respectant pas la règle bs13.
     """
@@ -351,11 +351,11 @@ def _check_bs13(df: pd.DataFrame) -> pd.DataFrame:
 def _check_co2(df: pd.DataFrame, co: pd.Series) -> pd.DataFrame:
     """Identifie les descriptions ne respectant pas la règle co2
 
-    args:
+    Args:
         df: DataFrame à valider
         co: Filtre sur les Clinical finding de `df`
 
-    returns:
+    Returns:
         DataFrame du fichier avec une colonne identifiant les
         descriptions ne respectant pas la règle co2.
     """
@@ -374,13 +374,13 @@ def _check_co6(df: pd.DataFrame, co: pd.Series, pt: pd.Series,
                syn: pd.Series) -> pd.DataFrame:
     """Identifie les descriptions ne respectant pas la règle co6-FR
 
-    args:
+    Args:
         df: DataFrame à valider
         co: Filtre sur les Clinical finding de `df`
         pt: Filtre sur les termes préférés de `df`
         syn: Filtre sur les synonymes acceptables de `df`
 
-    returns:
+    Returns:
         DataFrame du fichier avec une colonne identifiant les
         descriptions ne respectant pas la règle co6-FR.
     """
@@ -446,12 +446,12 @@ def _check_co6(df: pd.DataFrame, co: pd.Series, pt: pd.Series,
 def _check_pa2(df: pd.DataFrame, pt: pd.Series, syn: pd.Series) -> pd.DataFrame:
     """Identifie les descriptions ne respectant pas la règle pa2
 
-    args:
+    Args:
         df: DataFrame à valider
         pt: Filtre sur les termes préférés de `df`
         syn: Filtre sur les synonymes acceptables de `df`
 
-    returns:
+    Returns:
         DataFrame du fichier avec une colonne identifiant les
         descriptions ne respectant pas la règle pa2.
     """
@@ -483,10 +483,10 @@ def _check_pa2(df: pd.DataFrame, pt: pd.Series, syn: pd.Series) -> pd.DataFrame:
 def _check_pa3_1(df: pd.DataFrame) -> pd.DataFrame:
     """Identifie les descriptions ne respectant pas la règle pa3.1
 
-    args:
+    Args:
         df: DataFrame à valider
 
-    returns:
+    Returns:
         DataFrame du fichier avec une colonne identifiant les
         descriptions ne respectant pas la règle pa3.1.
     """
@@ -503,10 +503,10 @@ def _check_pa3_1(df: pd.DataFrame) -> pd.DataFrame:
 def _check_pa4(df: pd.DataFrame) -> pd.DataFrame:
     """Identifie les descriptions ne respectant pas la règle pa4
 
-    args:
+    Args:
         df: DataFrame à valider
 
-    returns:
+    Returns:
         DataFrame du fichier avec une colonne identifiant les
         descriptions ne respectant pas la règle pa4.
     """
@@ -529,10 +529,10 @@ def _check_pa4(df: pd.DataFrame) -> pd.DataFrame:
 def _check_pa5(df: pd.DataFrame) -> pd.DataFrame:
     """Identifie les descriptions ne respectant pas la règle pa5
 
-    args:
+    Args:
         df: DataFrame à valider
 
-    returns:
+    Returns:
         DataFrame du fichier avec une colonne identifiant les
         descriptions ne respectant pas la règle pa5.
     """
@@ -549,11 +549,11 @@ def _check_pa5(df: pd.DataFrame) -> pd.DataFrame:
 def _check_pa6(df: pd.DataFrame, pt: pd.Series) -> pd.DataFrame:
     """Identifie les descriptions ne respectant pas la règle pa6
 
-    args:
+    Args:
         df: DataFrame à valider
         pt: Filtre sur les termes préférés de `df`
 
-    returns:
+    Returns:
         DataFrame du fichier avec une colonne identifiant les
         descriptions ne respectant pas la règle pa6.
     """
@@ -571,10 +571,10 @@ def _check_pa6(df: pd.DataFrame, pt: pd.Series) -> pd.DataFrame:
 def _check_pa7(df: pd.DataFrame) -> pd.DataFrame:
     """Identifie les descriptions ne respectant pas la règle pa7
 
-    args:
+    Args:
         df: DataFrame à valider
 
-    returns:
+    Returns:
         DataFrame du fichier avec une colonne identifiant les
         descriptions ne respectant pas la règle pa7.
     """
@@ -591,10 +591,10 @@ def _check_pa7(df: pd.DataFrame) -> pd.DataFrame:
 def _check_pa8(df: pd.DataFrame) -> pd.DataFrame:
     """Identifie les descriptions ne respectant pas la règle pa8
 
-    args:
+    Args:
         df: DataFrame à valider
 
-    returns:
+    Returns:
         DataFrame du fichier avec une colonne identifiant les
         descriptions ne respectant pas la règle pa8.
     """
@@ -617,10 +617,10 @@ def _check_pa8(df: pd.DataFrame) -> pd.DataFrame:
 def _check_pa9(df: pd.DataFrame) -> pd.DataFrame:
     """Identifie les descriptions ne respectant pas la règle pa9
 
-    args:
+    Args:
         df: DataFrame à valider
 
-    returns:
+    Returns:
         DataFrame du fichier avec une colonne identifiant les
         descriptions ne respectant pas la règle pa9.
     """
@@ -643,10 +643,10 @@ def _check_pa9(df: pd.DataFrame) -> pd.DataFrame:
 def _check_pa10(df: pd.DataFrame) -> pd.DataFrame:
     """Identifie les descriptions ne respectant pas la règle pa10
 
-    args:
+    Args:
         df: DataFrame à valider
 
-    returns:
+    Returns:
         DataFrame du fichier avec une colonne identifiant les
         descriptions ne respectant pas la règle pa10.
     """
@@ -669,12 +669,12 @@ def _check_pa10(df: pd.DataFrame) -> pd.DataFrame:
 def _check_me1(df: pd.DataFrame, me: pd.Series, pt: pd.Series) -> pd.DataFrame:
     """Identifie les descriptions ne respectant pas la règle me1
 
-    args:
+    Args:
         df: DataFrame à valider
         me: Filtre sur les Pharmaceutical / biological product de `df`
         pt: Filtre sur les termes préférés de `df`
 
-    returns:
+    Returns:
         DataFrame du fichier avec une colonne identifiant les
         descriptions ne respectant pas la règle me1.
     """
@@ -691,12 +691,12 @@ def _check_me1(df: pd.DataFrame, me: pd.Series, pt: pd.Series) -> pd.DataFrame:
 def _check_me2(df: pd.DataFrame, me: pd.Series, pt: pd.Series) -> pd.DataFrame:
     """Identifie les descriptions ne respectant pas la règle me2
 
-    args:
+    Args:
         df: DataFrame à valider
         me: Filtre sur les Pharmaceutical / biological product de `df`
         pt: Filtre sur les termes préférés de `df`
 
-    returns:
+    Returns:
         DataFrame du fichier avec une colonne identifiant les
         descriptions ne respectant pas la règle me2.
     """
@@ -714,12 +714,12 @@ def _check_me2(df: pd.DataFrame, me: pd.Series, pt: pd.Series) -> pd.DataFrame:
 def _check_me3(df: pd.DataFrame, me: pd.Series, pt: pd.Series) -> pd.DataFrame:
     """Identifie les descriptions ne respectant pas la règle me3
 
-    args:
+    Args:
         df: DataFrame à valider
         me: Filtre sur les Pharmaceutical / biological product de `df`
         pt: Filtre sur les termes préférés de `df`
 
-    returns:
+    Returns:
         DataFrame du fichier avec une colonne identifiant les
         descriptions ne respectant pas la règle me3.
     """
@@ -737,12 +737,12 @@ def _check_me3(df: pd.DataFrame, me: pd.Series, pt: pd.Series) -> pd.DataFrame:
 def _check_me4(df: pd.DataFrame, me: pd.Series, pt: pd.Series) -> pd.DataFrame:
     """Identifie les descriptions ne respectant pas la règle me4
 
-    args:
+    Args:
         df: DataFrame à valider
         me: Filtre sur les Pharmaceutical / biological product de `df`
         pt: Filtre sur les termes préférés de `df`
 
-    returns:
+    Returns:
         DataFrame du fichier avec une colonne identifiant les
         descriptions ne respectant pas la règle me4.
     """
@@ -762,11 +762,11 @@ def _check_me4(df: pd.DataFrame, me: pd.Series, pt: pd.Series) -> pd.DataFrame:
 def _check_sb1(df: pd.DataFrame, pt: pd.Series) -> pd.DataFrame:
     """Identifie les descriptions ne respectant pas la règle sb1
 
-    args:
+    Args:
         df: DataFrame à valider
         pt: Filtre sur les termes préférés de `df`
 
-    returns:
+    Returns:
         DataFrame du fichier avec une colonne identifiant les
         descriptions ne respectant pas la règle sb1.
     """
@@ -784,11 +784,11 @@ def _check_sb1(df: pd.DataFrame, pt: pd.Series) -> pd.DataFrame:
 def _check_sb2(df: pd.DataFrame, pt: pd.Series) -> pd.DataFrame:
     """Identifie les descriptions ne respectant pas la règle sb2
 
-    args:
+    Args:
         df: DataFrame à valider
         pt: Filtre sur les termes préférés de `df`
 
-    returns:
+    Returns:
         DataFrame du fichier avec une colonne identifiant les
         descriptions ne respectant pas la règle sb2.
     """
@@ -806,12 +806,12 @@ def _check_sb2(df: pd.DataFrame, pt: pd.Series) -> pd.DataFrame:
 def _check_sb3(df: pd.DataFrame, pt: pd.Series, syn: pd.Series) -> pd.DataFrame:
     """Identifie les descriptions ne respectant pas la règle sb3
 
-    args:
+    Args:
         df: DataFrame à valider
         pt: Filtre sur les termes préférés de `df`
         syn: Filtre sur les synonymes acceptables de `df`
 
-    returns:
+    Returns:
         DataFrame du fichier avec une colonne identifiant les
         descriptions ne respectant pas la règle sb3.
     """
@@ -840,12 +840,12 @@ def _check_sb3(df: pd.DataFrame, pt: pd.Series, syn: pd.Series) -> pd.DataFrame:
 def _check_pr2(df: pd.DataFrame, pt: pd.Series, syn: pd.Series) -> pd.DataFrame:
     """Identifie les descriptions ne respectant pas la règle pr2
 
-    args:
+    Args:
         df: DataFrame à valider
         pt: Filtre sur les termes préférés de `df`
         syn: Filtre sur les synonymes acceptables de `df`
 
-    returns:
+    Returns:
         DataFrame du fichier avec une colonne identifiant les
         descriptions ne respectant pas la règle pr2.
     """
@@ -893,10 +893,10 @@ def _check_pr2(df: pd.DataFrame, pt: pd.Series, syn: pd.Series) -> pd.DataFrame:
 def _check_pr3(df: pd.DataFrame) -> pd.DataFrame:
     """Identifie les descriptions ne respectant pas la règle pr3
 
-    args:
+    Args:
         df: DataFrame à valider
 
-    returns:
+    Returns:
         DataFrame du fichier avec une colonne identifiant les
         descriptions ne respectant pas la règle pr3.
     """
@@ -913,11 +913,11 @@ def _check_pr3(df: pd.DataFrame) -> pd.DataFrame:
 def _check_pr4(df: pd.DataFrame, pt: pd.Series) -> pd.DataFrame:
     """Identifie les descriptions ne respectant pas la règle pr4
 
-    args:
+    Args:
         df: DataFrame à valider
         pt: Filtre sur les termes préférés de `df`
 
-    returns:
+    Returns:
         DataFrame du fichier avec une colonne identifiant les
         descriptions ne respectant pas la règle pr4.
     """
@@ -939,12 +939,12 @@ def _check_pr4(df: pd.DataFrame, pt: pd.Series) -> pd.DataFrame:
 def _check_pr9(df: pd.DataFrame, pt: pd.Series, syn: pd.Series) -> pd.DataFrame:
     """Identifie les descriptions ne respectant pas la règle pr9
 
-    args:
+    Args:
         df: DataFrame à valider
         pt: Filtre sur les termes préférés de `df`
         syn: Filtre sur les synonymes acceptables de `df`
 
-    returns:
+    Returns:
         DataFrame du fichier avec une colonne identifiant les
         descriptions ne respectant pas la règle pr9.
     """
@@ -970,10 +970,10 @@ def _check_pr9(df: pd.DataFrame, pt: pd.Series, syn: pd.Series) -> pd.DataFrame:
 def _check_pr10(df: pd.DataFrame) -> pd.DataFrame:
     """Identifie les descriptions ne respectant pas la règle pr10
 
-    args:
+    Args:
         df: DataFrame à valider
 
-    returns:
+    Returns:
         DataFrame du fichier avec une colonne identifiant les
         descriptions ne respectant pas la règle pr10.
     """
@@ -990,12 +990,12 @@ def _check_pr10(df: pd.DataFrame) -> pd.DataFrame:
 def _check_pr12(df: pd.DataFrame, pt: pd.Series, syn: pd.Series) -> pd.DataFrame:
     """Identifie les descriptions ne respectant pas la règle pr12
 
-    args:
+    Args:
         df: DataFrame à valider
         pt: Filtre sur les termes préférés de `df`
         syn: Filtre sur les synonymes acceptables de `df`
 
-    returns:
+    Returns:
         DataFrame du fichier avec une colonne identifiant les
         descriptions ne respectant pas la règle pr12.
     """
@@ -1021,12 +1021,12 @@ def _check_pr12(df: pd.DataFrame, pt: pd.Series, syn: pd.Series) -> pd.DataFrame
 def _check_pr13(df: pd.DataFrame, pt: pd.Series, syn: pd.Series) -> pd.DataFrame:
     """Identifie les descriptions ne respectant pas la règle pr13
 
-    args:
+    Args:
         df: DataFrame à valider
         pt: Filtre sur les termes préférés de `df`
         syn: Filtre sur les synonymes acceptables de `df`
 
-    returns:
+    Returns:
         DataFrame du fichier avec une colonne identifiant les
         descriptions ne respectant pas la règle pr13.
     """
@@ -1052,12 +1052,12 @@ def _check_pr13(df: pd.DataFrame, pt: pd.Series, syn: pd.Series) -> pd.DataFrame
 def _check_pr14(df: pd.DataFrame, pt: pd.Series, syn: pd.Series) -> pd.DataFrame:
     """Identifie les descriptions ne respectant pas la règle pr14
 
-    args:
+    Args:
         df: DataFrame à valider
         pt: Filtre sur les termes préférés de `df`
         syn: Filtre sur les synonymes acceptables de `df`
 
-    returns:
+    Returns:
         DataFrame du fichier avec une colonne identifiant les
         descriptions ne respectant pas la règle pr14.
     """
@@ -1087,7 +1087,7 @@ def _check_pr15(df: pd.DataFrame, pr: pd.Series) -> pd.DataFrame:
         df: DataFrame à valider
         pr: Filtre sur les Procedure de `df`
 
-    returns:
+    Returns:
         DataFrame du fichier avec une colonne identifiant les
         descriptions ne respectant pas la règle pr15-FR.
     """
@@ -1108,11 +1108,11 @@ def _check_pr15(df: pd.DataFrame, pr: pd.Series) -> pd.DataFrame:
 def _check_hs1(df: pd.DataFrame, hs: pd.Series) -> pd.DataFrame:
     """Identifie les descriptions ne respectant pas la règle hs1
 
-    args:
+    Args:
         df: DataFrame à valider
         hs: Filtre sur les Situation with explicit context de `df`
 
-    returns:
+    Returns:
         DataFrame du fichier avec une colonne identifiant les
         descriptions ne respectant pas la règle hs1.
     """
@@ -1133,10 +1133,10 @@ def _check_hs1(df: pd.DataFrame, hs: pd.Series) -> pd.DataFrame:
 def _check_ec2(df: pd.DataFrame) -> pd.DataFrame:
     """Identifie les descriptions ne respectant pas la règle ec2
 
-    args:
+    Args:
         df: DataFrame à valider
 
-    returns:
+    Returns:
         DataFrame du fichier avec une colonne identifiant les
         descriptions ne respectant pas la règle ec2.
     """
@@ -1159,10 +1159,10 @@ def _check_ec2(df: pd.DataFrame) -> pd.DataFrame:
 def _check_ec4(df: pd.DataFrame) -> pd.DataFrame:
     """Identifie les descriptions ne respectant pas la règle ec4
 
-    args:
+    Args:
         df: DataFrame à valider
 
-    returns:
+    Returns:
         DataFrame du fichier avec une colonne identifiant les
         descriptions ne respectant pas la règle ec4.
     """
@@ -1182,12 +1182,12 @@ def _check_ec4(df: pd.DataFrame) -> pd.DataFrame:
 def _check_su1(df: pd.DataFrame, pt: pd.Series, syn: pd.Series) -> pd.DataFrame:
     """Identifie les descriptions ne respectant pas la règle su1-FR.
 
-    args:
+    Args:
         df: DataFrame à valider
         pt: Filtre sur les termes préférés de `df`
         syn: Filtre sur les synonymes acceptables de `df`
 
-    returns:
+    Returns:
         DataFrame du fichier avec une colonne identifiant les descriptions ne respectant
         pas la règle su1-FR.
     """
@@ -1220,12 +1220,12 @@ def _check_su1(df: pd.DataFrame, pt: pd.Series, syn: pd.Series) -> pd.DataFrame:
 def _check_su3(df: pd.DataFrame, su: pd.Series, pt: pd.Series) -> pd.DataFrame:
     """Identifie les descriptions ne respectant pas la règle su3-FR.
 
-    args:
+    Args:
         df: DataFrame à valider
         su: Filtre sur les Substance de `df`
         pt: Filtre sur les termes préférés de `df`
 
-    returns:
+    Returns:
         DataFrame du fichier avec une colonne identifiant les descriptions ne respectant
         pas la règle su3-FR.
     """
@@ -1242,12 +1242,12 @@ def _check_su3(df: pd.DataFrame, su: pd.Series, pt: pd.Series) -> pd.DataFrame:
 def _check_su6(df: pd.DataFrame, su: pd.Series, pt: pd.Series) -> pd.DataFrame:
     """Identifie les descriptions ne respectant pas la règle su6-FR.
 
-    args:
+    Args:
         df: DataFrame à valider
         su: Filtre sur les Substance de `df`
         pt: Filtre sur les termes préférés de `df`
 
-    returns:
+    Returns:
         DataFrame du fichier avec une colonne identifiant les descriptions ne respectant
         pas la règle su6-FR.
     """
@@ -1265,12 +1265,12 @@ def _check_su6(df: pd.DataFrame, su: pd.Series, pt: pd.Series) -> pd.DataFrame:
 def _check_su8(df: pd.DataFrame, su: pd.Series, pt: pd.Series) -> pd.DataFrame:
     """Identifie les descriptions ne respectant pas la règle su8-FR.
 
-    args:
+    Args:
         df: DataFrame à valider
         su: Filtre sur les Substance de `df`
         pt: Filtre sur les termes préférés de `df`
 
-    returns:
+    Returns:
         DataFrame du fichier avec une colonne identifiant les descriptions ne respectant
         pas la règle su8-FR.
     """
@@ -1287,11 +1287,11 @@ def _check_su8(df: pd.DataFrame, su: pd.Series, pt: pd.Series) -> pd.DataFrame:
 def run_editorial_check(df: pd.DataFrame, fts: "server.Server") -> pd.DataFrame:
     """Lance l'ensemble des contrôles sur le respect des règles éditoriales.
 
-    args:
+    Args:
         df: DataFrame à valider
         fts: Serveur de Terminologies FHIR à utiliser
 
-    returns:
+    Returns:
         Fichier avec les résultats des contrôles
     """
     print("Vérification des règles éditoriales...", end="\r")

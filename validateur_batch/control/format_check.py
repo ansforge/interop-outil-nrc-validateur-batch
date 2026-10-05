@@ -11,11 +11,11 @@ if TYPE_CHECKING:
 def _find_empty_cell(df: pd.DataFrame, type: "batch.BATCH_TYPE") -> pd.DataFrame:
     """Cherche des cellules vides ou NaN dans le DataFrame.
 
-    args:
+    Args:
         df: DataFrame à valider
         type: Type de batch
 
-    returns:
+    Returns:
         DataFrame avec une colonne identifiant les lignes ayant une cellule vide ou
         contenant un NaN
     """
@@ -49,10 +49,10 @@ def _find_empty_cell(df: pd.DataFrame, type: "batch.BATCH_TYPE") -> pd.DataFrame
 def _sctid_is_inactive(json: Dict) -> str:
     """Vérifie si le concept est inactif
 
-    args:
+    Args:
         json: Résultat de l'opération lookup
 
-    returns:
+    Returns:
         "1" si le concept est inactif ou une string vide dans le cas contraire
     """
     p = list(
@@ -66,11 +66,11 @@ def _sctid_is_inactive(json: Dict) -> str:
 def _validate_sctid(df: pd.DataFrame, fts: "server.Server") -> pd.DataFrame:
     """Valide les SCTID de concepts et ajoute les FSN de chaque concept
 
-    args:
+    Args:
         df: DataFrame à valider
         fts: Serveur de Terminologies FHIR à utiliser
 
-    returns:
+    Returns:
         DataFrame avec 2 colonnes identifiant : les SCTID de concepts inactifs et les
         FSN
     """
@@ -86,11 +86,11 @@ def _validate_sctid(df: pd.DataFrame, fts: "server.Server") -> pd.DataFrame:
 def _duplicated_term(df: pd.DataFrame, col: str) -> pd.DataFrame:
     """Vérifie s'il existe des termes dupliqués dans le fichier
 
-    args:
+    Args:
         df: DataFrame à valider
         col: Nom de la colonne à vérifier dans `df`
 
-    returns:
+    Returns:
         DataFrame avec une colonne identifiant les lignes ayant un terme dupliqué
     """
     idx = df.loc[df.duplicated(col, keep=False),].index
@@ -106,10 +106,10 @@ def _duplicated_term(df: pd.DataFrame, col: str) -> pd.DataFrame:
 def _check_language_code(df: pd.DataFrame) -> pd.DataFrame:
     """Vérifie la valeur de la colonne Language Code
 
-    args:
+    Args:
         df: DataFrame à valider
 
-    returns:
+    Returns:
         DataFrame avec une colonne identifiant les lignes ayant une valeur incorrecte
         dans la colonne Language Code
     """
@@ -129,10 +129,10 @@ def _check_language_code(df: pd.DataFrame) -> pd.DataFrame:
 def _check_case_significance(df: pd.DataFrame) -> pd.DataFrame:
     """Vérifie la valeur de la colonne Case significance
 
-    args:
+    Args:
         df: DataFrame à valider
 
-    returns:
+    Returns:
         DataFrame avec une colonne identifiant les lignes ayant une valeur incorrecte
         dans la colonne Case significance
     """
@@ -152,10 +152,10 @@ def _check_case_significance(df: pd.DataFrame) -> pd.DataFrame:
 def _check_type(df: pd.DataFrame) -> pd.DataFrame:
     """Vérifie la valeur de la colonne Type
 
-    args:
+    Args:
         df: DataFrame à valider
 
-    returns:
+    Returns:
         DataFrame avec une colonne identifiant les lignes ayant une valeur incorrecte
         dans la colonne Type
     """
@@ -174,10 +174,10 @@ def _check_type(df: pd.DataFrame) -> pd.DataFrame:
 def _check_language_refset(df: pd.DataFrame) -> pd.DataFrame:
     """Vérifie la valeur de la colonne Language reference set
 
-    args:
+    Args:
         df: DataFrame à valider
 
-    returns:
+    Returns:
         DataFrame avec une colonne identifiant les lignes ayant une valeur incorrecte
         dans la colonne Language reference set
     """
@@ -197,10 +197,10 @@ def _check_language_refset(df: pd.DataFrame) -> pd.DataFrame:
 def _check_acceptability(df: pd.DataFrame) -> pd.DataFrame:
     """Vérifie la valeur de la colonne Acceptability
 
-    args:
+    Args:
         df: DataFrame à valider
 
-    returns:
+    Returns:
         DataFrame avec une colonne identifiant les lignes ayant une valeur incorrecte
         dans la colonne Acceptability
     """
@@ -220,10 +220,10 @@ def _check_acceptability(df: pd.DataFrame) -> pd.DataFrame:
 def _check_inactivation_reason(df: pd.DataFrame) -> pd.DataFrame:
     """Vérifie la valeur de la colonne Inactivation Reason
 
-    args:
+    Args:
         df: DataFrame à valider
 
-    returns:
+    Returns:
         DataFrame avec une colonne identifiant les lignes ayant une valeur incorrecte
         dans la colonne Inactivation Reason
     """
@@ -246,11 +246,11 @@ def _check_association_target(df: pd.DataFrame, fts: "server.Server") -> pd.Data
     """Vérifie la présence d'un concept cible dans le cas d'une description
     inactivée pour la raison "Not semantically equivalent"
 
-    args:
+    Args:
         df: DataFrame à valider
         fts: Serveur de Terminologies FHIR à utiliser
 
-    returns:
+    Returns:
         DataFrame avec une colonne identifiant les lignes ne définissant pas de concept
         cible
     """
@@ -278,10 +278,10 @@ def _check_association_target(df: pd.DataFrame, fts: "server.Server") -> pd.Data
 def check_pt(df: pd.DataFrame) -> pd.DataFrame:
     """Vérifie que chaque concept possède un seul PT.
 
-    args:
+    Args:
         df: DataFrame à valider
 
-    returns:
+    Returns:
         DataFrame du fichier avec une colonne identifiant les concepts ayant moins ou
         plus d'un PT
     """
@@ -300,12 +300,12 @@ def run_format_check(df: pd.DataFrame, type: "batch.BATCH_TYPE",
                      fts: "server.Server") -> pd.DataFrame:
     """Lance l'ensemble des contrôles sur le respect du format.
 
-    args:
+    Args:
         df: DataFrame à valider
         type: Type de batch
         fts: Serveur de Terminologies FHIR à utiliser
 
-    returns:
+    Returns:
         Fichier avec les résultats des contrôles
     """
     # Contrôle de la présence de cellules vides

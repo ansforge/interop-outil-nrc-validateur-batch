@@ -51,11 +51,11 @@ class Batch:
     def _apply_add(self, preview: pd.DataFrame) -> pd.DataFrame:
         """Applique les modifications d'un batch d'addition à `preview`
 
-        args:
+        Args:
             preview: DataFrame contenant les descriptions d'intérêt de la snapshot dans
                 le périmètre des travaux
 
-        returns:
+        Returns:
             DataFrame avec les nouvelles descriptions ajoutées par le batch
         """
         # Identifier l'addition de PT pour des concepts en ayant déjà
@@ -83,11 +83,11 @@ class Batch:
     def _apply_chg(self, preview: pd.DataFrame) -> pd.DataFrame:
         """Applique les modifications d'un batch de changement à `preview`
 
-        args:
+        Args:
             preview: DataFrame contenant les descriptions d'intérêt de la snapshot dans
                 le périmètre des travaux
 
-        returns:
+        Returns:
             DataFrame avec la mise à jour des métadonnées du batch
         """
         # Formatage des changements de métadonnées
@@ -105,11 +105,11 @@ class Batch:
     def _apply_rep(self, preview: pd.DataFrame) -> pd.DataFrame:
         """Applique les modifications d'un batch de remplacement à `preview`
 
-        args:
+        Args:
             preview: DataFrame contenant les descriptions d'intérêt de la snapshot dans
                 le périmètre des travaux
 
-        returns:
+        Returns:
             DataFrame avec le remplacement des descriptions du batch
         """
         rep = self.df.loc[:, ["Concept ID", "Description ID", "New Translated Term",
@@ -137,11 +137,11 @@ class Batch:
     def _apply_ina(self, preview: pd.DataFrame) -> pd.DataFrame:
         """Applique les modifications d'un batch d'inactivation à `preview`
 
-        args:
+        Args:
             preview: DataFrame contenant les descriptions d'intérêt de la snapshot dans
                 le périmètre des travaux
 
-        returns:
+        Returns:
             DataFrame avec l'inactivation des descriptions du batch
         """
         # Formatage des inactivations du batch
@@ -162,11 +162,11 @@ class Batch:
         """
         Applique les modifications du batch à `preview`
 
-        args:
+        Args:
             preview: DataFrame contenant les descriptions d'intérêt de la snapshot
                 FR dans le périmètre des travaux
 
-        returns:
+        Returns:
             DataFrame `preview` mis à jour avec les modifications des batchs
         """
         self.df.reset_index(inplace=True)
@@ -189,7 +189,7 @@ class Batch:
     def check_format(self, fts: "server.Server") -> None:
         """Lance les contrôles de format du fichier batch.
 
-        args:
+        Args:
             fts: Serveur de Terminologies FHIR à utiliser
         """
         print(f"{self.type} - Vérification du format...", end="\r")

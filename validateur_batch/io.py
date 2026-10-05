@@ -21,10 +21,10 @@ ACCEPT = {
 def read_excel_dir(directory: str) -> List[batch.Batch]:
     """Lecture de l'ensemble des fichiers Excel d'un dossier
 
-    args:
+    Args:
         directory: Chemin vers le dossier contenant les fichiers Excel
 
-    returns:
+    Returns:
         Dictionnaire {nom du fichier: {nom de l'onglet: DataFrame de l'onglet}}
     """
     list_b = {}
@@ -76,11 +76,11 @@ def read_snapshot(snapshot: str,
                   list_batch: List[batch.Batch]) -> pd.DataFrame:
     """Lecture de la Snapshot de l'édition française
 
-    args:
+    Args:
         snapshot: Chemin vers le dossier de la snapshot
         list_batch: Liste des batchs à valider
 
-    returns:
+    Returns:
         DataFrame représentant les concepts de l'édition FR inclus dans le périmètre
         des batchs
     """

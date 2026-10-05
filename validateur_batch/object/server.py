@@ -53,10 +53,10 @@ class Server:
     def get_fsn(self, sctid: str) -> str:
         """Donne le FSN du concept `sctid`
 
-        args:
+        Args:
             sctid: SCTID du concept
 
-        returns:
+        Returns:
             FSN du concept
         """
         json = self.lookup(sctid)
