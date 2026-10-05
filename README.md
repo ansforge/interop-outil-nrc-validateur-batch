@@ -24,29 +24,25 @@ Le projet nécessite plusieurs données en entrée :
 - [**OBLIGATOIRE**] Endpoint d'un serveur FHIR contenant l'édition internationale de référence pour le projet
 - [**OBLIGATOIRE**] Snapshot de la dernière release de l'édition française
 - [**OBLIGATOIRE**] Date de publication de la dernière release de l'édition française
+- [**OBLIGATOIRE**] Dossier contenant les fichiers à valider
 - [**OBLIGATOIRE**] Dossier de sauvegarde du fichier de résultats
-- [*OPTIONNEL*] Chemin du fichier des concepts sans modification
-- [*OPTIONNEL*] Chemin du fichier des descriptions à ajouter
-- [*OPTIONNEL*] Chemin du fichier des métadonnées de descriptions à modifier
-- [*OPTIONNEL*] Chemin du fichier des descriptions à remplacer par une nouvelle traduction
-- [*OPTIONNEL*] Chemin du fichier des descriptions à inactiver
 ```shell
-./validateur_batch/main.py "endpoint_FTS" "chemin_vers_release_fr/Snapshot/" "YYYYMMDD" "dossier_sauvegarde" --val "chemin_fichier_concept_sans_modification" --add "chemin_fichier_descriptions_à_ajouter" --chg "chemin_fichier_metadonnees_à_modifier" --rep "chemin_fichier_descriptions_à_remplacer" --ina "chemin_fichier_descriptions_à_inactiver"
+./validateur_batch/main.py "endpoint_FTS" "chemin_vers_release_fr/Snapshot/" "YYYYMMDD" "dossier_input" "dossier_sauvegarde"
 ```
 
 ## Fichiers d'entrée valides
-Ce projet peut valider jusqu'à 5 fichiers différents dans le cadre d'une tâche de traduction ou révision de traductions. Tous ces fichiers sont à mettre au format CSV.
+Ce projet peut valider jusqu'à 5 fichiers différents dans le cadre d'une tâche de traduction ou révision de traductions.
 
 ### Concepts sans modification
-Le chemin vers ce fichier est passé par l'argument ```--val```. Les colonnes attendues sont :
+Les colonnes attendues sont :
 ```python
-["Concept ID", "FSN"]
+["Concept ID", "FSN", "Notes"]
 ```
 
 ### Descriptions à ajouter
 Ce fichier correspond à l'onglet **Description Additions** du template d'import batch de SNOMED International.
 
-Le chemin vers ce fichier est passé par l'argument ```--add```. Les colonnes attendues sont :
+Les colonnes attendues sont :
 ```python
 ["Concept ID", "GB/US FSN Term (For reference only)", "Preferred Term (For reference only)", "Translated Term", "Language Code", "Case significance", "Type", "Language reference set", "Acceptability", "Notes"]
 ```
@@ -54,7 +50,7 @@ Le chemin vers ce fichier est passé par l'argument ```--add```. Les colonnes at
 ### Métadonnées de descriptions à modifier
 Ce fichier correspond à l'onglet **Description Changes** du template d'import batch de SNOMED International.
 
-Le chemin vers ce fichier est passé par l'argument ```--chg```. Les colonnes attendues sont :
+Les colonnes attendues sont :
 ```python
 ["Description ID", "Preferred Term (For reference only)", "Term (For reference only)", "Case significance", "Type", "Language reference set", "Acceptability", "Notes"]
 ```
@@ -62,7 +58,7 @@ Le chemin vers ce fichier est passé par l'argument ```--chg```. Les colonnes at
 ### Descriptions à remplacer par une nouvelle traduction
 Ce fichier correspond à l'onglet **Description Replacements** du template d'import batch de SNOMED International.
 
-Le chemin vers ce fichier est passé par l'argument ```--rep```. Les colonnes attendues sont :
+Les colonnes attendues sont :
 ```python
 ["Concept ID", "Description ID", "Preferred Term (For reference only)", "Term (For reference only)", "Inactivation Reason", "Association Target ID1", "Association Target ID2", "Association Target ID3", "Association Target ID4", "New Replacement Description ID", "Replacement term (For reference only)", "New Translated Term", "Language Code", "Case significance", "Type", "Language reference set", "Acceptability", "Notes"]
 ```
@@ -70,7 +66,7 @@ Le chemin vers ce fichier est passé par l'argument ```--rep```. Les colonnes at
 ### Descriptions à inactiver
 Ce fichier correspond à l'onglet **Description Inactivations** du template d'import batch de SNOMED International.
 
-Le chemin vers ce fichier est passé par l'argument ```--ina```. Les colonnes attendues sont :
+Les colonnes attendues sont :
 ```python
 ["Description ID Or Term", "Language Code (require if the term is specified)", "Concept ID (Optional)", "Preferred Term (For reference only)", "Term (For reference only)", "Inactivation Reason", "Association Target ID1", "Association Target ID2", "Association Target ID3", "Association Target ID4", "Notes"]
 ```

@@ -8,7 +8,7 @@ if TYPE_CHECKING:
 
 BATCH_TYPE = Literal["VAL", "ADD", "CHG", "REP", "INA"]
 COL = {
-    "VAL": ["Concept ID", "FSN"],
+    "VAL": ["Concept ID", "FSN", "Notes"],
     "ADD": ["Concept ID", "GB/US FSN Term (For reference only)",
             "Preferred Term (For reference only)", "Translated Term", "Language Code",
             "Case significance", "Type", "Language reference set", "Acceptability",
@@ -34,15 +34,19 @@ COL = {
 class Batch:
     """Représente un batch de descriptions à ajouter, modifier, inactiver ou remplacer
     dans l'Authoring Platform ainsi que les résultats des contrôles associés"""
-    def __init__(self, file: str, type: BATCH_TYPE):
+    def __init__(self, type: BATCH_TYPE, df: pd.DataFrame):
         # Métadonnées du batch
-        self.file = file
         self.type = type
         # Données du batch
-        self.df = pd.read_csv(file, sep=";", quoting=3, na_filter=False, dtype=str)
+        df.drop(["Language reference set.1", "Acceptability.1",
+                 "Language reference set.2", "Acceptability.2",
+                 "Language reference set.3", "Acceptability.3",
+                 "Language reference set.4", "Acceptability.4"],
+                axis=1, inplace=True, errors="ignore")
+        self.df = df
 
         if not all(i == j for i, j in zip(self.df.columns, COL[type])):
-            raise ValueError(f"Colonne(s) du fichier incorrecte(s) : {file}")
+            raise ValueError(f"Colonne(s) incorrecte(s) : {type}")
 
     def _apply_add(self, preview: pd.DataFrame) -> pd.DataFrame:
         """Applique les modifications d'un batch d'addition à `preview`

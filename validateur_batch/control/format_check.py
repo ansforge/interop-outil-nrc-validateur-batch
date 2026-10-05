@@ -266,7 +266,7 @@ def _check_association_target(df: pd.DataFrame, fts: "server.Server") -> pd.Data
                                        index=idx),
                       how="left", left_index=True, right_index=True, validate="1:1")
 
-    json = [fts.lookup(sctid) if sctid else ""
+    json = [fts.lookup(sctid) if not pd.isna(sctid) else ""
             for sctid in df.loc[:, "Association Target ID1"]]
     inactive = [_sctid_is_inactive(j) if j else "" for j in json]
     if "1" in inactive:

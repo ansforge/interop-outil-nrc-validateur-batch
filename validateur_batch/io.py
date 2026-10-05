@@ -1,10 +1,9 @@
+import os
 import os.path as op
 import pandas as pd
 
-from typing import List, TYPE_CHECKING
-
-if TYPE_CHECKING:
-    from validateur_batch.object import batch
+from typing import List
+from validateur_batch.object import batch
 
 
 CASE = {
@@ -19,8 +18,62 @@ ACCEPT = {
 }
 
 
+def read_excel_dir(directory: str) -> List[batch.Batch]:
+    """Lecture de l'ensemble des fichiers Excel d'un dossier
+
+    args:
+        directory: Chemin vers le dossier contenant les fichiers Excel
+
+    returns:
+        Dictionnaire {nom du fichier: {nom de l'onglet: DataFrame de l'onglet}}
+    """
+    list_b = {}
+    files_list = sorted(f for f in os.listdir(directory)
+                        if f.endswith(".xlsx") and not f.startswith("~$"))
+
+    for file in files_list:
+        sheets = pd.read_excel(op.join(directory, file), sheet_name=None, dtype=str)
+
+        # Les fichiers VAL et ADD ne doivent contenir qu'un seul onglet
+        if (file.startswith(("LstConcRevusNonModif", "ModEdtNatAddDesc"))
+                and len(sheets) > 1):
+            raise ValueError(f"Le fichier contient plusieurs onglets : {file} "
+                             f"({', '.join(sheets)})")
+
+        if file.startswith("LstConcRevusNonModif"):
+            df = next(iter(sheets.values()))
+            list_b["VAL"] = df
+        elif file.startswith("ModEdtNatAddDesc"):
+            df = next(iter(sheets.values()))
+            list_b["ADD"] = df
+        elif file.startswith("ModEdtNatSnomed"):
+            if not sheets["Description Additions"].empty and "ADD" in list_b.keys():
+                list_b["ADD"] = pd.concat([list_b["ADD"],
+                                          sheets["Description Additions"]],
+                                          ignore_index=True)
+            elif not sheets["Description Additions"].empty and "ADD" not in list_b.keys():  # noqa
+                list_b["ADD"] = sheets["Description Additions"]
+
+            if not sheets["Description Changes"].empty:
+                list_b["CHG"] = sheets["Description Changes"]
+
+            if not sheets["Description Inactivations"].empty:
+                list_b["INA"] = sheets["Description Inactivations"]
+
+            if not sheets["Description Replacements"].empty:
+                col = "New Replacement Description ID"
+                if not all(sheets["Description Replacements"].loc[:, col].isnull()):
+                    raise ValueError(f"Remplacement : '{col}' n'est pas vide")
+                list_b["REP"] = sheets["Description Replacements"]
+
+        else:
+            raise ValueError(f"Fichier inconnu : {file}")
+
+    return [batch.Batch(k, v) for k, v in list_b.items()]
+
+
 def read_snapshot(snapshot: str, date: str,
-                  list_batch: List["batch.Batch"]) -> pd.DataFrame:
+                  list_batch: List[batch.Batch]) -> pd.DataFrame:
     """Lecture de la Snapshot de l'édition française
 
     args:

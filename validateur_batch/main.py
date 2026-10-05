@@ -5,7 +5,7 @@ import os.path as op
 import pandas as pd
 
 from validateur_batch import io
-from validateur_batch.object import batch, server
+from validateur_batch.object import server
 from validateur_batch.control import editorial_check, format_check
 
 if __name__ == "__main__":
@@ -14,17 +14,8 @@ if __name__ == "__main__":
     cli.add_argument("snapshot", type=str,
                      help="Chemin vers la snapshot de l'édition FR")
     cli.add_argument("date", type=str, help="Date de publication de l'édition FR")
+    cli.add_argument("input", type=str, help="Dossier contenant les batchs")
     cli.add_argument("output", type=str, help="Dossier où sauvegarder les rapports")
-    cli.add_argument("--val", type=str,
-                     help="Chemin vers le CSV des concepts non modifiés")
-    cli.add_argument("--add", type=str,
-                     help="Chemin vers le CSV de l'onglet 'Description Additions'")
-    cli.add_argument("--chg", type=str,
-                     help="Chemin vers le CSV de l'onglet 'Description Changes'")
-    cli.add_argument("--rep", type=str,
-                     help="Chemin vers le CSV de l'onglet 'Description Replacement'")
-    cli.add_argument("--ina", type=str,
-                     help="Chemin vers le CSV de l'onglet 'Description Inactivations'")
     args = cli.parse_args()
 
     # Initialisation de la classe de gestion du FTS
@@ -33,11 +24,7 @@ if __name__ == "__main__":
     # Création de la liste des fichiers
     print("\n## Imports batch ##")
     print("Lecture des imports batch...", end="\r")
-    input = zip(
-        [args.val, args.add, args.chg, args.rep, args.ina],
-        ["VAL", "ADD", "CHG", "REP", "INA"]
-    )
-    list_b = [batch.Batch(f, t) for f, t in input if f is not None]
+    list_b = io.read_excel_dir(args.input)
     print("Lecture des imports batch - OK")
 
     # Initialiser la preview de la snapshot de l'édition FR

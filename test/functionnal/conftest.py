@@ -572,10 +572,10 @@ def fts_null() -> Generator[responses.RequestsMock, Any, None]:
 def add() -> pd.DataFrame:
     return pd.DataFrame({
         "Concept ID": ["C2"] * 2,
-        "GB/US FSN Term (For reference only)": [""] * 2,
-        "Preferred Term (For reference only)": [""] * 2,
+        "GB/US FSN Term (For reference only)": [float("nan")] * 2,
+        "Preferred Term (For reference only)": [float("nan")] * 2,
         "Translated Term": ["concept SNOMED CT"] * 2,
-        "Language Code": ["", "fr"],
+        "Language Code": [float("nan"), "fr"],
         "Case significance": ["cI", "SC"],
         "Type": ["SYNONYM", "SYN"],
         "Language reference set": ["French", "FR"],
@@ -588,10 +588,10 @@ def add() -> pd.DataFrame:
 def chg() -> pd.DataFrame:
     return pd.DataFrame({
         "Description ID": ["D1"],
-        "Preferred Term (For reference only)": [""],
-        "Term (For reference only)": [""],
+        "Preferred Term (For reference only)": [float("nan")],
+        "Term (For reference only)": [float("nan")],
         "Case significance": ["SC"],
-        "Type": [""],
+        "Type": [float("nan")],
         "Language reference set": ["FR"],
         "Acceptability": ["PREF"]
     })
@@ -600,17 +600,17 @@ def chg() -> pd.DataFrame:
 @pytest.fixture
 def ina() -> pd.DataFrame:
     return pd.DataFrame({
-        "Description ID Or Term": ["D1", "D2", ""],
-        "Language Code (require if the term is specified)": [""] * 3,
-        "Concept ID (Optional)": [""] * 3,
-        "Preferred Term (For reference only)": [""] * 3,
-        "Term (For reference only)": [""] * 3,
+        "Description ID Or Term": ["D1", "D2", float("nan")],
+        "Language Code (require if the term is specified)": [float("nan")] * 3,
+        "Concept ID (Optional)": [float("nan")] * 3,
+        "Preferred Term (For reference only)": [float("nan")] * 3,
+        "Term (For reference only)": [float("nan")] * 3,
         "Inactivation Reason": ["Not semantically equivalent",
                                 "Not semantically equivalent", "Wrong"],
-        "Association Target ID1": ["C2", "", ""],
-        "Association Target ID2": [""] * 3,
-        "Association Target ID3": [""] * 3,
-        "Association Target ID4": [""] * 3
+        "Association Target ID1": ["C2", float("nan"), float("nan")],
+        "Association Target ID2": [float("nan")] * 3,
+        "Association Target ID3": [float("nan")] * 3,
+        "Association Target ID4": [float("nan")] * 3
     })
 
 
@@ -618,21 +618,21 @@ def ina() -> pd.DataFrame:
 def rep() -> pd.DataFrame:
     return pd.DataFrame({
         "Concept ID": ["C1", "C2", "C2"],
-        "Description ID": ["", "D2", "D3"],
-        "Preferred Term (For reference only)": [""] * 3,
-        "Term (For reference only)": [""] * 3,
+        "Description ID": [float("nan"), "D2", "D3"],
+        "Preferred Term (For reference only)": [float("nan")] * 3,
+        "Term (For reference only)": [float("nan")] * 3,
         "Inactivation Reason": ["Not semantically equivalent",
                                 "Not semantically equivalent", "Wrong"],
-        "Association Target ID1": ["C2", "", ""],
-        "Association Target ID2": [""] * 3,
-        "Association Target ID3": [""] * 3,
-        "Association Target ID4": [""] * 3,
-        "New Replacement Description ID": ["D3", "", ""],
-        "Replacement term (For reference only)": [""] * 3,
-        "New Translated Term": ["", "concept SNOMED CT", "concept SNOMED CT"],
-        "Language Code": ["", "fr", "fr"],
-        "Case significance": ["", "cI", "cI"],
-        "Type": ["", "SYNONYM", "SYNONYM"],
+        "Association Target ID1": ["C2", float("nan"), float("nan")],
+        "Association Target ID2": [float("nan")] * 3,
+        "Association Target ID3": [float("nan")] * 3,
+        "Association Target ID4": [float("nan")] * 3,
+        "New Replacement Description ID": ["D3", float("nan"), float("nan")],
+        "Replacement term (For reference only)": [float("nan")] * 3,
+        "New Translated Term": [float("nan"), "concept SNOMED CT", "concept SNOMED CT"],
+        "Language Code": [float("nan"), "fr", "fr"],
+        "Case significance": [float("nan"), "cI", "cI"],
+        "Type": [float("nan"), "SYNONYM", "SYNONYM"],
         "Language reference set": ["FR", "French", "French"],
         "Acceptability": ["PREF", "PREFERRED", "PREFERRED"],
         "_FSN_": ["Clinical finding (finding)", "Scar NOS (disorder)",
