@@ -72,13 +72,12 @@ def read_excel_dir(directory: str) -> List[batch.Batch]:
     return [batch.Batch(k, v) for k, v in list_b.items()]
 
 
-def read_snapshot(snapshot: str, date: str,
+def read_snapshot(snapshot: str,
                   list_batch: List[batch.Batch]) -> pd.DataFrame:
     """Lecture de la Snapshot de l'édition française
 
     args:
         snapshot: Chemin vers le dossier de la snapshot
-        date : Date de release de la snapshot
         list_batch: Liste des batchs à valider
 
     returns:
@@ -88,6 +87,11 @@ def read_snapshot(snapshot: str, date: str,
     # Vérification du dossier Snapshot
     if op.basename(op.normpath(snapshot)) != "Snapshot":
         raise ValueError("Le chemin ne pointe pas vers le dossier Snapshot")
+    # Récupération et vérification de la date
+    date = op.dirname(op.normpath(snapshot)).split("_")[-1].split("T")[0]
+    if not date.startswith("20") or not date.endswith("0621"):
+        raise ValueError("Le dossier Snapshot n'appartient pas au RF2 de l'édition FR")
+
     p = {
         "concept": op.join(snapshot, f"Terminology/sct2_Concept_Snapshot_FR1000315_{date}.txt"), # noqa
         "desc_fr": op.join(snapshot, f"Terminology/sct2_Description_Snapshot-fr_FR1000315_{date}.txt"), # noqa

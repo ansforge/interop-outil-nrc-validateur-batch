@@ -23,11 +23,10 @@ python3 -m pip install -e .
 Le projet nécessite plusieurs données en entrée :
 - [**OBLIGATOIRE**] Endpoint d'un serveur FHIR contenant l'édition internationale de référence pour le projet
 - [**OBLIGATOIRE**] Snapshot de la dernière release de l'édition française
-- [**OBLIGATOIRE**] Date de publication de la dernière release de l'édition française
 - [**OBLIGATOIRE**] Dossier contenant les fichiers à valider
 - [**OBLIGATOIRE**] Dossier de sauvegarde du fichier de résultats
 ```shell
-./validateur_batch/main.py "endpoint_FTS" "chemin_vers_release_fr/Snapshot/" "YYYYMMDD" "dossier_input" "dossier_sauvegarde"
+./validateur_batch/main.py "endpoint_FTS" "chemin_vers_release_fr/Snapshot/" "dossier_input" "dossier_sauvegarde"
 ```
 
 ## Fichiers d'entrée valides

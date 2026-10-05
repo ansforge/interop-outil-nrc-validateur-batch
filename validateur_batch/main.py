@@ -13,7 +13,6 @@ if __name__ == "__main__":
     cli.add_argument("endpoint", type=str, help="Endpoint du FTS à utiliser")
     cli.add_argument("snapshot", type=str,
                      help="Chemin vers la snapshot de l'édition FR")
-    cli.add_argument("date", type=str, help="Date de publication de l'édition FR")
     cli.add_argument("input", type=str, help="Dossier contenant les batchs")
     cli.add_argument("output", type=str, help="Dossier où sauvegarder les rapports")
     args = cli.parse_args()
@@ -29,7 +28,7 @@ if __name__ == "__main__":
 
     # Initialiser la preview de la snapshot de l'édition FR
     print("\n## Snapshot FR ##")
-    preview = io.read_snapshot(args.snapshot, args.date, list_b)
+    preview = io.read_snapshot(args.snapshot, list_b)
 
     print("\n\n## Respect du format ##")
     for b in list_b:
