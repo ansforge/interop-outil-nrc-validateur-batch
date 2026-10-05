@@ -20,13 +20,19 @@ python3 -m pip install -e .
 ```
 
 ## Utilisation du projet
-Le projet nécessite plusieurs données en entrée :
-- [**OBLIGATOIRE**] Endpoint d'un serveur FHIR contenant l'édition internationale de référence pour le projet
-- [**OBLIGATOIRE**] Snapshot de la dernière release de l'édition française
+Le projet nécessite plusieurs arguments en entrée :
 - [**OBLIGATOIRE**] Dossier contenant les fichiers à valider
 - [**OBLIGATOIRE**] Dossier de sauvegarde du fichier de résultats
+- [**OPTIONNEL**] Indicateur de lancement de la vérification ou du formatage
+- [**OPTIONNEL**] Endpoint d'un serveur FHIR contenant l'édition internationale de référence pour le projet
+- [**OPTIONNEL**] Snapshot de la dernière release de l'édition française
+
 ```shell
-./validateur_batch/main.py "endpoint_FTS" "chemin_vers_release_fr/Snapshot/" "dossier_input" "dossier_sauvegarde"
+# Pour lancer la vérification des fichiers
+./validateur_batch/main.py "dossier_input" "dossier_sauvegarde" -e "endpoint_FTS" -s "chemin_vers_release_fr/Snapshot/" 
+
+# Pour lancer le formatage pour importer sur l'Authoring Platform
+./validateur_batch/main.py "dossier_input" "dossier_sauvegarde" -i
 ```
 
 ## Fichiers d'entrée valides

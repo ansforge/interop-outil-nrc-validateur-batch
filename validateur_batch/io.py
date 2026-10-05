@@ -149,3 +149,65 @@ def read_snapshot(snapshot: str,
     print("Préparation du DataFrame - OK", end="\r")
 
     return desc.loc[desc.loc[:, "conceptId"].isin(scope)]
+
+
+def save_for_import(data: batch.Batch, directory: str) -> None:
+    """Sauvegarde un batch au format TSV et renomme les colonnes pour permettre
+    l'import dans l'Authoring Platform.
+
+    Args:
+        data: Batch data to format and save
+        directory: Chemin vers le dossier où sauvegarder les fichiers
+    """
+    if data.type == "ADD":
+        data.df.columns = ["conceptId", "termRef", "preferredTerm", "term", "lang",
+                           "caseSignificanceId", "typeId", "langRefset1",
+                           "acceptability1", "notes"]
+        data.df.insert(9, "langRefset2", [""] * len(data.df))
+        data.df.insert(10, "acceptability2", [""] * len(data.df))
+        data.df.insert(11, "langRefset3", [""] * len(data.df))
+        data.df.insert(12, "acceptability3", [""] * len(data.df))
+        data.df.insert(13, "langRefset4", [""] * len(data.df))
+        data.df.insert(14, "acceptability4", [""] * len(data.df))
+        data.df.insert(15, "langRefset5", [""] * len(data.df))
+        data.df.insert(16, "acceptability5", [""] * len(data.df))
+    elif data.type == "CHG":
+        data.df.insert(7, "Language reference set", [""] * len(data.df),
+                       allow_duplicates=True)
+        data.df.insert(8, "Acceptability", [""] * len(data.df), allow_duplicates=True)
+        data.df.insert(9, "Language reference set", [""] * len(data.df),
+                       allow_duplicates=True)
+        data.df.insert(10, "Acceptability", [""] * len(data.df), allow_duplicates=True)
+        data.df.insert(11, "Language reference set", [""] * len(data.df),
+                       allow_duplicates=True)
+        data.df.insert(12, "Acceptability", [""] * len(data.df), allow_duplicates=True)
+        data.df.insert(13, "Language reference set", [""] * len(data.df),
+                       allow_duplicates=True)
+        data.df.insert(14, "Acceptability", [""] * len(data.df), allow_duplicates=True)
+    elif data.type == "INA":
+        data.df.columns = ["descriptionID Or Term",
+                           "Language Code (require if the term is specified)",
+                           "Concept ID (Optional)",
+                           "Preferred Term (For reference only)",
+                           "Term (For reference only)", "Inactivation Reason",
+                           "Association Target ID1", "Association Target ID2",
+                           "Association Target ID3", "Association Target ID4", "Notes"]
+    else:
+        data.df.columns = ["conceptId", "descriptionId", "preferredTerm", "term",
+                           "inactivationReason", "associationTargetId1",
+                           "associationTargetId2", "associationTargetId3",
+                           "associationTargetId4", "newReplacementDescriptionId",
+                           "replacementTerm", "newTranslatedTerm", "languageCode",
+                           "caseSignificance", "type", "languageRefset1",
+                           "acceptability1", "Notes"]
+        data.df.insert(17, "languageRefset2", [""] * len(data.df))
+        data.df.insert(18, "acceptability2", [""] * len(data.df))
+        data.df.insert(19, "languageRefset3", [""] * len(data.df))
+        data.df.insert(20, "acceptability3", [""] * len(data.df))
+        data.df.insert(21, "languageRefset4", [""] * len(data.df))
+        data.df.insert(22, "acceptability4", [""] * len(data.df))
+        data.df.insert(23, "languageRefset5", [""] * len(data.df))
+        data.df.insert(24, "acceptability5", [""] * len(data.df))
+
+    data.df.to_csv(op.join(directory, f"{data.type.lower()}.tsv"), sep="\t",
+                   index=False)
