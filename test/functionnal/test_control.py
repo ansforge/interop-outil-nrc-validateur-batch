@@ -15,10 +15,10 @@ def test_editorial_check(df_editorial: pd.DataFrame, df_editorial_output: pd.Dat
 
 
 @pytest.mark.parametrize("df_in, df_out, type, fts",
-                         [("add", "add_output", "ADD", "fts_inactive"),
+                         [("add", "add_output", "ADD", "fts_batch"),
                           ("chg", "chg_output", "CHG", "fts_null"),
-                          ("ina", "ina_output", "INA", "fts_inactive"),
-                          ("rep", "rep_output", "REP", "fts_both")])
+                          ("ina", "ina_output", "INA", "fts_batch"),
+                          ("rep", "rep_output", "REP", "fts_batch")])
 def test_format_check(df_in: pd.DataFrame, df_out: pd.DataFrame, type: str,
                       fts: Generator, pytestconfig: pytest.Config,
                       request: pytest.FixtureRequest) -> None:
@@ -28,3 +28,10 @@ def test_format_check(df_in: pd.DataFrame, df_out: pd.DataFrame, type: str,
     fts = request.getfixturevalue(fts)
     pd.testing.assert_frame_equal(
         format_check.run_format_check(input, type, endpoint), output)
+
+
+def test_batch_get_fsn(fts_batch: Generator, pytestconfig: pytest.Config) -> None:
+    endpoint = server.Server(pytestconfig.getoption("endpoint"))
+    assert endpoint.batch_get_fsn(["C1", "C2", "C1"]) == {
+        "C1": "Clinical finding (finding)", "C2": "Scar NOS (disorder)"}
+    assert len(fts_batch.calls) == 1

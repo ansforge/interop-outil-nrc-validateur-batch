@@ -35,8 +35,8 @@ def test_sctid_is_inactive(json: Dict, status: str, request: pytest.FixtureReque
 
 
 @pytest.mark.parametrize("df_in, df_out, fts",
-                         [("invalid_add", "sctid_add", "fts_inactive"),
-                          ("invalid_rep", "sctid_rep", "fts_both")])
+                         [("invalid_add", "sctid_add", "fts_batch"),
+                          ("invalid_rep", "sctid_rep", "fts_batch")])
 def test_validate_sctid(df_in: pd.DataFrame, df_out: pd.DataFrame,
                         fts: Generator, pytestconfig: pytest.Config,
                         request: pytest.FixtureRequest) -> None:
@@ -46,6 +46,23 @@ def test_validate_sctid(df_in: pd.DataFrame, df_out: pd.DataFrame,
     fts = request.getfixturevalue(fts)
     pd.testing.assert_frame_equal(format_check._validate_sctid(input, endpoint),
                                   output)
+
+
+@pytest.mark.parametrize("size, nb_requests", [(100, 1), (1, 2)])
+def test_batch_lookup(size: int, nb_requests: int, fts_batch: Generator,
+                      active_concept: Dict, inactive_concept: Dict,
+                      pytestconfig: pytest.Config) -> None:
+    fts = server.Server(pytestconfig.getoption("endpoint"))
+    result = fts.batch_lookup(["C1", "C2", "C1"], size=size)
+    assert result == {"C1": active_concept, "C2": inactive_concept}
+    assert len(fts_batch.calls) == nb_requests
+
+
+def test_batch_lookup_unknown(fts_batch: Generator,
+                              pytestconfig: pytest.Config) -> None:
+    fts = server.Server(pytestconfig.getoption("endpoint"))
+    with pytest.raises(server.requests.HTTPError, match="C3 : 404"):
+        fts.batch_lookup(["C1", "C3"])
 
 
 @pytest.mark.parametrize("df_in, df_out, col",
@@ -156,10 +173,10 @@ def test_check_inactivation_reason(df_in: pd.DataFrame, df_out: pd.DataFrame,
                           ("valid_add", "valid_add", "fts_null"),
                           ("invalid_chg", "invalid_chg", "fts_null"),
                           ("valid_chg", "valid_chg", "fts_null"),
-                          ("invalid_ina", "target_ina", "fts_inactive"),
-                          ("valid_ina", "valid_ina", "fts_inactive"),
-                          ("invalid_rep", "target_rep", "fts_inactive"),
-                          ("valid_rep", "valid_rep", "fts_active")])
+                          ("invalid_ina", "target_ina", "fts_batch"),
+                          ("valid_ina", "valid_ina", "fts_batch"),
+                          ("invalid_rep", "target_rep", "fts_batch"),
+                          ("valid_rep", "valid_rep", "fts_batch")])
 def test_check_association_target(df_in: pd.DataFrame, df_out: pd.DataFrame,
                                   fts: Generator, pytestconfig: pytest.Config,
                                   request: pytest.FixtureRequest) -> None:
