@@ -1,0 +1,32 @@
+/* Compléments au Design System ANS propres au validateur */
+.validateur-log {
+    background-color: var(--white, #fff);
+    border: .1rem solid var(--border-color, #dee0ea);
+    border-radius: var(--border-radius, 1.4rem);
+    color: var(--body-color-darker, #343852);
+    font-size: 1.4rem;
+    max-height: 50rem;
+    overflow: auto;
+    padding: 2rem;
+    white-space: pre-wrap;
+}
+
+.validateur-downloads {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 1.6rem;
+    list-style: none;
+    margin: 2rem 0 4rem;
+    padding: 0;
+}
+
+.custom-file-label {
+    overflow: hidden;
+    padding-right: 14rem;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+}
+
+fieldset[hidden] {
+    display: none;
+}

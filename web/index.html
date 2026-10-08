@@ -1,0 +1,228 @@
+<!DOCTYPE html>
+<html lang="fr" class="no-js" dir="ltr">
+
+<head>
+    <meta charset="UTF-8">
+    <title>Validateur batch SCT - ANS</title>
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <meta name="description"
+        content="Vérification et formatage des fichiers d'import batch de l'édition nationale SNOMED CT">
+    <link rel="shortcut icon" href="./img/favicon.ico" type="image/x-icon">
+    <link rel="stylesheet" href="https://use.typekit.net/jjx2ksb.css">
+    <link rel="stylesheet" href="./style/style-ans.css" type="text/css">
+    <link rel="stylesheet" href="./style/print.css" type="text/css" media="print">
+    <link rel="stylesheet" href="./style/validateur.css" type="text/css">
+    <link rel="stylesheet" href="https://pyscript.net/releases/2026.7.3/core.css">
+    <script type="module" src="https://pyscript.net/releases/2026.7.3/core.js"></script>
+</head>
+
+<body>
+    <noscript>
+        <p class="js-off">Javascript est désactivé dans votre navigateur.</p>
+    </noscript>
+    <div class="body-wrapper">
+        <header class="header header-principal" role="banner">
+            <div class="header-principal__inner">
+                <div class="header-principal-left">
+                    <div class="logos">
+                        <div class="logo logo--0">
+                            <a href="https://sante.gouv.fr/">
+                                <img src="img/logo-ministere.svg" alt="Ministère de la Santé et de la Prévention"
+                                    width="107" height="62">
+                            </a>
+                        </div>
+                        <div class="logo logo--1">
+                            <a href="https://esante.gouv.fr/">
+                                <img src="./img/logo-ANS.svg" alt="Agence du Numérique en Santé" width="166"
+                                    height="50">
+                            </a>
+                        </div>
+                    </div>
+                    <p class="header__title">Validateur batch SNOMED CT</p>
+                </div>
+            </div>
+        </header>
+
+        <main class="main" role="main" id="main" tabindex="-1">
+            <div class="container">
+                <h1 class="mt-5">Validateur des imports batch SNOMED CT</h1>
+                <p>Vérification et formatage des modifications en batch de l'édition française
+                    SNOMED CT pour import dans l'Authoring Platform.</p>
+                <p>Les fichiers sont traités dans votre navigateur et ne sont envoyés à aucun serveur. En mode
+                    vérification, seules des requêtes vers le serveur de terminologies indiqué sont émises.</p>
+
+                <div id="status" aria-live="polite">
+                    <div class="o-alert o-alert--info" role="status">
+                        <div class="o-alert__icon">
+                            <svg class="svg-icon svg-circle-info" aria-hidden="true" focusable="false">
+                                <use xlink:href="svg-icons/icon-sprite.svg#circle-info"></use>
+                            </svg>
+                        </div>
+                        <h2 class="o-alert__title">Chargement de l'environnement Python</h2>
+                        <p>Le premier chargement peut prendre quelques dizaines de secondes.</p>
+                    </div>
+                </div>
+
+                <form id="form" novalidate>
+                    <fieldset class="form-box">
+                        <legend class="form-box__title">Traitement</legend>
+                        <div class="form-group">
+                            <fieldset>
+                                <legend>Que souhaitez-vous faire ? <span class="form-required"
+                                        title="Ce champ est requis">*</span></legend>
+                                <div class="custom-radio-box">
+                                    <div class="custom-control custom-radio custom-control-inline">
+                                        <input type="radio" class="custom-control-input" name="mode" value="check"
+                                            id="modeCheck" checked="checked">
+                                        <label class="custom-control-label" for="modeCheck">Vérifier les batchs</label>
+                                    </div>
+                                    <div class="custom-control custom-radio custom-control-inline">
+                                        <input type="radio" class="custom-control-input" name="mode" value="import"
+                                            id="modeImport">
+                                        <label class="custom-control-label" for="modeImport">Formater pour
+                                            importer</label>
+                                    </div>
+                                </div>
+                            </fieldset>
+                        </div>
+                        <br />
+                        <legend class="form-box__title">Fichiers batch</legend>
+                        <div class="form-group" id="batchGroup">
+                            <label for="batchFiles">Fichiers Excel (.xlsx) <span class="form-required"
+                                    title="Ce champ est requis">*</span></label>
+                            <div class="custom-file">
+                                <input type="file" class="custom-file-input" id="batchFiles" name="batchFiles"
+                                    accept=".xlsx" multiple required="required" aria-describedby="batchFiles-desc">
+                                <label class="custom-file-label" for="batchFiles" data-browse="Parcourir"
+                                    data-placeholder="Aucun fichier sélectionné">Aucun fichier sélectionné</label>
+                            </div>
+                            <p class="description" id="batchFiles-desc">Fichiers attendus :
+                                <code>LstConcRevusNonModif*</code>, <code>ModEdtNatAddDesc*</code> et
+                                <code>ModEdtNatSnomed*</code>.
+                            </p>
+                        </div>
+                    </fieldset>
+
+                    <fieldset class="form-box" id="checkOptions">
+                        <legend class="form-box__title">Paramètres de vérification</legend>
+                        <div class="form-group" id="endpointGroup">
+                            <label for="endpoint">Endpoint du serveur de terminologies FHIR <span class="form-required"
+                                    title="Ce champ est requis">*</span></label>
+                            <input class="form-control" name="endpoint" type="url" id="endpoint" required="required"
+                                placeholder="https://smt.esante.gouv.fr/fhir">
+                        </div>
+                        <div class="form-group">
+                            <fieldset>
+                                <legend>Format de la release RF2 de l'édition FR</legend>
+                                <div class="custom-control custom-radio custom-control-inline">
+                                    <input type="radio" class="custom-control-input" name="snapshotSource" value="zip"
+                                        id="snapshotZip" checked="checked">
+                                    <label class="custom-control-label" for="snapshotZip">Archive ZIP</label>
+                                </div>
+                                <div class="custom-control custom-radio custom-control-inline">
+                                    <input type="radio" class="custom-control-input" name="snapshotSource" value="dir"
+                                        id="snapshotDir">
+                                    <label class="custom-control-label" for="snapshotDir">Dossier décompressé</label>
+                                </div>
+                            </fieldset>
+                        </div>
+                        <div class="form-group" id="snapshotGroup">
+                            <label for="snapshotFile" id="snapshotLabel">Release RF2 de l'édition FR <span
+                                    class="form-required" title="Ce champ est requis">*</span></label>
+                            <div class="custom-file">
+                                <input type="file" class="custom-file-input" id="snapshotFile" name="snapshotFile"
+                                    accept=".zip" required="required" aria-describedby="snapshotFile-desc">
+                                <label class="custom-file-label" for="snapshotFile" data-browse="Parcourir"
+                                    data-placeholder="Aucun fichier sélectionné">Aucun fichier sélectionné</label>
+                            </div>
+                            <p class="description" id="snapshotFile-desc">Archive ou dossier de la release dont le nom
+                                se termine par la date de publication (ex. :
+                                <code>SnomedCT_..._20250621T120000Z</code>).
+                            </p>
+                        </div>
+                    </fieldset>
+
+                    <div class="btn-group mb-5">
+                        <button type="reset" class="btn btn--ghost btn--default">Réinitialiser</button>
+                        <button type="submit" class="btn btn--plain btn--primary" id="submit" disabled>Lancer</button>
+                    </div>
+                </form>
+
+                <section id="results" class="mb-6" hidden>
+                    <h2>Résultats</h2>
+                    <ul class="validateur-downloads" id="downloads"></ul>
+                    <h3>Journal d'exécution</h3>
+                    <pre class="validateur-log" id="log"></pre>
+                </section>
+            </div>
+        </main>
+
+        <footer class="footer footer-principal" role="contentinfo">
+            <div class="footer__region1">
+                <div class="container">
+                    <div class="row">
+                        <div class="col-md-6 col-lg-3 text-center text-md-left">
+                            <div class="logos">
+                                <div class="logo logo--0">
+                                    <a href="https://sante.gouv.fr/"
+                                        title="Ministère de la Santé et de la Prévention (nouvelle fenêtre)"
+                                        target="_blank" rel="nofollow">
+                                        <img src="img/logo-ministere.svg"
+                                            alt="Ministère de la Santé et de la Prévention" width="133" height="77"
+                                            loading="lazy">
+                                    </a>
+                                </div>
+                                <div class="logo logo--1">
+                                    <a href="https://esante.gouv.fr/"
+                                        title="Agence du Numérique en Santé (nouvelle fenêtre)" target="_blank"
+                                        rel="nofollow">
+                                        <img src="img/logo-ANS-footer.svg" alt="Agence du Numérique en Santé"
+                                            width="106" height="74" loading="lazy">
+                                    </a>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col-md-6 col-lg-3 text-center text-md-left">
+                            <p class="footer__title">
+                                <strong>Agence du Numérique en Santé</strong>
+                                <br> 2-10 Rue d'Oradour-sur-Glane
+                                <br> 75015 Paris
+                            </p>
+                        </div>
+                        <div class="col-6 col-lg-3">
+                            <ul class="footer-list">
+                                <li class="footer-list__item footer-list__item--hasIcon">
+                                    <a href="https://github.com/ansforge/interop-outil-nrc-validateur-batch"
+                                        target="_blank">
+                                        <svg class="svg-icon svg-angle-right" aria-hidden="true" focusable="false">
+                                            <use xlink:href="svg-icons/icon-sprite.svg#angle-right"></use>
+                                        </svg>Code source</a>
+                                </li>
+                            </ul>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="footer__region2">
+                <div class="container">
+                    <div class="footer-contentinfo">
+                        <ul class="footer-list footer-list--inline">
+                            <li class="footer-list__item">
+                                <a href="https://esante.gouv.fr/" target="_blank">esante.gouv.fr</a>
+                            </li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+        </footer>
+    </div>
+
+    <script type="py" src="./app.py" config="./pyscript.toml"></script>
+    <script type="text/javascript" src="./script/jquery-3.5.1.min.js"></script>
+    <script type="text/javascript" src="./script/vendor.js"></script>
+    <script type="text/javascript" src="./script/app.js"></script>
+    <script type="text/javascript" src="./script/validateur.js"></script>
+</body>
+
+</html>
