@@ -35,6 +35,19 @@ Le projet nécessite plusieurs arguments en entrée :
 ./validateur_batch/main.py "dossier_input" "dossier_sauvegarde" -i
 ```
 
+## Version web
+Le dossier `web/` contient un formulaire basé sur [PyScript](https://pyscript.net/) et le [Design System de l'ANS](https://ansforge.github.io/DesignSystem/) qui permet à une personne n'ayant pas un profil technique de lancer la validation et le formatage. Il est déployé sur GitHub Pages par le workflow `.github/workflows/pages.yml`.
+
+- Les fichiers sont traités localement dans le navigateur
+- Le serveur FHIR doit autoriser les requêtes cross-origin (CORS)
+- La release RF2 de l'édition FR peut être fournie sous forme d'archive ZIP ou de dossier décompressé.
+
+```shell
+# Pour tester la version web en local
+cp -r web _site && rsync -a --exclude "__pycache__" validateur_batch _site/
+python3 -m http.server 8000 -d _site
+```
+
 ## Fichiers d'entrée valides
 Ce projet peut valider jusqu'à 5 fichiers différents dans le cadre d'une tâche de traduction ou révision de traductions.
 

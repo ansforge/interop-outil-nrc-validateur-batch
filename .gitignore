@@ -624,3 +624,6 @@ FodyWeavers.xsd
 *.msix
 *.msm
 *.msp
+
+# Assemblage local de la version web
+_site/

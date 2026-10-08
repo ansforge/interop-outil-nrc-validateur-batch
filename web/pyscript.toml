@@ -1,0 +1,14 @@
+name = "Validateur batch"
+packages = ["pandas", "openpyxl", "python-jsonpath", "requests"]
+
+# Le package est copié à côté de la page lors du déploiement (cf. pages.yml)
+[files]
+"./validateur_batch/__init__.py" = "./validateur_batch/__init__.py"
+"./validateur_batch/io.py" = "./validateur_batch/io.py"
+"./validateur_batch/main.py" = "./validateur_batch/main.py"
+"./validateur_batch/control/__init__.py" = "./validateur_batch/control/__init__.py"
+"./validateur_batch/control/editorial_check.py" = "./validateur_batch/control/editorial_check.py"
+"./validateur_batch/control/format_check.py" = "./validateur_batch/control/format_check.py"
+"./validateur_batch/object/__init__.py" = "./validateur_batch/object/__init__.py"
+"./validateur_batch/object/batch.py" = "./validateur_batch/object/batch.py"
+"./validateur_batch/object/server.py" = "./validateur_batch/object/server.py"

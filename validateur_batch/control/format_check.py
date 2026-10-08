@@ -74,8 +74,9 @@ def _validate_sctid(df: pd.DataFrame, fts: "server.Server") -> pd.DataFrame:
         DataFrame avec 2 colonnes identifiant : les SCTID de concepts inactifs et les
         FSN
     """
-    json = [fts.lookup(sctid) if sctid else "" for sctid in df.loc[:, "Concept ID"]]
-    inactive = [_sctid_is_inactive(j) if j else "" for j in json]
+    sctids = [sctid if pd.notna(sctid) else "" for sctid in df.loc[:, "Concept ID"]]
+    json = fts.batch_lookup([sctid for sctid in sctids if sctid])
+    inactive = [_sctid_is_inactive(json[sctid]) if sctid else "" for sctid in sctids]
 
     if "1" in inactive:
         df.loc[:, "E_concept_inactif"] = inactive
@@ -266,9 +267,10 @@ def _check_association_target(df: pd.DataFrame, fts: "server.Server") -> pd.Data
                                        index=idx),
                       how="left", left_index=True, right_index=True, validate="1:1")
 
-    json = [fts.lookup(sctid) if not pd.isna(sctid) else ""
-            for sctid in df.loc[:, "Association Target ID1"]]
-    inactive = [_sctid_is_inactive(j) if j else "" for j in json]
+    sctids = [sctid if pd.notna(sctid) else ""
+              for sctid in df.loc[:, "Association Target ID1"]]
+    json = fts.batch_lookup([sctid for sctid in sctids if sctid])
+    inactive = [_sctid_is_inactive(json[sctid]) if sctid else "" for sctid in sctids]
     if "1" in inactive:
         df.loc[:, "E_association_target_inactive"] = inactive
 

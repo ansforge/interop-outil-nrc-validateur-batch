@@ -1,9 +1,8 @@
-import os.path as op
 import pytest
 import pandas as pd
 import responses
 
-from typing import Any, Dict, Generator
+from typing import Any, Callable, Dict, Generator
 
 
 ####################################
@@ -39,42 +38,16 @@ def inactive_concept():
 # Fixtures mimant le FTS #
 ##########################
 @pytest.fixture
-def fts_active(active_concept: Dict,
-               pytestconfig) -> Generator[responses.RequestsMock, Any, None]:
-    url = op.join(pytestconfig.getoption("endpoint"),
-                  "CodeSystem/$lookup?system=http://snomed.info/sct&version=http://snomed.info/sct/900000000000207008&code=C1") # noqa
+def fts_batch(active_concept: Dict, inactive_concept: Dict,
+              batch_lookup_callback: Callable,
+              pytestconfig) -> Generator[responses.RequestsMock, Any, None]:
+    """Requête batch de lookup : C1 actif, C2 inactif, autres codes inconnus"""
+    callback = batch_lookup_callback({"C1": active_concept, "C2": inactive_concept})
 
     with responses.RequestsMock() as mock:
-        mock.add(method=responses.GET, url=url, json=active_concept)
-
-        yield mock
-
-
-@pytest.fixture
-def fts_inactive(inactive_concept: Dict,
-                 pytestconfig) -> Generator[responses.RequestsMock, Any, None]:
-    url = op.join(pytestconfig.getoption("endpoint"),
-                  "CodeSystem/$lookup?system=http://snomed.info/sct&version=http://snomed.info/sct/900000000000207008&code=C2") # noqa
-
-    with responses.RequestsMock() as mock:
-
-        mock.add(method=responses.GET, url=url, json=inactive_concept)
-
-        yield mock
-
-
-@pytest.fixture
-def fts_both(active_concept: Dict, inactive_concept: Dict,
-             pytestconfig) -> Generator[responses.RequestsMock, Any, None]:
-    valid = op.join(pytestconfig.getoption("endpoint"),
-                    "CodeSystem/$lookup?system=http://snomed.info/sct&version=http://snomed.info/sct/900000000000207008&code=C1") # noqa
-    invalid = op.join(pytestconfig.getoption("endpoint"),
-                      "CodeSystem/$lookup?system=http://snomed.info/sct&version=http://snomed.info/sct/900000000000207008&code=C2") # noqa
-
-    with responses.RequestsMock() as mock:
-        mock.add(method=responses.GET, url=valid, json=active_concept)
-
-        mock.add(method=responses.GET, url=invalid, json=inactive_concept)
+        mock.add_callback(method=responses.POST,
+                          url=pytestconfig.getoption("endpoint") + "/",
+                          callback=callback, content_type="application/fhir+json")
 
         yield mock
 
